@@ -1,0 +1,198 @@
+﻿2016/03/05 22:13:31 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\南宏\Desktop\3D_Game\3D_Game.vcxproj" (build ターゲット)。
+     1>InitializeBuildStatus:
+         "AlwaysCreate" が指定されたため "Release\Time To Shoot.unsuccessfulbuild" を作成しています。
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt billboard.cpp clock.cpp enemyBullet.cpp camera.cpp debugproc.cpp enemy.cpp enemyNum.cpp fade.cpp fountain.cpp fountainCircle.cpp game.cpp gun.cpp gunSight.cpp hitCheck.cpp input.cpp itemBullet.cpp light.cpp main.cpp meshdome.cpp meshfield.cpp meshwall.cpp message.cpp model.cpp particle.cpp player.cpp playerBullet.cpp playerBulletNum.cpp playerLife.cpp result.cpp result_BG.cpp result_rank.cpp result_rank_nth.cpp result_rank_tex.cpp shadow.cpp sound.cpp stageManager.cpp time.cpp title.cpp title_BG.cpp title_menu.cpp
+         billboard.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         clock.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         enemyBullet.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         camera.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>camera.cpp(144): warning C4800: 'int' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+         debugproc.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>debugproc.cpp(108): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : 'sprintf' の宣言を確認してください。
+     1>debugproc.cpp(118): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : 'sprintf' の宣言を確認してください。
+     1>debugproc.cpp(123): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : 'sprintf' の宣言を確認してください。
+     1>debugproc.cpp(128): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : 'sprintf' の宣言を確認してください。
+     1>debugproc.cpp(133): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : 'sprintf' の宣言を確認してください。
+     1>debugproc.cpp(137): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : 'sprintf' の宣言を確認してください。
+     1>debugproc.cpp(141): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(110) : 'strcat' の宣言を確認してください。
+     1>debugproc.cpp(150): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(110) : 'strcat' の宣言を確認してください。
+         enemy.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>enemy.cpp(92): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(105) : 'strcpy' の宣言を確認してください。
+     1>enemy.cpp(93): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(105) : 'strcpy' の宣言を確認してください。
+     1>enemy.cpp(94): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(105) : 'strcpy' の宣言を確認してください。
+     1>enemy.cpp(260): warning C4244: '引数' : 'int' から 'FLOAT' への変換です。データが失われる可能性があります。
+     1>enemy.cpp(260): warning C4244: '引数' : 'int' から 'FLOAT' への変換です。データが失われる可能性があります。
+     1>enemy.cpp(260): warning C4244: '引数' : 'int' から 'FLOAT' への変換です。データが失われる可能性があります。
+         enemyNum.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>enemyNum.cpp(274): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>enemyNum.cpp(274): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>enemyNum.cpp(274): warning C4244: '=' : 'float' から 'int' への変換です。データが失われる可能性があります。
+         fade.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         fountain.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>fountain.cpp(121): warning C4244: '=' : 'float' から 'int' への変換です。データが失われる可能性があります。
+         fountainCircle.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         game.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         gun.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         gunSight.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         hitCheck.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         input.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>input.cpp(556): warning C4244: 'return' : 'float' から 'long' への変換です。データが失われる可能性があります。
+     1>input.cpp(564): warning C4244: 'return' : 'float' から 'long' への変換です。データが失われる可能性があります。
+         itemBullet.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         light.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         main.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         meshdome.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         meshfield.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         コンパイル中...
+         meshwall.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         message.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         model.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>model.cpp(267): warning C4244: '+=' : 'double' から 'float' への変換です。データが失われる可能性があります。
+         particle.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>particle.cpp(125): warning C4244: '=' : 'float' から 'int' への変換です。データが失われる可能性があります。
+         player.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         playerBullet.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         playerBulletNum.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         playerLife.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         result.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         result_BG.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>result_BG.cpp(180): warning C4305: '+=' : 'double' から 'float' へ切り詰めます。
+         result_rank.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>result_rank.cpp(81): warning C4244: '引数' : 'int' から 'FLOAT' への変換です。データが失われる可能性があります。
+     1>result_rank.cpp(82): warning C4244: '引数' : 'int' から 'FLOAT' への変換です。データが失われる可能性があります。
+     1>result_rank.cpp(318): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : 'fopen' の宣言を確認してください。
+     1>result_rank.cpp(322): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : 'fopen' の宣言を確認してください。
+     1>result_rank.cpp(378): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : 'fopen' の宣言を確認してください。
+         result_rank_nth.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>result_rank_nth.cpp(83): warning C4244: '引数' : 'int' から 'FLOAT' への変換です。データが失われる可能性があります。
+     1>result_rank_nth.cpp(84): warning C4244: '引数' : 'int' から 'FLOAT' への変換です。データが失われる可能性があります。
+         result_rank_tex.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>result_rank_tex.cpp(83): warning C4244: '引数' : 'int' から 'FLOAT' への変換です。データが失われる可能性があります。
+     1>result_rank_tex.cpp(84): warning C4244: '引数' : 'int' から 'FLOAT' への変換です。データが失われる可能性があります。
+     1>result_rank_tex.cpp(328): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>result_rank_tex.cpp(328): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>result_rank_tex.cpp(328): warning C4244: '=' : 'float' から 'int' への変換です。データが失われる可能性があります。
+         shadow.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         sound.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         stageManager.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>stageManager.cpp(433): warning C4065: switch 文に 'default' はありますが 'case' ラベルがありません。
+         time.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+     1>time.cpp(296): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>time.cpp(296): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>time.cpp(296): warning C4244: '=' : 'float' から 'int' への変換です。データが失われる可能性があります。
+         title.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         title_BG.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+         title_menu.cpp
+         C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+       ResourceCompile:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /l"0x0409" /nologo /fo"Release\3D_Game.res" 3D_Game.rc 
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\南宏\Desktop\3D_Game\Release\Time To Shoot.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\Time To Shoot.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\南宏\Desktop\3D_Game\Release\Time To Shoot.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\南宏\Desktop\3D_Game\Release\Time To Shoot.lib" /MACHINE:X86 Release\3D_Game.res
+         Release\billboard.obj
+         Release\clock.obj
+         Release\enemyBullet.obj
+         Release\camera.obj
+         Release\debugproc.obj
+         Release\enemy.obj
+         Release\enemyNum.obj
+         Release\fade.obj
+         Release\fountain.obj
+         Release\fountainCircle.obj
+         Release\game.obj
+         Release\gun.obj
+         Release\gunSight.obj
+         Release\hitCheck.obj
+         Release\input.obj
+         Release\itemBullet.obj
+         Release\light.obj
+         Release\main.obj
+         Release\meshdome.obj
+         Release\meshfield.obj
+         Release\meshwall.obj
+         Release\message.obj
+         Release\model.obj
+         Release\particle.obj
+         Release\player.obj
+         Release\playerBullet.obj
+         Release\playerBulletNum.obj
+         Release\playerLife.obj
+         Release\result.obj
+         Release\result_BG.obj
+         Release\result_rank.obj
+         Release\result_rank_nth.obj
+         Release\result_rank_tex.obj
+         Release\shadow.obj
+         Release\sound.obj
+         Release\stageManager.obj
+         Release\time.obj
+         Release\title.obj
+         Release\title_BG.obj
+         Release\title_menu.obj
+         コード生成しています。
+         コード生成が終了しました。
+         3D_Game.vcxproj -> C:\Users\南宏\Desktop\3D_Game\Release\Time To Shoot.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\南宏\Desktop\3D_Game\Release\Time To Shoot.exe;#1" /manifest "Release\Time To Shoot.exe.intermediate.manifest"
+       FinalizeBuildStatus:
+         ファイル "Release\Time To Shoot.unsuccessfulbuild" を削除しています。
+         "Release\Time To Shoot.lastbuildstate" のタッチ タスクを実行しています。
+     1>プロジェクト "C:\Users\南宏\Desktop\3D_Game\3D_Game.vcxproj" (build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:13.86
