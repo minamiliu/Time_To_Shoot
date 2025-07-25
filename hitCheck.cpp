@@ -1,37 +1,37 @@
-/*******************************************************************************
+﻿/*******************************************************************************
 *
-* �^�C�g��:		�����蔻��̏���
-* �v���O������:	gunSight.cpp
-* �쐬��:		HAL�����Q�[���w�ȁ@����G
+* タイトル:		当たり判定の処理
+* プログラム名:	gunSight.cpp
+* 作成者:		HAL東京ゲーム学科　劉南宏
 *
 *******************************************************************************/
 
 
 /*******************************************************************************
-* �C���N���[�h�t�@�C��
+* インクルードファイル
 *******************************************************************************/
 #include "hitCheck.h"
 
 //*****************************************************************************
-// �}�N����`
+// マクロ定義
 //*****************************************************************************
-#define		NO_USE_D3DX	// �錾���R�����g�ɂ����D3DXVec3Dot�����g�p����
-#define VALUE_ROTATE	(D3DX_PI * 0.02f) 						// ��]��
+#define		NO_USE_D3DX	// 宣言をコメントにするとD3DXVec3Dot等を使用する
+#define VALUE_ROTATE	(D3DX_PI * 0.02f) 						// 回転量
 
 //*****************************************************************************
-// �O���[�o���ϐ�
+// グローバル変数
 //*****************************************************************************
 D3DXVECTOR3 g_hitPos;
 
 //=============================================================================
-// ����
+// 内積
 //=============================================================================
 float DotProduct( D3DXVECTOR3 vl, D3DXVECTOR3 vr)
 {
 	float ans;
 
 #ifdef NO_USE_D3DX
-	// �_�C���N�g�w�ł́A�A�A
+	// ダイレクトＸでは、、、
 	ans = (vl.x * vr.x) + (vl.y * vr.y) + (vl.z * vr.z);
 
 #else
@@ -45,14 +45,14 @@ float DotProduct( D3DXVECTOR3 vl, D3DXVECTOR3 vr)
 
 
 //=============================================================================
-// �O��
+// 外積
 //=============================================================================
 D3DXVECTOR3 CrossProduct( D3DXVECTOR3 vl, D3DXVECTOR3 vr )
 {
 	D3DXVECTOR3 ret;
 
 #ifdef NO_USE_D3DX
-	// �_�C���N�g�w�ł́A�A�A
+	// ダイレクトＸでは、、、
 	ret.x = (vl.y * vr.z) - (vl.z*vr.y);
 	ret.y = (vl.z * vr.x) - (vl.x*vr.z);
 	ret.z = (vl.x * vr.y) - (vl.y*vr.x);
@@ -65,28 +65,28 @@ D3DXVECTOR3 CrossProduct( D3DXVECTOR3 vl, D3DXVECTOR3 vr )
 
 
 //=============================================================================
-// �|���S���Ɛ����Ƃ̓����蔻��
-// p0  :�|���S���̒��_1
-// p1  :�|���S���̒��_2
-// p2  :�|���S���̒��_3
-// pos0:�n�_�i�ړ��O�j
-// pos1:�I�_�i�ړ���j
+// ポリゴンと線分との当たり判定
+// p0  :ポリゴンの頂点1
+// p1  :ポリゴンの頂点2
+// p2  :ポリゴンの頂点3
+// pos0:始点（移動前）
+// pos1:終点（移動後）
 // 
-// �Ԃ�l�F0�͓������Ă��Ȃ�  1:�������Ă���
+// 返り値：0は当たっていない  1:当たっている
 //=============================================================================
 bool HitCheck(D3DXVECTOR3 p0, D3DXVECTOR3 p1, D3DXVECTOR3 p2, D3DXVECTOR3 pos0, D3DXVECTOR3 pos1)
 {
-	D3DXVECTOR3		nor;		// �|���S���̖@��
+	D3DXVECTOR3		nor;		// ポリゴンの法線
 
-	{	// �|���S���̊O�ς��Ƃ��Ė@�������߂�
+	{	// ポリゴンの外積をとって法線を求める
 		D3DXVECTOR3 vec01 = p1 - p0;
 		D3DXVECTOR3 vec02 = p2 - p0;
 		nor = CrossProduct( vec01, vec02);
 		D3DXVec3Normalize( &nor, &nor);
 	}
 
-	{	// ���ʂƐ����̓��ςƂ��ďՓ˂��Ă���\���𒲂ׂ�
-		// ���߂��@���ƃx�N�g���Q�i�����̗��[�ƃ|���S����̔C�ӂ̓_�j�̓��ςƂ��ďՓ˂��Ă���\���𒲂ׂ�
+	{	// 平面と線分の内積とって衝突している可能性を調べる
+		// 求めた法線とベクトル２つ（線分の両端とポリゴン上の任意の点）の内積とって衝突している可能性を調べる
 		D3DXVECTOR3 vec1 = pos0 - p0;
 		D3DXVECTOR3 vec2 = pos1 - p0;
 		float a = DotProduct( vec1, nor);
@@ -94,41 +94,41 @@ bool HitCheck(D3DXVECTOR3 p0, D3DXVECTOR3 p1, D3DXVECTOR3 p2, D3DXVECTOR3 pos0, 
 		if( (a * b) > 0 ) return false;
 	}
 
-	{	// �|���S���Ɛ����̌�_�����߂�
+	{	// ポリゴンと線分の交点を求める
 		D3DXVECTOR3 vec1 = pos0 - p0;
 		D3DXVECTOR3 vec2 = pos1 - p0;
-		float	d1 = fabs( DotProduct( nor, vec1));	// ����������߂�ׂ̓_�ƃ|���S���Ƃ̋���
-		float	d2 = fabs( DotProduct( nor, vec2));	// ����������߂�ׂ̓_�ƃ|���S���Ƃ̋���
-		float	a = d1 / (d1+d2);					// ������
+		float	d1 = fabs( DotProduct( nor, vec1));	// 内分比を求める為の点とポリゴンとの距離
+		float	d2 = fabs( DotProduct( nor, vec2));	// 内分比を求める為の点とポリゴンとの距離
+		float	a = d1 / (d1+d2);					// 内分比
 		
 		
-		// pos0����pos1�ւ̃x�N�g���i�ړ��x�N�g���j
+		// pos0からpos1へのベクトル（移動ベクトル）
 		D3DXVECTOR3 vec3 = pos1 -pos0; 
 
-		// ��_
+		// 交点
 		D3DXVECTOR3 p3 = pos0 + vec3 * a;
 
-		// ��_��n��
+		// 交点を渡す
 		g_hitPos = p3;
 
-		{	// ���߂���_���|���S���̒��ɂ��邩���ׂ�
+		{	// 求めた交点がポリゴンの中にあるか調べる
 			
-			// �|���S���̊e�ӂ̃x�N�g��
+			// ポリゴンの各辺のベクトル
 			D3DXVECTOR3 v1 = p1 - p0;
 			D3DXVECTOR3 v2 = p2 - p1;
 			D3DXVECTOR3 v3 = p0 - p2;
 
-			// �e���_�ƌ�_�Ƃ̃x�N�g��
+			// 各頂点と交点とのベクトル
 			D3DXVECTOR3 v4 = p3 - p1;
 			D3DXVECTOR3 v5 = p3 - p2;
 			D3DXVECTOR3 v6 = p3 - p0;
 
-			// �e�ӂƂ̊O�ςŖ@�������߂�
+			// 各辺との外積で法線を求める
 			D3DXVECTOR3 n1 = CrossProduct( v1, v4);
 			D3DXVECTOR3 n2 = CrossProduct( v2, v5);
 			D3DXVECTOR3 n3 = CrossProduct( v3, v6);
 
-			// ���ꂼ��̃x�N�g���̌�������ςŃ`�F�b�N
+			// それぞれのベクトルの向きを内積でチェック
 			if( DotProduct( n1, n2) < -0.02f ) return false;
 			if( DotProduct( n1, n3) < -0.02f ) return false;
 		}
@@ -139,11 +139,11 @@ bool HitCheck(D3DXVECTOR3 p0, D3DXVECTOR3 p1, D3DXVECTOR3 p2, D3DXVECTOR3 pos0, 
 
 
 //=============================================================================
-// �ǂ���x�N�g��
+// 壁ずりベクトル
 //
-// out : ���K���ǂ���x�N�g���i�߂�l�j
-// front : �i�s�x�N�g��
-// normal: �Փ˓_�ł̖@���x�N�g��
+// out : 正規化壁ずりベクトル（戻り値）
+// front : 進行ベクトル
+// normal: 衝突点での法線ベクトル
 //
 //=============================================================================
 D3DXVECTOR3* GetWallScratchVector(D3DXVECTOR3 *out, D3DXVECTOR3 &front, D3DXVECTOR3 &normal)
@@ -156,7 +156,7 @@ D3DXVECTOR3* GetWallScratchVector(D3DXVECTOR3 *out, D3DXVECTOR3 &front, D3DXVECT
 }
 
 //*****************************************************************************
-// ��_���擾
+// 交点を取得
 //*****************************************************************************
 D3DXVECTOR3 GetHitPos(void)
 {
@@ -164,12 +164,12 @@ D3DXVECTOR3 GetHitPos(void)
 }
 
 //*****************************************************************************
-// �ۂ̓����蔻��
+// 丸の当たり判定
 //*****************************************************************************
 bool HitCheckBall( D3DXVECTOR3 pos1, float radius1, D3DXVECTOR3 pos2, float radius2)
 {
 
-	//�o�E���f�B���O�X�t�B�A
+	//バウンディングスフィア
 	if( (pos1.x - pos2.x)*(pos1.x - pos2.x) + (pos1.y - pos2.y)*(pos1.y - pos2.y) + (pos1.z - pos2.z)*(pos1.z - pos2.z) 
 		< (radius1 + radius2)*(radius1 + radius2) )
 	{
@@ -179,12 +179,12 @@ bool HitCheckBall( D3DXVECTOR3 pos1, float radius1, D3DXVECTOR3 pos2, float radi
 	return false;
 }
 //*****************************************************************************
-// ���ʂ̉~�̓����蔻��
+// 平面の円の当たり判定
 //*****************************************************************************
 bool HitCheckXZ( D3DXVECTOR3 pos1, float radius1, D3DXVECTOR3 pos2, float radius2)
 {
 
-	//�o�E���f�B���O�X�t�B�A
+	//バウンディングスフィア
 	if( (pos1.x - pos2.x)*(pos1.x - pos2.x)  + (pos1.z - pos2.z)*(pos1.z - pos2.z) 
 		< (radius1 + radius2)*(radius1 + radius2) )
 	{
@@ -194,23 +194,23 @@ bool HitCheckXZ( D3DXVECTOR3 pos1, float radius1, D3DXVECTOR3 pos2, float radius
 	return false;
 }
 //*****************************************************************************
-// �Q�_�̌����x�N�g�����擾
+// ２点の向きベクトルを取得
 //*****************************************************************************
 D3DXVECTOR3 GetRotationAngle( D3DXVECTOR3 myPos, D3DXVECTOR3 target, D3DXVECTOR3 myAngle)
 {
-	// �����p�x
+	// 方向角度
 	D3DXVECTOR3 dir = target - myPos;
-	// Y���p�x
+	// Y軸角度
 	float yAngle = atan2( dir.x, dir.z );
 
-	//180�x�ȏ㍷�������+-360�x���ċt��
+	//180度以上差があれば+-360度して逆回し
 	if( yAngle - myAngle.y > D3DX_PI ) {
 		yAngle -= D3DX_PI * 2.0f;
 	} else if( myAngle.y - yAngle > D3DX_PI ) {
 		yAngle += D3DX_PI * 2.0f;
 	}
 
-	//Y���p�x�C��
+	//Y軸角度修正
 	if(yAngle > D3DX_PI)
 	{
 		yAngle = yAngle - D3DX_PI*2;
@@ -220,14 +220,14 @@ D3DXVECTOR3 GetRotationAngle( D3DXVECTOR3 myPos, D3DXVECTOR3 target, D3DXVECTOR3
 		yAngle = yAngle + D3DX_PI*2;
 	}
 
-	// X���p�x
+	// X軸角度
 	float zxLen = sqrt( dir.x * dir.x + dir.z * dir.z );
 	float xAngle = atan2( dir.y, zxLen );
 
 	return D3DXVECTOR3( -xAngle, yAngle, 0.0f); 
 }
 //*****************************************************************************
-// ��]�p�x���擾
+// 回転角度を取得
 //*****************************************************************************
 D3DXVECTOR3 Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget, float divide, float value_rot)
 {
@@ -305,7 +305,7 @@ D3DXVECTOR3 Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget, float divid
 	return re;
 }
 //*****************************************************************************
-// ������̔���
+// 視野内の判定
 //*****************************************************************************
 bool HitCheckViewArea( D3DXVECTOR3 myPos, D3DXVECTOR3 tarPos, D3DXVECTOR3 myRot, float myView)
 {
@@ -329,7 +329,7 @@ bool HitCheckViewArea( D3DXVECTOR3 myPos, D3DXVECTOR3 tarPos, D3DXVECTOR3 myRot,
 }
 
 //*****************************************************************************
-// �Q�_�������擾
+// ２点距離を取得
 //*****************************************************************************
 float GetDistanceXZ( D3DXVECTOR3 pos1, D3DXVECTOR3 pos2)
 {

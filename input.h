@@ -1,8 +1,8 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		“ü—Íˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	input.h
-* ì¬Ò:		HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		å…¥åŠ›å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	input.h
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
@@ -35,9 +35,9 @@
 #define RSTICK_RIGHT	(17)	
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
-// ƒL[ƒ{[ƒhŠÖ˜A
+// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰é–¢é€£
 HRESULT InitKeyboard(HINSTANCE hInstance, HWND hWnd);
 void UninitKeyboard(void);
 void UpdateKeyboard(void);
@@ -46,7 +46,7 @@ bool GetKeyboardTrigger(int nKey);
 bool GetKeyboardRepeat(int nKey);
 bool GetKeyboardRelease(int nKey);
 
-// ƒ}ƒEƒXŠÖ˜A
+// ãƒã‚¦ã‚¹é–¢é€£
 HRESULT InitMouse(HINSTANCE hInstance, HWND hWnd);
 void UninitMouse(void);
 void UpdateMouse(void);
@@ -60,7 +60,7 @@ long GetMouseAxisX(void);
 long GetMouseAxisY(void);
 long GetMouseAxisZ(void);
 
-// ƒWƒ‡ƒCƒpƒbƒhŠÖ˜A
+// ã‚¸ãƒ§ã‚¤ãƒ‘ãƒƒãƒ‰é–¢é€£
 HRESULT InitJoypad(HINSTANCE hInstance, HWND hWnd);
 void UninitJoypad(void);
 void UpdateJoypad(void);

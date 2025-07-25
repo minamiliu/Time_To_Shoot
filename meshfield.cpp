@@ -1,13 +1,13 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		ƒƒbƒVƒ…ƒtƒB[ƒ‹ƒhˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	meshfield.cpp
-* ì¬ŽÒ:		HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		ãƒ¡ãƒƒã‚·ãƒ¥ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	meshfield.cpp
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 #include "meshfield.h"
 #include "input.h"
@@ -15,42 +15,42 @@
 #include "debugproc.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 
-#define TEXTURE_FIELD	"data/TEXTURE/field002.jpg"						// “Ç‚Ýž‚ÞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
+#define TEXTURE_FIELD	"data/TEXTURE/field002.jpg"						// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice);
 
 //*****************************************************************************
-// ƒOƒ[ƒoƒ‹•Ï”
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 //*****************************************************************************
-LPDIRECT3DTEXTURE9 g_pD3DTextureField;		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffField;	// ’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-LPDIRECT3DINDEXBUFFER9 g_pD3DIdxBuffField;	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
+LPDIRECT3DTEXTURE9 g_pD3DTextureField;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffField;	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+LPDIRECT3DINDEXBUFFER9 g_pD3DIdxBuffField;	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 
-D3DXMATRIX g_mtxWorldField;					// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX
-D3DXVECTOR3 g_posField;						// ˆÊ’u
-D3DXVECTOR3 g_rotField;						// Œü‚«
+D3DXMATRIX g_mtxWorldField;					// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹
+D3DXVECTOR3 g_posField;						// ä½ç½®
+D3DXVECTOR3 g_rotField;						// å‘ã
 
-int g_nNumBlockX, g_nNumBlockZ;				// ƒuƒƒbƒN”
-int g_nNumVertex;							// ‘’¸“_”
-int g_nNumVertexIndex;						// ‘ƒCƒ“ƒfƒbƒNƒX”
-int g_nNumPolygon;							// ‘ƒ|ƒŠƒSƒ“”
-float g_fSizeBlockX, g_fSizeBlockZ;			// ƒuƒƒbƒNƒTƒCƒY
+int g_nNumBlockX, g_nNumBlockZ;				// ãƒ–ãƒ­ãƒƒã‚¯æ•°
+int g_nNumVertex;							// ç·é ‚ç‚¹æ•°
+int g_nNumVertexIndex;						// ç·ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°
+int g_nNumPolygon;							// ç·ãƒãƒªã‚´ãƒ³æ•°
+float g_fSizeBlockX, g_fSizeBlockZ;			// ãƒ–ãƒ­ãƒƒã‚¯ã‚µã‚¤ã‚º
 
 
 //=============================================================================
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT InitMeshField(int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float fSizeBlockZ)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	// ˆÊ’uE‰ñ“]EƒXƒP[ƒ‹‚Ì‰ŠúÝ’è
+	// ä½ç½®ãƒ»å›žè»¢ãƒ»ã‚¹ã‚±ãƒ¼ãƒ«ã®åˆæœŸè¨­å®š
 
 	g_posField = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 	g_rotField = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
@@ -68,10 +68,10 @@ HRESULT InitMeshField(int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float f
 	g_pD3DVtxBuffField = NULL;
 	g_pD3DIdxBuffField = NULL;
 	
-	// ’¸“_î•ñ‚Ìì¬
+	// é ‚ç‚¹æƒ…å ±ã®ä½œæˆ
 	MakeVertexField(pDevice);
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	D3DXCreateTextureFromFile( pDevice, TEXTURE_FIELD, &g_pD3DTextureField);
 
 
@@ -79,25 +79,25 @@ HRESULT InitMeshField(int nNumBlockX, int nNumBlockZ, float fSizeBlockX, float f
 }
 
 //=============================================================================
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //=============================================================================
 void UninitMeshField(void)
 {
 	if(g_pD3DTextureField != NULL)
-	{// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
+	{// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é–‹æ”¾
 		g_pD3DTextureField->Release();
 		g_pD3DTextureField = NULL;
 	}
 
 	if(g_pD3DVtxBuffField != NULL) 
-	{// ’¸“_ƒoƒbƒtƒ@‚ÌŠJ•ú
+	{// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®é–‹æ”¾
 		g_pD3DVtxBuffField->Release();
 		g_pD3DVtxBuffField = NULL;
 	}
 }
 
 //=============================================================================
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 //=============================================================================
 void UpdateMeshField(void)
 {
@@ -105,47 +105,47 @@ void UpdateMeshField(void)
 }
 
 //=============================================================================
-// •`‰æ‰—
+// æç”»åˆç†
 //=============================================================================
 void DrawMeshField(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	D3DXMATRIX mtxScl, mtxRot, mtxTranslate;
 		
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 	D3DXMatrixIdentity( &g_mtxWorldField);
 	
-	// ‰ñ“]‚ð”½‰f
+	// å›žè»¢ã‚’åæ˜ 
 	D3DXMatrixRotationYawPitchRoll( &mtxRot, g_rotField.y, g_rotField.x, g_rotField.z);
 	D3DXMatrixMultiply( &g_mtxWorldField, &g_mtxWorldField, &mtxRot);
 	
-	// ˆÚ“®‚ð”½‰f
+	// ç§»å‹•ã‚’åæ˜ 
 	D3DXMatrixTranslation( &mtxTranslate, g_posField.x, g_posField.y, g_posField.z);
 	D3DXMatrixMultiply( &g_mtxWorldField, &g_mtxWorldField, &mtxTranslate);
 	
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚ÌÝ’è
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹ã®è¨­å®š
 	pDevice->SetTransform( D3DTS_WORLD, &g_mtxWorldField);
 
-	// ’¸“_ƒoƒbƒtƒ@‚ðƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒã‚¤ãƒ³ãƒ‰
 	pDevice->SetStreamSource(0, g_pD3DVtxBuffField, 0, sizeof(VERTEX_3D));
 
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ðƒŒƒ“ƒ_ƒŠƒ“ƒOƒpƒCƒvƒ‰ƒCƒ“‚ÉÝ’è
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 	pDevice->SetIndices(g_pD3DIdxBuffField);
 
-	// ’¸“_ƒtƒH[ƒ}ƒbƒg‚ÌÝ’è
+	// é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®è¨­å®š
 	pDevice->SetFVF(FVF_VERTEX_3D);
 
-	// ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 	pDevice->SetTexture(0, g_pD3DTextureField);
 	
-	//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+	//ãƒãƒªã‚´ãƒ³ã®æç”»
 	pDevice->DrawIndexedPrimitive(
-		D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚ÌŽí—Þ
-		0,						//Å‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX‚Ü‚Å‚ÌƒIƒtƒZƒbƒg
-		0,						//Å¬‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-		g_nNumVertex,			//’¸“_‚Ì”
-		0,						//“Ç‚ÝŽæ‚è‚ðŠJŽn‚·‚éˆÊ’u
-		g_nNumPolygon			//ƒ|ƒŠƒSƒ“‚Ì”
+		D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡ž
+		0,						//æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¾ã§ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+		0,						//æœ€å°ã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		g_nNumVertex,			//é ‚ç‚¹ã®æ•°
+		0,						//èª­ã¿å–ã‚Šã‚’é–‹å§‹ã™ã‚‹ä½ç½®
+		g_nNumPolygon			//ãƒãƒªã‚´ãƒ³ã®æ•°
 	);
 
 
@@ -153,23 +153,23 @@ void DrawMeshField(void)
 }
 
 //=============================================================================
-// ’¸“_‚Ìì¬
+// é ‚ç‚¹ã®ä½œæˆ
 //=============================================================================
 HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice)
 {
-	// ƒIƒuƒWƒFƒNƒg‚Ì’¸“_ƒoƒbƒtƒ@‚ð¶¬
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆ
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_3D) * g_nNumVertex,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY
+		sizeof(VERTEX_3D) * g_nNumVertex,	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
 		D3DUSAGE_WRITEONLY,
-		FVF_VERTEX_3D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_3D,					//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆ
 		D3DPOOL_MANAGED,
-		&g_pD3DVtxBuffField,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&g_pD3DVtxBuffField,			//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
-	// ƒIƒuƒWƒFƒNƒg‚ÌƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ð¶¬
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆ
 	if(FAILED(pDevice->CreateIndexBuffer(
 		sizeof(WORD) * g_nNumVertexIndex,
 		D3DUSAGE_WRITEONLY,
@@ -182,11 +182,11 @@ HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice)
 	}
 
 	
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 
 		VERTEX_3D *pVtx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		g_pD3DVtxBuffField->Lock( 0, 0, (void**)&pVtx, 0);
 
 		for(int nCntZ = 0; nCntZ < g_nNumBlockZ+1; nCntZ++)
@@ -202,16 +202,16 @@ HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice)
 		}
 
 
-		// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_pD3DVtxBuffField->Unlock();	
 	}
 
 
-	{//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	{//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 
 		WORD *pIdx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		g_pD3DIdxBuffField->Lock( 0, 0, (void**)&pIdx, 0);
 
 		for(int nCntZ = 0; nCntZ < g_nNumBlockZ; nCntZ++)
@@ -223,7 +223,7 @@ HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice)
 			}
 			for(int nCntX = 0; nCntX < g_nNumBlockX+1; nCntX++, pIdx+=2)
 			{
-				//’¸“_À•W‚ÌÝ’è
+				//é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 				pIdx[0] = (g_nNumBlockX + 1) * (nCntZ + 1) + nCntX; 
 				pIdx[1] = (g_nNumBlockX + 1) * (nCntZ) + nCntX;
 			}
@@ -234,7 +234,7 @@ HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice)
 			}
 		}
 
-		// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_pD3DIdxBuffField->Unlock();	
 	}
 

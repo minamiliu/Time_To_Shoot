@@ -1,14 +1,14 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		“–‚½‚è”»’è‚Ìˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	hitCheck.h
-* ì¬ŽÒ:		HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		å½“ãŸã‚Šåˆ¤å®šã®å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	hitCheck.h
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 #ifndef _HITCHECK_H_
 #define _HITCHECH_H_
@@ -16,40 +16,40 @@
 #include "main.h"
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 
-// “àÏ
+// å†…ç©
 float DotProduct( D3DXVECTOR3 vl, D3DXVECTOR3 vr);
 
-// ŠOÏ
+// å¤–ç©
 D3DXVECTOR3 CrossProduct( D3DXVECTOR3 vl, D3DXVECTOR3 vr );
 
-// ƒ|ƒŠƒSƒ“‚Æü•ª‚Æ‚Ì“–‚½‚è”»’è
+// ãƒãƒªã‚´ãƒ³ã¨ç·šåˆ†ã¨ã®å½“ãŸã‚Šåˆ¤å®š
 bool HitCheck(D3DXVECTOR3 p0, D3DXVECTOR3 p1, D3DXVECTOR3 p2, D3DXVECTOR3 pos0, D3DXVECTOR3 pos1);
 
-// •Ç‚¸‚èƒxƒNƒgƒ‹
+// å£ãšã‚Šãƒ™ã‚¯ãƒˆãƒ«
 D3DXVECTOR3* GetWallScratchVector(D3DXVECTOR3 *out, D3DXVECTOR3 &front, D3DXVECTOR3 &normal);
 
-// Œð“_‚ðŽæ“¾
+// äº¤ç‚¹ã‚’å–å¾—
 D3DXVECTOR3 GetHitPos(void);
 
-// ŠÛ‚Ì“–‚½‚è”»’è
+// ä¸¸ã®å½“ãŸã‚Šåˆ¤å®š
 bool HitCheckBall( D3DXVECTOR3 pos1, float radius1, D3DXVECTOR3 pos2, float radius2);
 
-// •½–Ê‚Ì‰~‚Ì“–‚½‚è”»’è
+// å¹³é¢ã®å††ã®å½“ãŸã‚Šåˆ¤å®š
 bool HitCheckXZ( D3DXVECTOR3 pos1, float radius1, D3DXVECTOR3 pos2, float radius2);
 
-// ‚Q“_‚ÌŒü‚«ƒxƒNƒgƒ‹‚ðŽæ“¾
+// ï¼’ç‚¹ã®å‘ããƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—
 D3DXVECTOR3 GetRotationAngle( D3DXVECTOR3 myPos, D3DXVECTOR3 target, D3DXVECTOR3 myAngle);
 
-// ‰ñ“]Šp“x‚ðŽæ“¾
+// å›žè»¢è§’åº¦ã‚’å–å¾—
 D3DXVECTOR3 Get2VecRotAngle( D3DXVECTOR3 rot, D3DXVECTOR3 rotTarget, float divide, float value_rot);
 
-// Ž‹–ì“à‚Ì”»’è
+// è¦–é‡Žå†…ã®åˆ¤å®š
 bool HitCheckViewArea( D3DXVECTOR3 myPos, D3DXVECTOR3 tarPos, D3DXVECTOR3 myRot, float myView);
 
-// ‚Q“_‹——£‚ðŽæ“¾
+// ï¼’ç‚¹è·é›¢ã‚’å–å¾—
 
 float GetDistanceXZ( D3DXVECTOR3 pos1, D3DXVECTOR3 pos2);
 #endif

@@ -1,8 +1,8 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		ƒƒbƒVƒ…ƒEƒH[ƒ‹ˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	meshwall.h
-* ì¬ŽÒ:		HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		ãƒ¡ãƒƒã‚·ãƒ¥ã‚¦ã‚©ãƒ¼ãƒ«å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	meshwall.h
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
@@ -14,7 +14,7 @@
 
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 HRESULT InitMeshWall(D3DXVECTOR3 pos, D3DXVECTOR3 rot,
 						int nNumBlockX, int nNumBlockY, float fSizeBlockX, float fSizeBlockY);
@@ -22,7 +22,7 @@ void UninitMeshWall(void);
 //void UpdateMeshWall(void);
 void DrawMeshWall(void);
 
-//•Ç‚Æ‚Ì“–‚½‚è”»’è
+//å£ã¨ã®å½“ãŸã‚Šåˆ¤å®š
 bool HitCheckMeshWall( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 *wall_nor, D3DXVECTOR3 *HitPoint);
 
 #endif

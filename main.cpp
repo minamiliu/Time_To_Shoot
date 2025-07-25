@@ -1,14 +1,14 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		ƒƒCƒ“ˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	main.cpp
-* ì¬ŽÒ:		HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		ãƒ¡ã‚¤ãƒ³å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	main.cpp
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 #include "main.h"
 #include "resource.h"
@@ -25,13 +25,13 @@
 #include <stdio.h>
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
-#define CLASS_NAME		"AppClass"				// ƒEƒCƒ“ƒhƒE‚ÌƒNƒ‰ƒX–¼
-#define WINDOW_NAME		"TIME TO SHOOT"		// ƒEƒCƒ“ƒhƒE‚ÌƒLƒƒƒvƒVƒ‡ƒ“–¼
+#define CLASS_NAME		"AppClass"				// ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®ã‚¯ãƒ©ã‚¹å
+#define WINDOW_NAME		"TIME TO SHOOT"		// ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®ã‚­ãƒ£ãƒ—ã‚·ãƒ§ãƒ³å
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow);
@@ -41,25 +41,25 @@ void Update(void);
 void Draw(void);
 
 //*****************************************************************************
-// ƒOƒ[ƒoƒ‹•Ï”:
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°:
 //*****************************************************************************
-LPDIRECT3D9			g_pD3D = NULL;			// Direct3DƒIƒuƒWƒFƒNƒg
-LPDIRECT3DDEVICE9	g_pD3DDevice = NULL;	// ƒfƒoƒCƒXƒIƒuƒWƒFƒNƒg(•`‰æ‚É•K—v)
+LPDIRECT3D9			g_pD3D = NULL;			// Direct3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+LPDIRECT3DDEVICE9	g_pD3DDevice = NULL;	// ãƒ‡ãƒã‚¤ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ(æç”»ã«å¿…è¦)
 MODE g_mode;
 bool g_bDebug;
 int g_nWindowMode = -1;
 
 #ifdef _DEBUG
-int					g_nCountFPS;			// FPSƒJƒEƒ“ƒ^
+int					g_nCountFPS;			// FPSã‚«ã‚¦ãƒ³ã‚¿
 #endif
 
 //=============================================================================
-// ƒƒCƒ“ŠÖ”
+// ãƒ¡ã‚¤ãƒ³é–¢æ•°
 //=============================================================================
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	UNREFERENCED_PARAMETER(hPrevInstance);	// –³‚­‚Ä‚à—Ç‚¢‚¯‚ÇAŒx‚ªo‚éi–¢Žg—péŒ¾j
-	UNREFERENCED_PARAMETER(lpCmdLine);		// –³‚­‚Ä‚à—Ç‚¢‚¯‚ÇAŒx‚ªo‚éi–¢Žg—péŒ¾j
+	UNREFERENCED_PARAMETER(hPrevInstance);	// ç„¡ãã¦ã‚‚è‰¯ã„ã‘ã©ã€è­¦å‘ŠãŒå‡ºã‚‹ï¼ˆæœªä½¿ç”¨å®£è¨€ï¼‰
+	UNREFERENCED_PARAMETER(lpCmdLine);		// ç„¡ãã¦ã‚‚è‰¯ã„ã‘ã©ã€è­¦å‘ŠãŒå‡ºã‚‹ï¼ˆæœªä½¿ç”¨å®£è¨€ï¼‰
 
 	DWORD dwExecLastTime;
 	DWORD dwFPSLastTime;
@@ -77,7 +77,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		0,
 		0,
 		hInstance,
-		LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON2)),// Žg—p‚·‚éƒAƒCƒRƒ“‚ðŽw’è
+		LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON2)),// ä½¿ç”¨ã™ã‚‹ã‚¢ã‚¤ã‚³ãƒ³ã‚’æŒ‡å®š
 		LoadCursor(NULL, IDC_ARROW),
 		(HBRUSH)(COLOR_WINDOW + 1),
 		NULL,
@@ -85,14 +85,14 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		NULL
 	};
 
-	// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚Ì“o˜^
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã®ç™»éŒ²
 	RegisterClassEx(&wcex);
 
-	//ƒfƒXƒNƒgƒbƒv‚ÌƒTƒCƒY‚ðŽæ“¾
+	//ãƒ‡ã‚¹ã‚¯ãƒˆãƒƒãƒ—ã®ã‚µã‚¤ã‚ºã‚’å–å¾—
 	RECT rcWnd;
 	GetClientRect( GetDesktopWindow(), &rcWnd);
 
-	// ƒEƒBƒ“ƒhƒE‚Ìì¬
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½œæˆ
 	hWnd = CreateWindowEx(0,
 						CLASS_NAME,
 						WINDOW_NAME,
@@ -108,7 +108,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	if( g_nWindowMode == 0)
 	{
-		// ƒEƒBƒ“ƒhƒE‚Ìì¬
+		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½œæˆ
 		hWnd = CreateWindowEx(0,
 							CLASS_NAME,
 							WINDOW_NAME,
@@ -124,7 +124,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	}
 	if( g_nWindowMode == 1)
 	{
-		// ƒEƒBƒ“ƒhƒE‚Ìì¬
+		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ä½œæˆ
 		hWnd = CreateWindowEx(0,
 							CLASS_NAME,
 							WINDOW_NAME,
@@ -139,35 +139,35 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 							NULL);
 	}
 	
-	// ‰Šú‰»ˆ—(ƒEƒBƒ“ƒhƒE‚ðì¬‚µ‚Ä‚©‚çs‚¤)
-	if(FAILED(Init(hInstance, hWnd, TRUE))) //FALSE ƒtƒ‹ƒXƒNƒŠ[ƒ“
+	// åˆæœŸåŒ–å‡¦ç†(ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ä½œæˆã—ã¦ã‹ã‚‰è¡Œã†)
+	if(FAILED(Init(hInstance, hWnd, TRUE))) //FALSE ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³
 	{
 		return -1;
 	}
 
-	//ƒtƒŒ[ƒ€ƒJƒEƒ“ƒg‰Šú‰»
-	timeBeginPeriod(1);				// •ª‰ð”\‚ðÝ’è
+	//ãƒ•ãƒ¬ãƒ¼ãƒ ã‚«ã‚¦ãƒ³ãƒˆåˆæœŸåŒ–
+	timeBeginPeriod(1);				// åˆ†è§£èƒ½ã‚’è¨­å®š
 	dwExecLastTime = 
 	dwFPSLastTime = timeGetTime();
 	dwCurrentTime =
 	dwFrameCount = 0;
 
-	// ƒEƒCƒ“ƒhƒE‚Ì•\Ž¦(‰Šú‰»ˆ—‚ÌŒã‚ÉŒÄ‚Î‚È‚¢‚Æ‘Ê–Ú)
+	// ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®è¡¨ç¤º(åˆæœŸåŒ–å‡¦ç†ã®å¾Œã«å‘¼ã°ãªã„ã¨é§„ç›®)
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 	
-	// ƒƒbƒZ[ƒWƒ‹[ƒv
+	// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ«ãƒ¼ãƒ—
 	while(1)
 	{
         if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			if(msg.message == WM_QUIT)
-			{// PostQuitMessage()‚ªŒÄ‚Î‚ê‚½‚çƒ‹[ƒvI—¹
+			{// PostQuitMessage()ãŒå‘¼ã°ã‚ŒãŸã‚‰ãƒ«ãƒ¼ãƒ—çµ‚äº†
 				break;
 			}
 			else
 			{
-				// ƒƒbƒZ[ƒW‚Ì–|–ó‚Æ‘—o
+				// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®ç¿»è¨³ã¨é€å‡º
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
 			}
@@ -175,7 +175,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		else
 		{
 			dwCurrentTime = timeGetTime();
-			if((dwCurrentTime - dwFPSLastTime) >= 500)	// 0.5•b‚²‚Æ‚ÉŽÀs
+			if((dwCurrentTime - dwFPSLastTime) >= 500)	// 0.5ç§’ã”ã¨ã«å®Ÿè¡Œ
 			{
 #ifdef _DEBUG
 				g_nCountFPS = dwFrameCount * 1000 / (dwCurrentTime - dwFPSLastTime);
@@ -188,15 +188,15 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			{
 				dwExecLastTime = dwCurrentTime;
 
-				// XVˆ—
+				// æ›´æ–°å‡¦ç†
 				Update();
 
-				// •`‰æˆ—
+				// æç”»å‡¦ç†
 				Draw();
 
 				dwFrameCount++;
 
-				//ƒ}ƒEƒX”ÍˆÍ‚Ì§–ñ
+				//ãƒžã‚¦ã‚¹ç¯„å›²ã®åˆ¶ç´„
 				POINT curPos;
 				GetCursorPos(&curPos);
 				WINDOWINFO windowInfo;
@@ -210,19 +210,19 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		}
 	}
 	
-	// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚Ì“o˜^‚ð‰ðœ
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã®ç™»éŒ²ã‚’è§£é™¤
 	UnregisterClass(CLASS_NAME, wcex.hInstance);
 
-	// I—¹ˆ—
+	// çµ‚äº†å‡¦ç†
 	Uninit();
 
-	timeEndPeriod(1);				// •ª‰ð”\‚ð–ß‚·
+	timeEndPeriod(1);				// åˆ†è§£èƒ½ã‚’æˆ»ã™
 	
 	return (int)msg.wParam;
 }
 
 //=============================================================================
-// ƒvƒƒV[ƒWƒƒ
+// ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£
 //=============================================================================
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -264,106 +264,106 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 }
 
 //=============================================================================
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 {
 	D3DPRESENT_PARAMETERS d3dpp;
     D3DDISPLAYMODE d3ddm;
 
-	// Direct3DƒIƒuƒWƒFƒNƒg‚Ìì¬
+	// Direct3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
 	g_pD3D = Direct3DCreate9(D3D_SDK_VERSION);
 	if(g_pD3D == NULL)
 	{
 		return E_FAIL;
 	}
 
-	// Œ»Ý‚ÌƒfƒBƒXƒvƒŒƒCƒ‚[ƒh‚ðŽæ“¾
+	// ç¾åœ¨ã®ãƒ‡ã‚£ã‚¹ãƒ—ãƒ¬ã‚¤ãƒ¢ãƒ¼ãƒ‰ã‚’å–å¾—
     if(FAILED(g_pD3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &d3ddm)))
 	{
 		return E_FAIL;
 	}
 
-	// ƒfƒoƒCƒX‚ÌƒvƒŒƒ[ƒ“ƒe[ƒVƒ‡ƒ“ƒpƒ‰ƒ[ƒ^‚ÌÝ’è
-	ZeroMemory(&d3dpp, sizeof(d3dpp));							// ƒ[ƒN‚ðƒ[ƒƒNƒŠƒA
-	d3dpp.BackBufferCount			= 1;						// ƒoƒbƒNƒoƒbƒtƒ@‚Ì”
-	d3dpp.BackBufferWidth			= SCREEN_WIDTH;				// ƒQ[ƒ€‰æ–ÊƒTƒCƒY(•)
-	d3dpp.BackBufferHeight			= SCREEN_HEIGHT;			// ƒQ[ƒ€‰æ–ÊƒTƒCƒY(‚‚³)
-	d3dpp.BackBufferFormat			= d3ddm.Format;				// ƒoƒbƒNƒoƒbƒtƒ@ƒtƒH[ƒ}ƒbƒg‚ÍƒfƒBƒXƒvƒŒƒCƒ‚[ƒh‚É‡‚í‚¹‚ÄŽg‚¤
-	d3dpp.SwapEffect				= D3DSWAPEFFECT_DISCARD;	// ‰f‘œM†‚É“¯Šú‚µ‚ÄƒtƒŠƒbƒv‚·‚é
-	d3dpp.Windowed					= bWindow;					// ƒEƒBƒ“ƒhƒEƒ‚[ƒh
-	d3dpp.EnableAutoDepthStencil	= TRUE;						// ƒfƒvƒXƒoƒbƒtƒ@i‚yƒoƒbƒtƒ@j‚ÆƒXƒeƒ“ƒVƒ‹ƒoƒbƒtƒ@‚ðì¬
-	d3dpp.AutoDepthStencilFormat	= D3DFMT_D16;				// ƒfƒvƒXƒoƒbƒtƒ@‚Æ‚µ‚Ä16bit‚ðŽg‚¤
+	// ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ—ãƒ¬ã‚¼ãƒ³ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®š
+	ZeroMemory(&d3dpp, sizeof(d3dpp));							// ãƒ¯ãƒ¼ã‚¯ã‚’ã‚¼ãƒ­ã‚¯ãƒªã‚¢
+	d3dpp.BackBufferCount			= 1;						// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®æ•°
+	d3dpp.BackBufferWidth			= SCREEN_WIDTH;				// ã‚²ãƒ¼ãƒ ç”»é¢ã‚µã‚¤ã‚º(å¹…)
+	d3dpp.BackBufferHeight			= SCREEN_HEIGHT;			// ã‚²ãƒ¼ãƒ ç”»é¢ã‚µã‚¤ã‚º(é«˜ã•)
+	d3dpp.BackBufferFormat			= d3ddm.Format;				// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã¯ãƒ‡ã‚£ã‚¹ãƒ—ãƒ¬ã‚¤ãƒ¢ãƒ¼ãƒ‰ã«åˆã‚ã›ã¦ä½¿ã†
+	d3dpp.SwapEffect				= D3DSWAPEFFECT_DISCARD;	// æ˜ åƒä¿¡å·ã«åŒæœŸã—ã¦ãƒ•ãƒªãƒƒãƒ—ã™ã‚‹
+	d3dpp.Windowed					= bWindow;					// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¢ãƒ¼ãƒ‰
+	d3dpp.EnableAutoDepthStencil	= TRUE;						// ãƒ‡ãƒ—ã‚¹ãƒãƒƒãƒ•ã‚¡ï¼ˆï¼ºãƒãƒƒãƒ•ã‚¡ï¼‰ã¨ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒãƒƒãƒ•ã‚¡ã‚’ä½œæˆ
+	d3dpp.AutoDepthStencilFormat	= D3DFMT_D16;				// ãƒ‡ãƒ—ã‚¹ãƒãƒƒãƒ•ã‚¡ã¨ã—ã¦16bitã‚’ä½¿ã†
 
 	if(bWindow)
-	{// ƒEƒBƒ“ƒhƒEƒ‚[ƒh
-		d3dpp.FullScreen_RefreshRateInHz = 0;								// ƒŠƒtƒŒƒbƒVƒ…ƒŒ[ƒg
-		d3dpp.PresentationInterval       = D3DPRESENT_INTERVAL_IMMEDIATE;	// ƒCƒ“ƒ^[ƒoƒ‹
+	{// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¢ãƒ¼ãƒ‰
+		d3dpp.FullScreen_RefreshRateInHz = 0;								// ãƒªãƒ•ãƒ¬ãƒƒã‚·ãƒ¥ãƒ¬ãƒ¼ãƒˆ
+		d3dpp.PresentationInterval       = D3DPRESENT_INTERVAL_IMMEDIATE;	// ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒ«
 	}
 	else
-	{// ƒtƒ‹ƒXƒNƒŠ[ƒ“ƒ‚[ƒh
-		d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;			// ƒŠƒtƒŒƒbƒVƒ…ƒŒ[ƒg
-		d3dpp.PresentationInterval       = D3DPRESENT_INTERVAL_DEFAULT;		// ƒCƒ“ƒ^[ƒoƒ‹
+	{// ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ãƒ¢ãƒ¼ãƒ‰
+		d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;			// ãƒªãƒ•ãƒ¬ãƒƒã‚·ãƒ¥ãƒ¬ãƒ¼ãƒˆ
+		d3dpp.PresentationInterval       = D3DPRESENT_INTERVAL_DEFAULT;		// ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒ«
 	}
 
-	// ƒfƒoƒCƒXƒIƒuƒWƒFƒNƒg‚Ì¶¬
-	// [ƒfƒoƒCƒXì¬§Œä]<•`‰æ>‚Æ<’¸“_ˆ—>‚ðƒn[ƒhƒEƒFƒA‚Ås‚È‚¤
+	// ãƒ‡ãƒã‚¤ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ
+	// [ãƒ‡ãƒã‚¤ã‚¹ä½œæˆåˆ¶å¾¡]<æç”»>ã¨<é ‚ç‚¹å‡¦ç†>ã‚’ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢ã§è¡Œãªã†
 	if(FAILED(g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, 
 									D3DDEVTYPE_HAL, 
 									hWnd, 
 									D3DCREATE_HARDWARE_VERTEXPROCESSING, 
 									&d3dpp, &g_pD3DDevice)))
 	{
-		// ã‹L‚ÌÝ’è‚ªŽ¸”s‚µ‚½‚ç
-		// [ƒfƒoƒCƒXì¬§Œä]<•`‰æ>‚ðƒn[ƒhƒEƒFƒA‚Ås‚¢A<’¸“_ˆ—>‚ÍCPU‚Ås‚È‚¤
+		// ä¸Šè¨˜ã®è¨­å®šãŒå¤±æ•—ã—ãŸã‚‰
+		// [ãƒ‡ãƒã‚¤ã‚¹ä½œæˆåˆ¶å¾¡]<æç”»>ã‚’ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢ã§è¡Œã„ã€<é ‚ç‚¹å‡¦ç†>ã¯CPUã§è¡Œãªã†
 		if(FAILED(g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, 
 										D3DDEVTYPE_HAL, 
 										hWnd, 
 										D3DCREATE_SOFTWARE_VERTEXPROCESSING, 
 										&d3dpp, &g_pD3DDevice)))
 		{
-			// ã‹L‚ÌÝ’è‚ªŽ¸”s‚µ‚½‚ç
-			// [ƒfƒoƒCƒXì¬§Œä]<•`‰æ>‚Æ<’¸“_ˆ—>‚ðCPU‚Ås‚È‚¤
+			// ä¸Šè¨˜ã®è¨­å®šãŒå¤±æ•—ã—ãŸã‚‰
+			// [ãƒ‡ãƒã‚¤ã‚¹ä½œæˆåˆ¶å¾¡]<æç”»>ã¨<é ‚ç‚¹å‡¦ç†>ã‚’CPUã§è¡Œãªã†
 			if(FAILED(g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, 
 											D3DDEVTYPE_REF,
 											hWnd, 
 											D3DCREATE_SOFTWARE_VERTEXPROCESSING, 
 											&d3dpp, &g_pD3DDevice)))
 			{
-				// ‰Šú‰»Ž¸”s
+				// åˆæœŸåŒ–å¤±æ•—
 				return E_FAIL;
 			}
 		}
 	}
 
-	// ƒŒƒ“ƒ_[ƒXƒe[ƒgƒpƒ‰ƒ[ƒ^‚ÌÝ’è
-    g_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);			// — –Ê‚ðƒJƒŠƒ“ƒO
-	//g_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);			// —¼–Ê‚ð‘‚­
-	g_pD3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);						// Zƒoƒbƒtƒ@‚ðŽg—p
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);				// ƒ¿ƒuƒŒƒ“ƒh‚ðs‚¤
-	g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// ƒ¿ƒ\[ƒXƒJƒ‰[‚ÌŽw’è
-	g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// ƒ¿ƒfƒXƒeƒBƒl[ƒVƒ‡ƒ“ƒJƒ‰[‚ÌŽw’è
+	// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®š
+    g_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);			// è£é¢ã‚’ã‚«ãƒªãƒ³ã‚°
+	//g_pD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);			// ä¸¡é¢ã‚’æ›¸ã
+	g_pD3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);						// Zãƒãƒƒãƒ•ã‚¡ã‚’ä½¿ç”¨
+	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);				// Î±ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚’è¡Œã†
+	g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// Î±ã‚½ãƒ¼ã‚¹ã‚«ãƒ©ãƒ¼ã®æŒ‡å®š
+	g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// Î±ãƒ‡ã‚¹ãƒ†ã‚£ãƒãƒ¼ã‚·ãƒ§ãƒ³ã‚«ãƒ©ãƒ¼ã®æŒ‡å®š
 
-	// ƒTƒ“ƒvƒ‰[ƒXƒe[ƒgƒpƒ‰ƒ[ƒ^‚ÌÝ’è
-	g_pD3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);	// ƒeƒNƒXƒ`ƒƒƒAƒhƒŒƒbƒVƒ“ƒO•û–@(U’l)‚ðÝ’è
-	g_pD3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);	// ƒeƒNƒXƒ`ƒƒƒAƒhƒŒƒbƒVƒ“ƒO•û–@(V’l)‚ðÝ’è
-	g_pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);	// ƒeƒNƒXƒ`ƒƒk¬ƒtƒBƒ‹ƒ^ƒ‚[ƒh‚ðÝ’è
-	g_pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);	// ƒeƒNƒXƒ`ƒƒŠg‘åƒtƒBƒ‹ƒ^ƒ‚[ƒh‚ðÝ’è
+	// ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã‚¹ãƒ†ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®š
+	g_pD3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚¢ãƒ‰ãƒ¬ãƒƒã‚·ãƒ³ã‚°æ–¹æ³•(Uå€¤)ã‚’è¨­å®š
+	g_pD3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚¢ãƒ‰ãƒ¬ãƒƒã‚·ãƒ³ã‚°æ–¹æ³•(Vå€¤)ã‚’è¨­å®š
+	g_pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ç¸®å°ãƒ•ã‚£ãƒ«ã‚¿ãƒ¢ãƒ¼ãƒ‰ã‚’è¨­å®š
+	g_pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);	// ãƒ†ã‚¯ã‚¹ãƒãƒ£æ‹¡å¤§ãƒ•ã‚£ãƒ«ã‚¿ãƒ¢ãƒ¼ãƒ‰ã‚’è¨­å®š
 
-	// ƒeƒNƒXƒ`ƒƒƒXƒe[ƒWƒXƒe[ƒg‚ÌÝ’è
-	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);	// ƒAƒ‹ƒtƒ@ƒuƒŒƒ“ƒfƒBƒ“ƒOˆ—‚ðÝ’è
-	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);	// Å‰‚ÌƒAƒ‹ƒtƒ@ˆø”
-	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT);	// ‚Q”Ô–Ú‚ÌƒAƒ‹ƒtƒ@ˆø”
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚¹ãƒ†ãƒ¼ã‚¸ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
+	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);	// ã‚¢ãƒ«ãƒ•ã‚¡ãƒ–ãƒ¬ãƒ³ãƒ‡ã‚£ãƒ³ã‚°å‡¦ç†ã‚’è¨­å®š
+	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);	// æœ€åˆã®ã‚¢ãƒ«ãƒ•ã‚¡å¼•æ•°
+	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT);	// ï¼’ç•ªç›®ã®ã‚¢ãƒ«ãƒ•ã‚¡å¼•æ•°
 
 	//debug
 	InitDebugProc();
 
-	//“ü—Í‚Ì‰Šú‰»
+	//å…¥åŠ›ã®åˆæœŸåŒ–
 	InitKeyboard(hInstance, hWnd);
 	InitMouse(hInstance, hWnd);
 	InitJoypad(hInstance, hWnd);
 
-	//sound‚Ì‰Šú‰»
+	//soundã®åˆæœŸåŒ–
 	InitSound(hWnd);
 
 	InitFade();
@@ -384,22 +384,22 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 }
 
 //=============================================================================
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //=============================================================================
 void Uninit(void)
 {
 	if(g_pD3DDevice != NULL)
-	{// ƒfƒoƒCƒXƒIƒuƒWƒFƒNƒg‚ÌŠJ•ú
+	{// ãƒ‡ãƒã‚¤ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é–‹æ”¾
 		g_pD3DDevice->Release();
 		g_pD3DDevice = NULL;
 	}
 
 	if(g_pD3D != NULL)
-	{// Direct3DƒIƒuƒWƒFƒNƒg‚ÌŠJ•ú
+	{// Direct3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é–‹æ”¾
 		g_pD3D->Release();
 		g_pD3D = NULL;
 	}
-	//“ü—Í‚ÌŠJ•ú
+	//å…¥åŠ›ã®é–‹æ”¾
 	UninitKeyboard();
 	UninitMouse();
 	UninitJoypad();
@@ -407,7 +407,7 @@ void Uninit(void)
 	//debug
 	UninitDebugProc();
 
-	//sound‚ÌI—¹ˆ—
+	//soundã®çµ‚äº†å‡¦ç†
 	UninitSound();
 
 	UninitFade();
@@ -419,14 +419,14 @@ void Uninit(void)
 }
 
 //=============================================================================
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 //=============================================================================
 void Update(void)
 {
 	//debug
 	UpdateDebugProc();
 
-	//“ü—Í‚ÌXVˆ—
+	//å…¥åŠ›ã®æ›´æ–°å‡¦ç†
 	UpdateKeyboard();
 	UpdateMouse();
 	UpdateJoypad();
@@ -451,14 +451,14 @@ void Update(void)
 }
 
 //=============================================================================
-// •`‰æˆ—
+// æç”»å‡¦ç†
 //=============================================================================
 void Draw(void)
 {
-	// ƒoƒbƒNƒoƒbƒtƒ@•‚yƒoƒbƒtƒ@‚ÌƒNƒŠƒA
+	// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ï¼†ï¼ºãƒãƒƒãƒ•ã‚¡ã®ã‚¯ãƒªã‚¢
 	g_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(0, 0, 0, 0), 1.0f, 0);
 
-	// •`‰æ‚ÌŠJŽn
+	// æç”»ã®é–‹å§‹
 	if(SUCCEEDED(g_pD3DDevice->BeginScene()))
 	{
 		switch(g_mode)
@@ -478,20 +478,20 @@ void Draw(void)
 
 		DrawDebugProc();
 #ifdef _DEBUG
-		// FPS•\Ž¦
+		// FPSè¡¨ç¤º
 		PrintDebugProc("FPS:%d\n", g_nCountFPS);
 #endif
 
-		// •`‰æ‚ÌI—¹
+		// æç”»ã®çµ‚äº†
 		g_pD3DDevice->EndScene();
 	}
 
-	// ƒoƒbƒNƒoƒbƒtƒ@‚Æƒtƒƒ“ƒgƒoƒbƒtƒ@‚Ì“ü‚ê‘Ö‚¦
+	// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã¨ãƒ•ãƒ­ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ã®å…¥ã‚Œæ›¿ãˆ
 	g_pD3DDevice->Present(NULL, NULL, NULL, NULL);
 }
 
 //=============================================================================
-// ƒfƒoƒCƒX‚ÌŽæ“¾
+// ãƒ‡ãƒã‚¤ã‚¹ã®å–å¾—
 //=============================================================================
 LPDIRECT3DDEVICE9 GetDevice(void)
 {
@@ -499,10 +499,10 @@ LPDIRECT3DDEVICE9 GetDevice(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void SetMode(MODE mode)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒQ[ƒ€‘JˆÚ‚ÌÝ’èŠÖ”
+é–¢æ•°å:	void SetMode(MODE mode)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	ã‚²ãƒ¼ãƒ é·ç§»ã®è¨­å®šé–¢æ•°
 *******************************************************************************/
 void SetMode(MODE mode)
 {
@@ -531,14 +531,14 @@ void SetMode(MODE mode)
 	}
 }
 //=============================================================================
-// ƒfƒoƒbƒO
+// ãƒ‡ãƒãƒƒã‚°
 //=============================================================================
 bool IsDebugMode(void)
 {
 	return g_bDebug;
 }
 //=============================================================================
-// ƒfƒoƒbƒOƒ‚[ƒh‚ð•Ï‚¦‚é
+// ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰ã‚’å¤‰ãˆã‚‹
 //=============================================================================
 void SwitchDebug()
 {

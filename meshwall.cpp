@@ -1,13 +1,13 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		ƒƒbƒVƒ…ƒEƒH[ƒ‹ˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	meshwall.cpp
-* ì¬Ò:		HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		ãƒ¡ãƒƒã‚·ãƒ¥ã‚¦ã‚©ãƒ¼ãƒ«å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	meshwall.cpp
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 #include "meshwall.h"
 #include "input.h"
@@ -17,48 +17,48 @@
 #include "stageManager.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
-#define	MAX_MESH_WALL		(64)							// •Ç‚Ì‘”
-#define	TEXTURE_FILENAME	"data/TEXTURE/wall000.jpg"	// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	VALUE_MOVE_WALL		(5.0f)						// ˆÚ“®‘¬“x
-#define	VALUE_ROTATE_WALL	(D3DX_PI * 0.001f)			// ‰ñ“]‘¬“x
+#define	MAX_MESH_WALL		(64)							// å£ã®ç·æ•°
+#define	TEXTURE_FILENAME	"data/TEXTURE/wall000.jpg"	// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
+#define	VALUE_MOVE_WALL		(5.0f)						// ç§»å‹•é€Ÿåº¦
+#define	VALUE_ROTATE_WALL	(D3DX_PI * 0.001f)			// å›è»¢é€Ÿåº¦
 
 
 //**************************************
-// ƒƒbƒVƒ…ƒEƒH[ƒ‹\‘¢‘Ì
+// ãƒ¡ãƒƒã‚·ãƒ¥ã‚¦ã‚©ãƒ¼ãƒ«æ§‹é€ ä½“
 //**************************************
 typedef struct
 {
-	LPDIRECT3DVERTEXBUFFER9 pD3DVtxBuff;	// ’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPDIRECT3DINDEXBUFFER9 pD3DIdxBuff;		// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
+	LPDIRECT3DVERTEXBUFFER9 pD3DVtxBuff;	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPDIRECT3DINDEXBUFFER9 pD3DIdxBuff;		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 
-	D3DXMATRIX mtxWorldField;				// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX  
-	D3DXVECTOR3 pos;						// ƒ|ƒŠƒSƒ“•\¦ˆÊ’u‚Ì’†SÀ•W
-	D3DXVECTOR3 rot;						// ƒ|ƒŠƒSƒ“‚Ì‰ñ“]Šp
+	D3DXMATRIX mtxWorldField;				// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹  
+	D3DXVECTOR3 pos;						// ãƒãƒªã‚´ãƒ³è¡¨ç¤ºä½ç½®ã®ä¸­å¿ƒåº§æ¨™
+	D3DXVECTOR3 rot;						// ãƒãƒªã‚´ãƒ³ã®å›è»¢è§’
 
-	int nNumBlockX, nNumBlockY;				// ƒuƒƒbƒN”
-	int nNumVertex;							// ‘’¸“_”
-	int nNumVertexIndex;					// ‘ƒCƒ“ƒfƒbƒNƒX”
-	int nNumPolygon;						// ‘ƒ|ƒŠƒSƒ“”
-	float fSizeBlockX, fSizeBlockY;			// ƒuƒƒbƒNƒTƒCƒY
+	int nNumBlockX, nNumBlockY;				// ãƒ–ãƒ­ãƒƒã‚¯æ•°
+	int nNumVertex;							// ç·é ‚ç‚¹æ•°
+	int nNumVertexIndex;					// ç·ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°
+	int nNumPolygon;						// ç·ãƒãƒªã‚´ãƒ³æ•°
+	float fSizeBlockX, fSizeBlockY;			// ãƒ–ãƒ­ãƒƒã‚¯ã‚µã‚¤ã‚º
 } MESH_WALL;
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice, MESH_WALL *pMesh);
 
 //*****************************************************************************
-// ƒOƒ[ƒoƒ‹•Ï”
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 //*****************************************************************************
-LPDIRECT3DTEXTURE9 g_pTextureWall = NULL;	// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
+LPDIRECT3DTEXTURE9 g_pTextureWall = NULL;	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 
-MESH_WALL g_aMeshWall[MAX_MESH_WALL];		// ƒƒbƒVƒ…•Çƒ[ƒN
-int g_nNumMeshWall = 0;						// ƒƒbƒVƒ…•Ç‚Ì”
+MESH_WALL g_aMeshWall[MAX_MESH_WALL];		// ãƒ¡ãƒƒã‚·ãƒ¥å£ãƒ¯ãƒ¼ã‚¯
+int g_nNumMeshWall = 0;						// ãƒ¡ãƒƒã‚·ãƒ¥å£ã®æ•°
 
 //=============================================================================
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT InitMeshWall(D3DXVECTOR3 pos, D3DXVECTOR3 rot,
 						int nNumBlockX, int nNumBlockY, float fSizeBlockX, float fSizeBlockY)
@@ -71,49 +71,49 @@ HRESULT InitMeshWall(D3DXVECTOR3 pos, D3DXVECTOR3 rot,
 		return E_FAIL;
 	}
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	if(!g_pTextureWall)
 	{
-		D3DXCreateTextureFromFile(pDevice,				// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-									TEXTURE_FILENAME,	// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-									&g_pTextureWall);	// “Ç‚İ‚Şƒƒ‚ƒŠ[
+		D3DXCreateTextureFromFile(pDevice,				// ãƒ‡ãƒã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+									TEXTURE_FILENAME,	// ãƒ•ã‚¡ã‚¤ãƒ«ã®åå‰
+									&g_pTextureWall);	// èª­ã¿è¾¼ã‚€ãƒ¡ãƒ¢ãƒªãƒ¼
 	}
 
-	// ƒƒbƒVƒ…•Ç\‘¢‘Ì‚Ìƒ|ƒCƒ“ƒ^‚É¡‰ñg—p‚·‚éƒƒbƒVƒ…•Çƒ[ƒN‚ÌƒAƒhƒŒƒX‚ğ‘ã“ü
+	// ãƒ¡ãƒƒã‚·ãƒ¥å£æ§‹é€ ä½“ã®ãƒã‚¤ãƒ³ã‚¿ã«ä»Šå›ä½¿ç”¨ã™ã‚‹ãƒ¡ãƒƒã‚·ãƒ¥å£ãƒ¯ãƒ¼ã‚¯ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’ä»£å…¥
 	pMesh = &g_aMeshWall[g_nNumMeshWall];
 
-	// ƒƒbƒVƒ…•Ç‚Ì”‚ğ‘‚â‚·
+	// ãƒ¡ãƒƒã‚·ãƒ¥å£ã®æ•°ã‚’å¢—ã‚„ã™
 	g_nNumMeshWall++;
 
-	// ˆÊ’uEŒü‚«‚Ì‰Šúİ’è
+	// ä½ç½®ãƒ»å‘ãã®åˆæœŸè¨­å®š
 	pMesh->pos = pos;
 	pMesh->rot = rot;
 
-	// ƒuƒƒbƒN”‚Ìİ’è
+	// ãƒ–ãƒ­ãƒƒã‚¯æ•°ã®è¨­å®š
 	pMesh->nNumBlockX = nNumBlockX;
 	pMesh->nNumBlockY = nNumBlockY;
 	
-	// ’¸“_”‚Ìİ’è
+	// é ‚ç‚¹æ•°ã®è¨­å®š
 	pMesh->nNumVertex = (nNumBlockX+1) * (nNumBlockY+1);
 	
-	// ƒCƒ“ƒfƒbƒNƒX”‚Ìİ’è
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°ã®è¨­å®š
 	pMesh->nNumVertexIndex = (nNumBlockX + 1)*2*nNumBlockY + (nNumBlockY - 1)*2;
 	
-	// ƒ|ƒŠƒSƒ“”‚Ìİ’è
+	// ãƒãƒªã‚´ãƒ³æ•°ã®è¨­å®š
 	pMesh->nNumPolygon = nNumBlockX*nNumBlockY*2 + (nNumBlockY - 1)*4;
 	
-	// ƒuƒƒbƒNƒTƒCƒY‚Ìİ’è
+	// ãƒ–ãƒ­ãƒƒã‚¯ã‚µã‚¤ã‚ºã®è¨­å®š
 	pMesh->fSizeBlockX = fSizeBlockX;
 	pMesh->fSizeBlockY = fSizeBlockY;
 
-	// ’¸“_î•ñ‚Ìì¬
+	// é ‚ç‚¹æƒ…å ±ã®ä½œæˆ
 	MakeVertexField(pDevice, pMesh);
 
 	return S_OK;
 }
 
 //=============================================================================
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //=============================================================================
 void UninitMeshWall(void)
 {
@@ -121,34 +121,34 @@ void UninitMeshWall(void)
 
 	for(int nCntMeshWall = 0; nCntMeshWall < g_nNumMeshWall; nCntMeshWall++)
 	{
-		// ƒƒbƒVƒ…•Ç\‘¢‘Ì‚Ìƒ|ƒCƒ“ƒ^‚ÉƒƒbƒVƒ…•Çƒ[ƒN‚ÌƒAƒhƒŒƒX‚ğ‘ã“ü
+		// ãƒ¡ãƒƒã‚·ãƒ¥å£æ§‹é€ ä½“ã®ãƒã‚¤ãƒ³ã‚¿ã«ãƒ¡ãƒƒã‚·ãƒ¥å£ãƒ¯ãƒ¼ã‚¯ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’ä»£å…¥
 		pMesh = &g_aMeshWall[nCntMeshWall];
 
 		if(pMesh->pD3DVtxBuff)
-		{// ’¸“_ƒoƒbƒtƒ@‚ÌŠJ•ú
+		{// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®é–‹æ”¾
 			pMesh->pD3DVtxBuff->Release();
 			pMesh->pD3DVtxBuff = NULL;
 		}
 
 		if(pMesh->pD3DIdxBuff)
-		{// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ÌŠJ•ú
+		{// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®é–‹æ”¾
 			pMesh->pD3DIdxBuff->Release();
 			pMesh->pD3DIdxBuff = NULL;
 		}
 	}
 
 	if(g_pTextureWall)
-	{// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
+	{// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é–‹æ”¾
 		g_pTextureWall->Release();
 		g_pTextureWall = NULL;
 	}
 
-	//ƒƒbƒVƒ…•Ç‚Ì”ƒŠƒZƒbƒg
+	//ãƒ¡ãƒƒã‚·ãƒ¥å£ã®æ•°ãƒªã‚»ãƒƒãƒˆ
 	g_nNumMeshWall = 0;
 }
 
 //=============================================================================
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 //=============================================================================
 void UpdateMeshWall(void)
 {
@@ -156,7 +156,7 @@ void UpdateMeshWall(void)
 }
 
 //=============================================================================
-// •`‰æˆ—
+// æç”»å‡¦ç†
 //=============================================================================
 void DrawMeshWall(void)
 {
@@ -164,48 +164,48 @@ void DrawMeshWall(void)
 	MESH_WALL *pMesh;
 	D3DXMATRIX mtxRot, mtxTranslate;
 
-	// ƒƒbƒVƒ…•Ç\‘¢‘Ì‚Ìƒ|ƒCƒ“ƒ^‚ÉƒƒbƒVƒ…•Çƒ[ƒN‚Ìæ“ªƒAƒhƒŒƒX‚ğ‘ã“ü
+	// ãƒ¡ãƒƒã‚·ãƒ¥å£æ§‹é€ ä½“ã®ãƒã‚¤ãƒ³ã‚¿ã«ãƒ¡ãƒƒã‚·ãƒ¥å£ãƒ¯ãƒ¼ã‚¯ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’ä»£å…¥
 	pMesh = g_aMeshWall;
 
 	for(int nCntMeshWall = 0; nCntMeshWall < g_nNumMeshWall; nCntMeshWall++, pMesh++)
 	{
-		// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+		// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 		D3DXMatrixIdentity( &pMesh->mtxWorldField);
 	
-		// ‰ñ“]‚ğ”½‰f
+		// å›è»¢ã‚’åæ˜ 
 		D3DXMatrixRotationYawPitchRoll( &mtxRot, pMesh->rot.y, pMesh->rot.x, pMesh->rot.z);
 		D3DXMatrixMultiply( &pMesh->mtxWorldField, &pMesh->mtxWorldField, &mtxRot);
 	
-		// ˆÚ“®‚ğ”½‰f
+		// ç§»å‹•ã‚’åæ˜ 
 		D3DXMatrixTranslation( &mtxTranslate, pMesh->pos.x, pMesh->pos.y, pMesh->pos.z);
 		D3DXMatrixMultiply( &pMesh->mtxWorldField, &pMesh->mtxWorldField, &mtxTranslate);
 	
-		// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ìİ’è
+		// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®è¨­å®š
 		pDevice->SetTransform( D3DTS_WORLD, &pMesh->mtxWorldField);
 
-		// ’¸“_ƒoƒbƒtƒ@‚ğƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒã‚¤ãƒ³ãƒ‰
 		pDevice->SetStreamSource(0, pMesh->pD3DVtxBuff, 0, sizeof(VERTEX_3D));
 
-		// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğƒŒƒ“ƒ_ƒŠƒ“ƒOƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 		pDevice->SetIndices(pMesh->pD3DIdxBuff);
 
-		// ’¸“_ƒtƒH[ƒ}ƒbƒg‚Ìİ’è
+		// é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®è¨­å®š
 		pDevice->SetFVF(FVF_VERTEX_3D);
 
-		// ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 		pDevice->SetTexture(0, g_pTextureWall);
 	
-		//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+		//ãƒãƒªã‚´ãƒ³ã®æç”»
 		pDevice->DrawIndexedPrimitive(
-			D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚Ìí—Ş
-			0,						//Å‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX‚Ü‚Å‚ÌƒIƒtƒZƒbƒg
-			0,						//Å¬‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-			pMesh->nNumVertex,		//’¸“_‚Ì”
-			0,						//“Ç‚İæ‚è‚ğŠJn‚·‚éˆÊ’u
-			pMesh->nNumPolygon		//ƒ|ƒŠƒSƒ“‚Ì”
+			D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡
+			0,						//æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¾ã§ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+			0,						//æœ€å°ã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			pMesh->nNumVertex,		//é ‚ç‚¹ã®æ•°
+			0,						//èª­ã¿å–ã‚Šã‚’é–‹å§‹ã™ã‚‹ä½ç½®
+			pMesh->nNumPolygon		//ãƒãƒªã‚´ãƒ³ã®æ•°
 		);
 
-		//•¬…‚ÍÅ‰‚Ì•”‰®‚Ì’†‚µ‚©Œ©‚¦‚È‚¢•`‰æ‡
+		//å™´æ°´ã¯æœ€åˆã®éƒ¨å±‹ã®ä¸­ã—ã‹è¦‹ãˆãªã„æç”»é †
 		if(nCntMeshWall == 7 && GetStageMode() == STAGE0)
 		{
 			DrawFountain();
@@ -214,23 +214,23 @@ void DrawMeshWall(void)
 }
 
 //=============================================================================
-// ’¸“_‚Ìì¬
+// é ‚ç‚¹ã®ä½œæˆ
 //=============================================================================
 HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice, MESH_WALL *pMesh)
 {
-	// ƒIƒuƒWƒFƒNƒg‚Ì’¸“_ƒoƒbƒtƒ@‚ğ¶¬
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆ
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_3D) * pMesh->nNumVertex,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY
+		sizeof(VERTEX_3D) * pMesh->nNumVertex,	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
 		D3DUSAGE_WRITEONLY,
-		FVF_VERTEX_3D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_3D,					//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 		D3DPOOL_MANAGED,
-		&pMesh->pD3DVtxBuff,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&pMesh->pD3DVtxBuff,			//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
-	// ƒIƒuƒWƒFƒNƒg‚ÌƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğ¶¬
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆ
 	if(FAILED(pDevice->CreateIndexBuffer(
 		sizeof(WORD) * pMesh->nNumVertexIndex,
 		D3DUSAGE_WRITEONLY,
@@ -243,11 +243,11 @@ HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice, MESH_WALL *pMesh)
 	}
 
 	
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 
 		VERTEX_3D *pVtx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		pMesh->pD3DVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
 
 		for(int nCntY = 0; nCntY < pMesh->nNumBlockY+1; nCntY++)
@@ -263,16 +263,16 @@ HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice, MESH_WALL *pMesh)
 		}
 
 
-		// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		pMesh->pD3DVtxBuff->Unlock();	
 	}
 
 
-	{//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	{//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 
 		WORD *pIdx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		pMesh->pD3DIdxBuff->Lock( 0, 0, (void**)&pIdx, 0);
 
 		for(int nCntY = 0; nCntY < pMesh->nNumBlockY; nCntY++)
@@ -284,7 +284,7 @@ HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice, MESH_WALL *pMesh)
 			}
 			for(int nCntX = 0; nCntX < pMesh->nNumBlockX+1; nCntX++, pIdx+=2)
 			{
-				//’¸“_À•W‚Ìİ’è
+				//é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 				pIdx[0] = (pMesh->nNumBlockX + 1) * (nCntY + 1) + nCntX; 
 				pIdx[1] = (pMesh->nNumBlockX + 1) * (nCntY) + nCntX;
 			}
@@ -295,7 +295,7 @@ HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice, MESH_WALL *pMesh)
 			}
 		}
 
-		// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		pMesh->pD3DIdxBuff->Unlock();	
 	}
 
@@ -309,28 +309,28 @@ bool HitCheckMeshWall( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 *w
 	D3DXVECTOR3 tPos[4];
 
 
-	// ƒƒbƒVƒ…•Ç\‘¢‘Ì‚Ìƒ|ƒCƒ“ƒ^‚ÉƒƒbƒVƒ…•Çƒ[ƒN‚Ìæ“ªƒAƒhƒŒƒX‚ğ‘ã“ü
+	// ãƒ¡ãƒƒã‚·ãƒ¥å£æ§‹é€ ä½“ã®ãƒã‚¤ãƒ³ã‚¿ã«ãƒ¡ãƒƒã‚·ãƒ¥å£ãƒ¯ãƒ¼ã‚¯ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’ä»£å…¥
 	MESH_WALL *pMesh = g_aMeshWall;
 
 	for(int nCntMeshWall = 0; nCntMeshWall < g_nNumMeshWall; nCntMeshWall++, pMesh++)
 	{
 
-		// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+		// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 		D3DXMatrixIdentity( &pMesh->mtxWorldField);
 	
-		// ‰ñ“]‚ğ”½‰f
+		// å›è»¢ã‚’åæ˜ 
 		D3DXMatrixRotationYawPitchRoll( &mtxRot, pMesh->rot.y, pMesh->rot.x, pMesh->rot.z);
 		D3DXMatrixMultiply( &pMesh->mtxWorldField, &pMesh->mtxWorldField, &mtxRot);
 	
-		// ˆÚ“®‚ğ”½‰f
+		// ç§»å‹•ã‚’åæ˜ 
 		D3DXMatrixTranslation( &mtxTranslate, pMesh->pos.x, pMesh->pos.y, pMesh->pos.z);
 		D3DXMatrixMultiply( &pMesh->mtxWorldField, &pMesh->mtxWorldField, &mtxTranslate);
 
-		{//’¸“_ƒoƒbƒtƒ@‚Ìæ“¾
+		{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®å–å¾—
 
 			VERTEX_3D *pVtx;
 
-			// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+			// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 			pMesh->pD3DVtxBuff->Lock( 0, 0, (void**)&pVtx, 0);
 
 			tPos[0] = pVtx[0].vtx;
@@ -339,11 +339,11 @@ bool HitCheckMeshWall( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 *w
 			tPos[3] = pVtx[(pMesh->nNumBlockX+1) * (pMesh->nNumBlockY+1) - 1 ].vtx;
 
 
-			// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+			// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 			pMesh->pD3DVtxBuff->Unlock();	
 		}
 
-		//’¸“_ƒoƒbƒtƒ@‚Éƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚ğŠ|‚¯‚éA’¸“_ƒoƒbƒtƒ@‚ªXV‚³‚ê‚é
+		//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã«ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã‚’æ›ã‘ã‚‹ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãŒæ›´æ–°ã•ã‚Œã‚‹
 		D3DXVec3TransformCoord( &tPos[0], &tPos[0], &pMesh->mtxWorldField);
 		D3DXVec3TransformCoord( &tPos[1], &tPos[1], &pMesh->mtxWorldField);
 		D3DXVec3TransformCoord( &tPos[2], &tPos[2], &pMesh->mtxWorldField);
@@ -353,7 +353,7 @@ bool HitCheckMeshWall( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 *w
 		{
 			bHit = true;
 
-			//ˆê”Ô‹ß‚¢Œğ“_‚ğ‹‚ß‚é
+			//ä¸€ç•ªè¿‘ã„äº¤ç‚¹ã‚’æ±‚ã‚ã‚‹
 			D3DXVECTOR3 tHitPos = GetHitPos();
 			D3DXVECTOR3 v1 = tHitPosNear - tNowPos;
 			D3DXVECTOR3 v2 = tHitPos - tNowPos;
@@ -361,7 +361,7 @@ bool HitCheckMeshWall( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 *w
 			{
 				tHitPosNear = tHitPos;
 
-				//•Ç‚Ì–@ü‚ğæ“¾
+				//å£ã®æ³•ç·šã‚’å–å¾—
 				if(wall_nor != NULL) *wall_nor = CrossProduct( tPos[0] - tPos[1], tPos[2] - tPos[1]);
 			}
 			
@@ -370,7 +370,7 @@ bool HitCheckMeshWall( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 *w
 		{
 			bHit = true;
 
-			//ˆê”Ô‹ß‚¢Œğ“_‚ğ‹‚ß‚é
+			//ä¸€ç•ªè¿‘ã„äº¤ç‚¹ã‚’æ±‚ã‚ã‚‹
 			D3DXVECTOR3 tHitPos = GetHitPos();
 			D3DXVECTOR3 v1 = tHitPosNear - tNowPos;
 			D3DXVECTOR3 v2 = tHitPos - tNowPos;
@@ -378,13 +378,13 @@ bool HitCheckMeshWall( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, D3DXVECTOR3 *w
 			{
 				tHitPosNear = tHitPos;
 
-				//•Ç‚Ì–@ü‚ğæ“¾
+				//å£ã®æ³•ç·šã‚’å–å¾—
 				if(wall_nor != NULL) *wall_nor = CrossProduct( tPos[1] - tPos[2], tPos[3] - tPos[2]);
 			}
 		}
 	}
 
-	//ˆê”Ô‹ß‚¢Œğ“_‚ğ“n‚·
+	//ä¸€ç•ªè¿‘ã„äº¤ç‚¹ã‚’æ¸¡ã™
 	if(HitPoint != NULL) *HitPoint = tHitPosNear;
 
 	return bHit;

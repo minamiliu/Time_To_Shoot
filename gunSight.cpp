@@ -1,64 +1,64 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		ƒeƒNƒXƒ`ƒƒe‚ÌÆ€Šíˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	gunSight.cpp
-* ì¬ŽÒ:		HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		ãƒ†ã‚¯ã‚¹ãƒãƒ£éŠƒã®ç…§æº–å™¨å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	gunSight.cpp
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 
 #include "gunSight.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
 
-#define	TEXTURE_POLYGON				"data/TEXTURE/sight2.png"		// “Ç‚Ýž‚ÞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	POLYGON_POS_X				(SCREEN_WIDTH/2)				// ƒ|ƒŠƒSƒ“‚ÌŠî€ˆÊ’u(‚wÀ•W)
-#define	POLYGON_POS_Y				(SCREEN_HEIGHT/2)				// ƒ|ƒŠƒSƒ“‚ÌŠî€ˆÊ’u(‚xÀ•W)
-#define	POLYGON_SIZE_X				(50)							// ƒ|ƒŠƒSƒ“‚Ì•
-#define	POLYGON_SIZE_Y				(50)							// ƒ|ƒŠƒSƒ“‚Ì‚‚³
+#define	TEXTURE_POLYGON				"data/TEXTURE/sight2.png"		// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
+#define	POLYGON_POS_X				(SCREEN_WIDTH/2)				// ãƒãƒªã‚´ãƒ³ã®åŸºæº–ä½ç½®(ï¼¸åº§æ¨™)
+#define	POLYGON_POS_Y				(SCREEN_HEIGHT/2)				// ãƒãƒªã‚´ãƒ³ã®åŸºæº–ä½ç½®(ï¼¹åº§æ¨™)
+#define	POLYGON_SIZE_X				(50)							// ãƒãƒªã‚´ãƒ³ã®å¹…
+#define	POLYGON_SIZE_Y				(50)							// ãƒãƒªã‚´ãƒ³ã®é«˜ã•
 
-#define	TEX_PATTERN_DIVIDE_X		(1)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚w•ûŒü)
-#define	TEX_PATTERN_DIVIDE_Y		(1)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚x•ûŒü)
+#define	TEX_PATTERN_DIVIDE_X		(1)								// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¸æ–¹å‘)
+#define	TEX_PATTERN_DIVIDE_Y		(1)								// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¹æ–¹å‘)
 
-#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚w•ûŒü)(1.0f/X•ûŒü•ªŠ„”)
-#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚x•ûŒü)(1.0f/Y•ûŒü•ªŠ„”)
+#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¸æ–¹å‘)(1.0f/Xæ–¹å‘åˆ†å‰²æ•°)
+#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¹æ–¹å‘)(1.0f/Yæ–¹å‘åˆ†å‰²æ•°)
 
-#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X*TEX_PATTERN_DIVIDE_Y)	// ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒpƒ^[ƒ“”(X•ûŒü•ªŠ„”~Y•ûŒü•ªŠ„”)
-//#define	TIME_CHANGE_PATTERN			(5)								// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌØ‚è‘Ö‚í‚éƒ^ƒCƒ~ƒ“ƒO(ƒtƒŒ[ƒ€”)
+#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X*TEX_PATTERN_DIVIDE_Y)	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ‘ã‚¿ãƒ¼ãƒ³æ•°(Xæ–¹å‘åˆ†å‰²æ•°Ã—Yæ–¹å‘åˆ†å‰²æ•°)
+//#define	TIME_CHANGE_PATTERN			(5)								// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®åˆ‡ã‚Šæ›¿ã‚ã‚‹ã‚¿ã‚¤ãƒŸãƒ³ã‚°(ãƒ•ãƒ¬ãƒ¼ãƒ æ•°)
 
-#define	VALUE_MOVE					(0.0f)							// ƒ|ƒŠƒSƒ“‚ÌˆÚ“®—Ê
-#define MAX_GUNSIGHT				(1)							// ƒIƒuƒWƒFƒNƒg‚Ì”
+#define	VALUE_MOVE					(0.0f)							// ãƒãƒªã‚´ãƒ³ã®ç§»å‹•é‡
+#define MAX_GUNSIGHT				(1)							// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ•°
 
 
 /*******************************************************************************
-* \‘¢‘Ì’è‹`
+* æ§‹é€ ä½“å®šç¾©
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒvƒƒgƒ^ƒCƒvéŒ¾
+* ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 *******************************************************************************/
 HRESULT MakeVertexGunSight(LPDIRECT3DDEVICE9 pDevice);
 void SetVertexGunSight(int nCntExplo);
 
 /*******************************************************************************
-* ƒOƒ[ƒoƒ‹•Ï”
+* ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 *******************************************************************************/
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBufferGunSight = NULL;
 LPDIRECT3DTEXTURE9 g_pTextureGunSight = NULL;
 
-GUNSIGHT g_gunSight[MAX_GUNSIGHT]; //ƒvƒŒƒCƒ„[‚Ìƒ[ƒN
+GUNSIGHT g_gunSight[MAX_GUNSIGHT]; //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒ¯ãƒ¼ã‚¯
 
 
 //=============================================================================
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT InitGunSight(void)
 {
@@ -66,7 +66,7 @@ HRESULT InitGunSight(void)
 
 	for(int nCntExplo = 0; nCntExplo < MAX_GUNSIGHT; nCntExplo++)
 	{
-		//bullet‚Ì‰Šú‰»
+		//bulletã®åˆæœŸåŒ–
 		g_gunSight[nCntExplo].pos = D3DXVECTOR3( POLYGON_POS_X, POLYGON_POS_Y, 0.0f);
 		g_gunSight[nCntExplo].rot = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 		//g_gunSight[nCntExplo].move = D3DXVECTOR3( VALUE_MOVE, VALUE_MOVE, 0.0f);
@@ -76,35 +76,35 @@ HRESULT InitGunSight(void)
 
 
 
-	//’¸“_î•ñ‚Ìì¬
+	//é ‚ç‚¹æƒ…å ±ã®ä½œæˆ
 	if(FAILED(MakeVertexGunSight(pDevice)))
 	{
 		return E_FAIL;
 	}
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
-	D3DXCreateTextureFromFile(pDevice,					// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-								TEXTURE_POLYGON,		// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-								&g_pTextureGunSight);	// “Ç‚Ýž‚Þƒƒ‚ƒŠ[
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
+	D3DXCreateTextureFromFile(pDevice,					// ãƒ‡ãƒã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+								TEXTURE_POLYGON,		// ãƒ•ã‚¡ã‚¤ãƒ«ã®åå‰
+								&g_pTextureGunSight);	// èª­ã¿è¾¼ã‚€ãƒ¡ãƒ¢ãƒªãƒ¼
 
 	return S_OK;
 }
 
 
 //=============================================================================
-// •`‰æˆ—
+// æç”»å‡¦ç†
 //=============================================================================
 void DrawGunSight(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//’¸“_ƒoƒbƒtƒ@‚ðƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒã‚¤ãƒ³ãƒ‰
 	pDevice->SetStreamSource(0, g_pVtxBufferGunSight, 0, sizeof(VERTEX_2D));
 
-	//’¸“_ƒtƒH[ƒ}ƒbƒg‚ÌÝ’è
+	//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®è¨­å®š
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 	pDevice->SetTexture(0, g_pTextureGunSight);
 
 	for(int nCntExplo = 0; nCntExplo < MAX_GUNSIGHT; nCntExplo++)
@@ -112,11 +112,11 @@ void DrawGunSight(void)
 		if(g_gunSight[nCntExplo].bUse)
 		{
 
-			//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+			//ãƒãƒªã‚´ãƒ³ã®æç”»
 			pDevice->DrawPrimitive(
-				D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚ÌŽí—Þ
-				nCntExplo*NUM_VERTEX,	//ƒ[ƒh‚·‚éÅ‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-				NUM_POLYGON				//ƒ|ƒŠƒSƒ“‚Ì”
+				D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡ž
+				nCntExplo*NUM_VERTEX,	//ãƒ­ãƒ¼ãƒ‰ã™ã‚‹æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+				NUM_POLYGON				//ãƒãƒªã‚´ãƒ³ã®æ•°
 			);
 		}	
 	}
@@ -127,7 +127,7 @@ void DrawGunSight(void)
 
 
 //=============================================================================
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //=============================================================================
 void UninitGunSight(void)
 {
@@ -144,19 +144,19 @@ void UninitGunSight(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT MakeVertexGunSight(LPDIRECT3DDEVICE9 pDevice)
-ˆø”:	LPDIRECT3DDEVICE9 pDevice : DeviceƒIƒuƒWƒFƒNƒg
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	ƒ|ƒŠƒSƒ“‚Ì’¸“_î•ñ‚Ìì¬ŠÖ”
+é–¢æ•°å:	HRESULT MakeVertexGunSight(LPDIRECT3DDEVICE9 pDevice)
+å¼•æ•°:	LPDIRECT3DDEVICE9 pDevice : Deviceã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+æˆ»ã‚Šå€¤:	HRESUL : åˆæœŸåŒ–çµæžœ æ­£å¸¸çµ‚äº†:S_OK
+èª¬æ˜Ž:	ãƒãƒªã‚´ãƒ³ã®é ‚ç‚¹æƒ…å ±ã®ä½œæˆé–¢æ•°
 *******************************************************************************/
 HRESULT MakeVertexGunSight(LPDIRECT3DDEVICE9 pDevice)
 {
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_GUNSIGHT,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY 
+		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_GUNSIGHT,	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º 
 		D3DUSAGE_WRITEONLY, 
-		FVF_VERTEX_2D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_2D,					//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆ
 		D3DPOOL_MANAGED, 
-		&g_pVtxBufferGunSight,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&g_pVtxBufferGunSight,			//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 		NULL)))
 	{
 		return E_FAIL;
@@ -164,10 +164,10 @@ HRESULT MakeVertexGunSight(LPDIRECT3DDEVICE9 pDevice)
 
 
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferGunSight->Lock( 0, 0, (void**)&pVtx, 0);
 
 	for(int nCntExplo = 0; nCntExplo < MAX_GUNSIGHT; nCntExplo++, pVtx += NUM_VERTEX)
@@ -185,13 +185,13 @@ HRESULT MakeVertexGunSight(LPDIRECT3DDEVICE9 pDevice)
 		pVtx[2].col = D3DCOLOR_RGBA(255,255,255,255);
 		pVtx[3].col = D3DCOLOR_RGBA(255,255,255,255);
 
-		// ’¸“_À•W‚ÌÝ’è
+		// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		pVtx[0].vtx = D3DXVECTOR3(g_gunSight[nCntExplo].pos.x - (POLYGON_SIZE_X/2), g_gunSight[nCntExplo].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[1].vtx = D3DXVECTOR3(g_gunSight[nCntExplo].pos.x + (POLYGON_SIZE_X/2), g_gunSight[nCntExplo].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[2].vtx = D3DXVECTOR3(g_gunSight[nCntExplo].pos.x - (POLYGON_SIZE_X/2), g_gunSight[nCntExplo].pos.y + (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[3].vtx = D3DXVECTOR3(g_gunSight[nCntExplo].pos.x + (POLYGON_SIZE_X/2), g_gunSight[nCntExplo].pos.y + (POLYGON_SIZE_Y/2), 0.0f);
 
-		//ƒeƒNƒXƒ`ƒƒÀ•WŽw’è
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™æŒ‡å®š
 		pVtx[0].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X) , TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X) );
 		pVtx[1].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X + 1) , TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X));
 		pVtx[2].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X), TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X + 1));
@@ -208,7 +208,7 @@ HRESULT MakeVertexGunSight(LPDIRECT3DDEVICE9 pDevice)
 
 
 //=============================================================================
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 //=============================================================================
 void UpdateGunSight(void)
 {
@@ -216,22 +216,22 @@ void UpdateGunSight(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void SetVertexGunSight(int nCntExplo)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	’¸“_À•W‚ÌÝ’è
+é–¢æ•°å:	void SetVertexGunSight(int nCntExplo)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 *******************************************************************************/
 void SetVertexGunSight(int nCntExplo)
 {
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 		VERTEX_2D *pVtx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		g_pVtxBufferGunSight->Lock(0, 0, (void**)&pVtx, 0);
 
 		pVtx += nCntExplo * NUM_VERTEX; 
 		
-		// ’¸“_À•W‚ÌÝ’è
+		// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		pVtx[0].vtx = D3DXVECTOR3(g_gunSight[nCntExplo].pos.x - (POLYGON_SIZE_X/2), g_gunSight[nCntExplo].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[1].vtx = D3DXVECTOR3(g_gunSight[nCntExplo].pos.x + (POLYGON_SIZE_X/2), g_gunSight[nCntExplo].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[2].vtx = D3DXVECTOR3(g_gunSight[nCntExplo].pos.x - (POLYGON_SIZE_X/2), g_gunSight[nCntExplo].pos.y + (POLYGON_SIZE_Y/2), 0.0f);
@@ -239,7 +239,7 @@ void SetVertexGunSight(int nCntExplo)
 
 		
 
-		// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_pVtxBufferGunSight->Unlock();
 	}
 }

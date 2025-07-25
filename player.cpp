@@ -1,13 +1,13 @@
 /*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		ƒvƒŒƒCƒ„[ˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	player.cpp
-* ì¬Ò:		HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
+* ¥¿¥¤¥È¥ë:		¥×¥ì¥¤¥ä¡¼½èÍı
+* ¥×¥í¥°¥é¥àÌ¾:	player.cpp
+* ºîÀ®¼Ô:		HALÅìµş¥²¡¼¥à³Ø²Ê¡¡Î­Æî¹¨
 *
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ¥¤¥ó¥¯¥ë¡¼¥É¥Õ¥¡¥¤¥ë
 *******************************************************************************/
 #include "player.h"
 #include "debugproc.h"
@@ -25,16 +25,16 @@
 #include "fountainCircle.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ¥Ş¥¯¥íÄêµÁ
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
 
-#define MODEL_PLAYER	"data/MODEL/player.x"					// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
+#define MODEL_PLAYER	"data/MODEL/player.x"					// ÆÉ¤ß¹ş¤à¥Æ¥¯¥¹¥Á¥ã¥Õ¥¡¥¤¥ëÌ¾
 
-#define VALUE_MOVE		(3.0f)									// ˆÚ“®—Ê
-#define VALUE_ROTATE	(D3DX_PI * 0.1f) 						// ‰ñ“]—Ê
-#define DIVIDE_ROTATE	(3) 									// ‰ñ“]—Ê‚ğ‚¢‚­‚Â‚É•ª‚¯‚é
+#define VALUE_MOVE		(3.0f)									// °ÜÆ°ÎÌ
+#define VALUE_ROTATE	(D3DX_PI * 0.1f) 						// ²óÅ¾ÎÌ
+#define DIVIDE_ROTATE	(3) 									// ²óÅ¾ÎÌ¤ò¤¤¤¯¤Ä¤ËÊ¬¤±¤ë
 
 #define PLAYER_POS_X	(-50)
 #define PLAYER_POS_Y	(50)
@@ -42,22 +42,22 @@
 
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ¥×¥í¥È¥¿¥¤¥×Àë¸À
 //*****************************************************************************
 
 
 //*****************************************************************************
-// ƒOƒ[ƒoƒ‹•Ï”
+// ¥°¥í¡¼¥Ğ¥ëÊÑ¿ô
 //*****************************************************************************
 PLAYER g_player;
 //=============================================================================
-// ‰Šú‰»ˆ—
+// ½é´ü²½½èÍı
 //=============================================================================
 HRESULT InitPlayer(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	
-	// ˆÊ’uE‰ñ“]EƒXƒP[ƒ‹‚Ì‰Šúİ’è
+	// °ÌÃÖ¡¦²óÅ¾¡¦¥¹¥±¡¼¥ë¤Î½é´üÀßÄê
 	g_player.pos = D3DXVECTOR3( PLAYER_POS_X, PLAYER_POS_Y, PLAYER_POS_Z);
 	g_player.posLSide = g_player.posRSide = g_player.pos;
 	g_player.rot = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
@@ -72,22 +72,22 @@ HRESULT InitPlayer(void)
 	g_player.nBullet = INI_NUM_LIFE;
 	g_player.nLife = INI_NUM_BULLET;
 
-	// ƒ‚ƒfƒ‹‚ÉŠÖ‚·‚é•Ï”‚Ì‰Šú‰»							
-	g_player.pD3DTexture = NULL;		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	g_player.pD3DXMesh = NULL;		// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	g_player.pD3DXBuffMat = NULL;		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	g_player.nNumMat = 0;				// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+	// ¥â¥Ç¥ë¤Ë´Ø¤¹¤ëÊÑ¿ô¤Î½é´ü²½							
+	g_player.pD3DTexture = NULL;		// ¥Æ¥¯¥¹¥Á¥ã¤Ø¤Î¥İ¥¤¥ó¥¿
+	g_player.pD3DXMesh = NULL;		// ¥á¥Ã¥·¥å¾ğÊó¤Ø¤Î¥İ¥¤¥ó¥¿
+	g_player.pD3DXBuffMat = NULL;		// ¥Ş¥Æ¥ê¥¢¥ë¾ğÊó¤Ø¤Î¥İ¥¤¥ó¥¿
+	g_player.nNumMat = 0;				// ¥Ş¥Æ¥ê¥¢¥ë¾ğÊó¤Î¿ô
 
-	// Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+	// X¥Õ¥¡¥¤¥ë¤ÎÆÉ¤ß¹ş¤ß
 	if(FAILED(D3DXLoadMeshFromX(
-		MODEL_PLAYER,				// “Ç‚İ‚Şƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹–¼(Xƒtƒ@ƒCƒ‹)
-		D3DXMESH_SYSTEMMEM,			// ƒƒbƒVƒ…‚Ìì¬ƒIƒvƒVƒ‡ƒ“‚ğw’è
-		pDevice,					// IDirect3DDevice9ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		NULL,						// —×Ú«ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		&g_player.pD3DXBuffMat,		// ƒ}ƒeƒŠƒAƒ‹ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		NULL,						// ƒGƒtƒFƒNƒgƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”z—ñ‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		&g_player.nNumMat,			// D3DXMATERIAL\‘¢‘Ì‚Ì”
-		&g_player.pD3DXMesh			// ID3DXMeshƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ÌƒAƒhƒŒƒX
+		MODEL_PLAYER,				// ÆÉ¤ß¹ş¤à¥â¥Ç¥ë¥Õ¥¡¥¤¥ëÌ¾(X¥Õ¥¡¥¤¥ë)
+		D3DXMESH_SYSTEMMEM,			// ¥á¥Ã¥·¥å¤ÎºîÀ®¥ª¥×¥·¥ç¥ó¤ò»ØÄê
+		pDevice,					// IDirect3DDevice9¥¤¥ó¥¿¡¼¥Õ¥§¥¤¥¹¤Ø¤Î¥İ¥¤¥ó¥¿
+		NULL,						// ÎÙÀÜÀ­¥Ç¡¼¥¿¤ò´Ş¤à¥Ğ¥Ã¥Õ¥¡¤Ø¤Î¥İ¥¤¥ó¥¿
+		&g_player.pD3DXBuffMat,		// ¥Ş¥Æ¥ê¥¢¥ë¥Ç¡¼¥¿¤ò´Ş¤à¥Ğ¥Ã¥Õ¥¡¤Ø¤Î¥İ¥¤¥ó¥¿
+		NULL,						// ¥¨¥Õ¥§¥¯¥È¥¤¥ó¥¹¥¿¥ó¥¹¤ÎÇÛÎó¤ò´Ş¤à¥Ğ¥Ã¥Õ¥¡¤Ø¤Î¥İ¥¤¥ó¥¿
+		&g_player.nNumMat,			// D3DXMATERIAL¹½Â¤ÂÎ¤Î¿ô
+		&g_player.pD3DXMesh			// ID3DXMesh¥¤¥ó¥¿¡¼¥Õ¥§¥¤¥¹¤Ø¤Î¥İ¥¤¥ó¥¿¤Î¥¢¥É¥ì¥¹
 		)))
 	{
 		return E_FAIL;
@@ -99,19 +99,19 @@ HRESULT InitPlayer(void)
 }
 
 //=============================================================================
-// I—¹ˆ—
+// ½ªÎ»½èÍı
 //=============================================================================
 void UninitPlayer(void)
 {
-	// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
+	// ¥Æ¥¯¥¹¥Á¥ã¤Î³«Êü
 
-	// ƒƒbƒVƒ…‚ÌŠJ•ú
+	// ¥á¥Ã¥·¥å¤Î³«Êü
 	if(g_player.pD3DXMesh != NULL)
 	{
 		g_player.pD3DXMesh->Release();
 		g_player.pD3DXMesh = NULL;
 	}
-	// ƒ}ƒeƒŠƒAƒ‹‚ÌŠJ•ú
+	// ¥Ş¥Æ¥ê¥¢¥ë¤Î³«Êü
 	if(g_player.pD3DXBuffMat != NULL)
 	{
 		g_player.pD3DXBuffMat->Release();
@@ -120,17 +120,17 @@ void UninitPlayer(void)
 }
 
 //=============================================================================
-// XVˆ—
+// ¹¹¿·½èÍı
 //=============================================================================
 void UpdatePlayer(void)
 {
 	CAMERA *pCamera = GetCamera();
 	GUN *pGun = GetGun();
 
-	//’e‚ğŒ‚‚Â
+	//ÃÆ¤ò·â¤Ä
 	if((GetMouseLeftTrigger() || GetGamePadTrigger(0, BUTTON_R1)) && !pGun->bShot)
 	{
-		//’e‚ ‚è
+		//ÃÆ¤¢¤ê
 		if( g_player.nBullet > 0 && IsGunReady())
 		{
 			PlaySound(SOUND_LABEL_SE_PSHOT);
@@ -144,7 +144,7 @@ void UpdatePlayer(void)
 			g_player.nBullet--;
 			ChangeNumBullet( 0, g_player.nBullet);
 		}
-		else//’e‚È‚µ
+		else//ÃÆ¤Ê¤·
 		{
 			if(IsGunReady())
 			{
@@ -180,10 +180,10 @@ void UpdatePlayer(void)
 		g_player.jumpTime = 0;
 	}
 
-	//ˆÚ“®ˆ—
+	//°ÜÆ°½èÍı
 	bool isKeyPressed = false;
-	//Î‚ßˆÚ“®
-	if( (GetKeyboardPress(DIK_D) && GetKeyboardPress(DIK_W)) ||(GetGamePadTrigger( 0, LSTICK_RIGHT) && GetGamePadTrigger( 0, LSTICK_UP)) ) //‰Eã
+	//¼Ğ¤á°ÜÆ°
+	if( (GetKeyboardPress(DIK_D) && GetKeyboardPress(DIK_W)) ||(GetGamePadTrigger( 0, LSTICK_RIGHT) && GetGamePadTrigger( 0, LSTICK_UP)) ) //±¦¾å
 	{
 		//g_player.rot.y = pCamera->rot.y + D3DXToRadian(45.0f);
 		g_player.rotTarget.y = pCamera->rot.y + D3DXToRadian(45.0f);
@@ -193,7 +193,7 @@ void UpdatePlayer(void)
 		}
 		isKeyPressed = true;
 	}
-	else if((GetKeyboardPress(DIK_D) && GetKeyboardPress(DIK_S)) ||(GetGamePadTrigger( 0, LSTICK_RIGHT) && GetGamePadTrigger( 0, LSTICK_DOWN)) ) //‰E‰º
+	else if((GetKeyboardPress(DIK_D) && GetKeyboardPress(DIK_S)) ||(GetGamePadTrigger( 0, LSTICK_RIGHT) && GetGamePadTrigger( 0, LSTICK_DOWN)) ) //±¦²¼
 	{
 		//g_player.rot.y = pCamera->rot.y + D3DXToRadian(135.0f);
 		g_player.rotTarget.y = pCamera->rot.y + D3DXToRadian(135.0f);
@@ -203,7 +203,7 @@ void UpdatePlayer(void)
 		}
 		isKeyPressed = true;
 	}
-	else if((GetKeyboardPress(DIK_A)  && GetKeyboardPress(DIK_W)) ||(GetGamePadTrigger( 0, LSTICK_LEFT) && GetGamePadTrigger( 0, LSTICK_UP)) ) //¶ã
+	else if((GetKeyboardPress(DIK_A)  && GetKeyboardPress(DIK_W)) ||(GetGamePadTrigger( 0, LSTICK_LEFT) && GetGamePadTrigger( 0, LSTICK_UP)) ) //º¸¾å
 	{
 		//g_player.rot.y = pCamera->rot.y + D3DXToRadian(-45.0f);
 		g_player.rotTarget.y = pCamera->rot.y + D3DXToRadian(-45.0f);
@@ -213,7 +213,7 @@ void UpdatePlayer(void)
 		}
 		isKeyPressed = true;
 	}
-	else if((GetKeyboardPress(DIK_A) && GetKeyboardPress(DIK_S)) ||(GetGamePadTrigger( 0, LSTICK_LEFT) && GetGamePadTrigger( 0, LSTICK_DOWN)) ) //¶‰º
+	else if((GetKeyboardPress(DIK_A) && GetKeyboardPress(DIK_S)) ||(GetGamePadTrigger( 0, LSTICK_LEFT) && GetGamePadTrigger( 0, LSTICK_DOWN)) ) //º¸²¼
 	{
 		//g_player.rot.y = pCamera->rot.y + D3DXToRadian(-135.0f);
 		g_player.rotTarget.y = pCamera->rot.y + D3DXToRadian(-135.0f);
@@ -263,7 +263,7 @@ void UpdatePlayer(void)
 	{
 		if(GetKeyboardPress(DIK_LSHIFT) || GetGamePadPress( 0, BUTTON_L1))
 		{
-			//ˆÚ“®Šµ«‚Ì‰Šú‰»
+			//°ÜÆ°´·À­¤Î½é´ü²½
 			g_player.move.x = VALUE_MOVE * 1.5f;
 			g_player.move.z = VALUE_MOVE * 1.5f;
 
@@ -271,20 +271,20 @@ void UpdatePlayer(void)
 		}
 		else
 		{
-			//ˆÚ“®Šµ«‚Ì‰Šú‰»
+			//°ÜÆ°´·À­¤Î½é´ü²½
 			g_player.move.x = VALUE_MOVE;
 			g_player.move.z = VALUE_MOVE;
 
 			ChangeTimeSpeed( 1.0f);
 		}	
 
-		//Œv‰ñ‚èA‚Ü‚½‚Í‹tŒv‰ñ‚è‚ğŒˆ‚ß‚é
+		//»ş·×²ó¤ê¡¢¤Ş¤¿¤ÏµÕ»ş·×²ó¤ê¤ò·è¤á¤ë
 		g_player.rotAngle =  Get2VecRotAngle( g_player.rot, g_player.rotTarget, DIVIDE_ROTATE, VALUE_ROTATE);
 
 
 		if(!g_player.bRun)
 		{
-			//‘–‚é‰¹
+			//Áö¤ë²»
 			PlaySound(SOUND_LABEL_SE_RUN);
 			SetGunShakeAni(true);
 		}
@@ -294,7 +294,7 @@ void UpdatePlayer(void)
 	{
 		if(g_player.bRun)
 		{
-			//‘–‚é‰¹ ˆê’â~
+			//Áö¤ë²» °ì»şÄä»ß
 			StopSound(SOUND_LABEL_SE_RUN);
 			SetGunShakeAni(false);
 		}
@@ -302,10 +302,10 @@ void UpdatePlayer(void)
 	}
 
 
-	//‰ñ“]Šµ«
+	//²óÅ¾´·À­
 	g_player.rotAngle.y += (-g_player.rotAngle.y) * 0.001f;
 
-	//ƒ‚ƒfƒ‹Šp“xC³
+	//¥â¥Ç¥ë³ÑÅÙ½¤Àµ
 	if(g_player.rot.y > D3DX_PI)
 	{
 		g_player.rot.y = g_player.rot.y - D3DX_PI*2;
@@ -315,13 +315,13 @@ void UpdatePlayer(void)
 		g_player.rot.y = g_player.rot.y + D3DX_PI*2;
 	}
 
-	//Ÿ‚Ì‰ñ“]ˆÊ’u‚É“’…‚µ‚½‚ç
-	if(abs(g_player.rot.y - g_player.rotTarget.y) < VALUE_ROTATE)
+	//¼¡¤Î²óÅ¾°ÌÃÖ¤ËÅşÃå¤·¤¿¤é
+	if(fabs(g_player.rot.y - g_player.rotTarget.y) < VALUE_ROTATE)
 	{
 		g_player.rot.y = g_player.rotTarget.y;
 		g_player.rotAngle.y = 0;
 	}
-	//Ÿ‚Ì‰ñ“]ˆÊ’u‚É‚Ü‚¾“’…‚µ‚Ä‚È‚¢
+	//¼¡¤Î²óÅ¾°ÌÃÖ¤Ë¤Ş¤ÀÅşÃå¤·¤Æ¤Ê¤¤
 	else
 	{
 		g_player.rot.y += g_player.rotAngle.y;
@@ -329,14 +329,14 @@ void UpdatePlayer(void)
 	
 
 
-	//‰ñ“]‚µ‚Ä‚¢‚È‚¢
+	//²óÅ¾¤·¤Æ¤¤¤Ê¤¤»ş
 	if(g_player.rotAngle.y == 0)
 	{
 		D3DXVECTOR3 tNextPos = g_player.pos;
 		tNextPos.x += g_player.move.x * sinf(g_player.rot.y);
 		tNextPos.z += g_player.move.z * cosf(g_player.rot.y);
 
-		//Šµ«ˆ—
+		//´·À­½èÍı
 		g_player.move.x -= g_player.move.x * 0.25f;
 		g_player.move.z -= g_player.move.z * 0.25f;
 
@@ -346,7 +346,7 @@ void UpdatePlayer(void)
 		tSphere *= 20.0f;
 
 
-		//•Ç‚Ì–@ü
+		//ÊÉ¤ÎË¡Àş
 		D3DXVECTOR3 wall_nor = D3DXVECTOR3(0,0,0);
 
 		//Side
@@ -358,14 +358,14 @@ void UpdatePlayer(void)
 		g_player.posRSide.z = g_player.pos.z +  15.0f * cosf(g_player.rotTarget.y+D3DXToRadian(90.0f));
 		g_player.posLSide.y = g_player.pos.y;
 
-		//•Ç‚É“–‚½‚Á‚½‚ç
+		//ÊÉ¤ËÅö¤¿¤Ã¤¿¤é
 		if( //HitCheckMeshWall( g_player.posRSide, g_player.posRSide + tSphere, &wall_nor, NULL) ||
 			//HitCheckMeshWall( g_player.posLSide, g_player.posLSide + tSphere, &wall_nor, NULL) ||	
 			HitCheckMeshWall( g_player.pos, g_player.pos + tSphere, &wall_nor, NULL)
 			)
 		{
 
-			//•Ç‚¸‚èˆ—FˆÚ“®ƒxƒNƒgƒ‹‚ğC³
+			//ÊÉ¤º¤ê½èÍı¡§°ÜÆ°¥Ù¥¯¥È¥ë¤ò½¤Àµ
 			GetWallScratchVector( &front, front, wall_nor);
 				
 			D3DXVec3Normalize( &tSphere, &front);
@@ -376,18 +376,18 @@ void UpdatePlayer(void)
 				!HitCheckMeshWall( g_player.posLSide, g_player.posLSide + tSphere, &wall_nor, NULL) &&
 				!HitCheckMeshWall( g_player.posRSide, g_player.posRSide + tSphere, &wall_nor, NULL))
 			{
-				//ˆÚ“®ˆ—
+				//°ÜÆ°½èÍı
 				g_player.pos += front;
 			}
 
 		}
 		else
 		{
-			//ˆÚ“®ˆ—
+			//°ÜÆ°½èÍı
 			g_player.pos += front;
 		}
 
-		//•¬…‚Æ‚Ì“–‚½‚è”»’è
+		//Ê®¿å¤È¤ÎÅö¤¿¤êÈ½Äê
 		FOUNTAIN_CIRCLE *pCircle = GetFountainCircle();
 		if( pCircle->bUse && HitCheckXZ( g_player.pos, 20.0f, pCircle->pos, pCircle->fRadius))
 		{
@@ -398,7 +398,7 @@ void UpdatePlayer(void)
 
 	if( IsDebugMode())
 	{
-		//ƒ‚ƒfƒ‹ã‰ºˆÚ“®
+		//¥â¥Ç¥ë¾å²¼°ÜÆ°
 		if(GetKeyboardPress(DIK_PRIOR))
 		{
 			g_player.pos.y += VALUE_MOVE * 0.5f;
@@ -413,17 +413,17 @@ void UpdatePlayer(void)
 	//shadow
 	SetPositionShadow( g_player.nIdxShadow, g_player.pos);
 
-	//PrintDebugProc("Player‚ÌŒü‚«@F(X:%f, Y:%f, Z:%f)\n", g_player.rot.x, g_player.rot.y, g_player.rot.z);
-	//PrintDebugProc("Player‚ÌˆÊ’uF(X:%f, Y:%f, Z:%f)\n", g_player.pos.x, g_player.pos.y, g_player.pos.z);
-	//PrintDebugProc("Left‚ÌˆÊ’uF(X:%f, Y:%f, Z:%f)\n", g_player.posLSide.x, g_player.posLSide.y, g_player.posLSide.z);
-	//PrintDebugProc("Right‚ÌˆÊ’uF(X:%f, Y:%f, Z:%f)\n", g_player.posRSide.x, g_player.posRSide.y, g_player.posRSide.z);
+	//PrintDebugProc("Player¤Î¸ş¤­¡¡¡§(X:%f, Y:%f, Z:%f)\n", g_player.rot.x, g_player.rot.y, g_player.rot.z);
+	//PrintDebugProc("Player¤Î°ÌÃÖ¡§(X:%f, Y:%f, Z:%f)\n", g_player.pos.x, g_player.pos.y, g_player.pos.z);
+	//PrintDebugProc("Left¤Î°ÌÃÖ¡§(X:%f, Y:%f, Z:%f)\n", g_player.posLSide.x, g_player.posLSide.y, g_player.posLSide.z);
+	//PrintDebugProc("Right¤Î°ÌÃÖ¡§(X:%f, Y:%f, Z:%f)\n", g_player.posRSide.x, g_player.posRSide.y, g_player.posRSide.z);
 
 	
 
 }
 
 //=============================================================================
-// •`‰æˆ—
+// ÉÁ²è½èÍı
 //=============================================================================
 void DrawPlayer(void)
 {
@@ -432,45 +432,45 @@ void DrawPlayer(void)
 	D3DXMATERIAL *pD3DXMat;
 	D3DMATERIAL9 matDef;
 	
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+	// ¥ï¡¼¥ë¥É¥Ş¥È¥ê¥Ã¥¯¥¹¤Î½é´ü²½
 	D3DXMatrixIdentity( &g_player.mtxWorld);
 	
-	// ƒXƒP[ƒ‹‚ğ”½‰f
+	// ¥¹¥±¡¼¥ë¤òÈ¿±Ç
 	D3DXMatrixScaling( &mtxScl, g_player.scl.x, g_player.scl.y, g_player.scl.z);
 	D3DXMatrixMultiply( &g_player.mtxWorld, &g_player.mtxWorld, &mtxScl);
 	
-	// ‰ñ“]‚ğ”½‰f
+	// ²óÅ¾¤òÈ¿±Ç
 	D3DXMatrixRotationYawPitchRoll( &mtxRot, g_player.rot.y, g_player.rot.x, g_player.rot.z);
 	D3DXMatrixMultiply( &g_player.mtxWorld, &g_player.mtxWorld, &mtxRot);
 	
-	// ˆÚ“®‚ğ”½‰f
+	// °ÜÆ°¤òÈ¿±Ç
 	D3DXMatrixTranslation( &mtxTranslate, g_player.pos.x, g_player.pos.y, g_player.pos.z);
 	D3DXMatrixMultiply( &g_player.mtxWorld, &g_player.mtxWorld, &mtxTranslate);
 	
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ìİ’è
+	// ¥ï¡¼¥ë¥É¥Ş¥È¥ê¥Ã¥¯¥¹¤ÎÀßÄê
 	pDevice->SetTransform( D3DTS_WORLD, &g_player.mtxWorld);
 
-	// Œ»İ‚Ìƒ}ƒeƒŠƒAƒ‹‚ğæ“¾
+	// ¸½ºß¤Î¥Ş¥Æ¥ê¥¢¥ë¤ò¼èÆÀ
 	pDevice->GetMaterial(&matDef);
 	
-	// ƒ}ƒeƒŠƒAƒ‹î•ñ‚É‘Î‚·‚éƒ|ƒCƒ“ƒ^‚ğæ“¾
+	// ¥Ş¥Æ¥ê¥¢¥ë¾ğÊó¤ËÂĞ¤¹¤ë¥İ¥¤¥ó¥¿¤ò¼èÆÀ
 	pD3DXMat = (D3DXMATERIAL *)g_player.pD3DXBuffMat->GetBufferPointer();
 	for(int nCntMat = 0; nCntMat < (int)g_player.nNumMat; nCntMat++)
 	{
-		// ƒ}ƒeƒŠƒAƒ‹‚Ìİ’è
+		// ¥Ş¥Æ¥ê¥¢¥ë¤ÎÀßÄê
 		pDevice->SetMaterial( &pD3DXMat[nCntMat].MatD3D);
-		// ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+		// ¥Æ¥¯¥¹¥Á¥ã¤ÎÀßÄê
 		pDevice->SetTexture( 0, g_player.pD3DTexture);
-		// •`‰æ
+		// ÉÁ²è
 		g_player.pD3DXMesh->DrawSubset( nCntMat);
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹‚ğƒfƒtƒHƒ‹ƒg‚É–ß‚·
+	// ¥Ş¥Æ¥ê¥¢¥ë¤ò¥Ç¥Õ¥©¥ë¥È¤ËÌá¤¹
 	pDevice->SetMaterial( &matDef);
 }
 
 //=============================================================================
-// ƒ‚ƒfƒ‹‚Ìæ“¾
+// ¥â¥Ç¥ë¤Î¼èÆÀ
 //=============================================================================
 PLAYER *GetPlayer(void)
 {
@@ -479,7 +479,7 @@ PLAYER *GetPlayer(void)
 
 void SetPlayerDeath(void)
 {
-	//‘«‰¹‚ğÁ‚·
+	//Â­²»¤ò¾Ã¤¹
 	g_player.bRun = false;
 	StopSound(SOUND_LABEL_SE_RUN);
 
@@ -487,13 +487,13 @@ void SetPlayerDeath(void)
 	ChangeNumLife( 0, --g_player.nLife);
 
 	CAMERA *pCamera = GetCamera();
-	//ƒJƒƒ‰‰ñ“]
+	//¥«¥á¥é²óÅ¾
 	float a = pCamera->rot.y + D3DXToRadian(90.0f);
 	float x = sinf(a);
 	float z = cosf(a);
 	pCamera->vecU = D3DXVECTOR3( x, 0.0f, z);
 
-	//’n–Ê‚É
+	//ÃÏÌÌ¤Ë
 	pCamera->posV.y = 30.0f;
 	
 	ReleaseShadow( g_player.nIdxShadow);
@@ -502,7 +502,7 @@ void SetPlayerDeath(void)
 }
 
 //=============================================================================
-// ƒvƒŒƒCƒ„[‚Ìİ’u
+// ¥×¥ì¥¤¥ä¡¼¤ÎÀßÃÖ
 //=============================================================================
 void SetPlayer( D3DXVECTOR3 pos, float rotY, int numBullet, int numLife)
 {
@@ -514,7 +514,7 @@ void SetPlayer( D3DXVECTOR3 pos, float rotY, int numBullet, int numLife)
 	g_player.nBullet = numBullet;
 	g_player.nLife = numLife;
 
-	//UI‚Ì‰Šú‰»
+	//UI¤Î½é´ü²½
 	ChangeNumBullet( 0, numBullet);
 	ChangeNumLife( 0, numLife);
 }

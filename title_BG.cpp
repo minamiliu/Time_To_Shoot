@@ -1,40 +1,40 @@
-/*******************************************************************************
+Ôªø/*******************************************************************************
 *
-* É^ÉCÉgÉã:		ÉeÉNÉXÉ`ÉÉ É^ÉCÉgÉãîwåiï\é¶èàóù
-* ÉvÉçÉOÉâÉÄñº:	result_BG.cpp
-* çÏê¨é“:		HALìåãûÉQÅ[ÉÄäwâ»Å@ó´ìÏçG
+* „Çø„Ç§„Éà„É´:		„ÉÜ„ÇØ„Çπ„ÉÅ„É£ „Çø„Ç§„Éà„É´ËÉåÊôØË°®Á§∫Âá¶ÁêÜ
+* „Éó„É≠„Ç∞„É©„É†Âêç:	result_BG.cpp
+* ‰ΩúÊàêËÄÖ:		HALÊù±‰∫¨„Ç≤„Éº„É†Â≠¶Áßë„ÄÄÂäâÂçóÂÆè
 *
 *******************************************************************************/
 
 /*******************************************************************************
-* ÉCÉìÉNÉãÅ[ÉhÉtÉ@ÉCÉã
+* „Ç§„É≥„ÇØ„É´„Éº„Éâ„Éï„Ç°„Ç§„É´
 *******************************************************************************/
 
 #include "title_BG.h"
 
 //*****************************************************************************
-// É}ÉNÉçíËã`
+// „Éû„ÇØ„É≠ÂÆöÁæ©
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
-#define POLYGON_POS_X	(0)//É|ÉäÉSÉìÇÃç∂è„X
-#define POLYGON_POS_Y	(0)//É|ÉäÉSÉìÇÃç∂è„Y
-#define POLYGON_SIZE_X	(SCREEN_WIDTH)//É|ÉäÉSÉìÇÃSIZE X
-#define POLYGON_SIZE_Y	(SCREEN_HEIGHT)//É|ÉäÉSÉìÇÃSIZE Y
+#define POLYGON_POS_X	(0)//„Éù„É™„Ç¥„É≥„ÅÆÂ∑¶‰∏äX
+#define POLYGON_POS_Y	(0)//„Éù„É™„Ç¥„É≥„ÅÆÂ∑¶‰∏äY
+#define POLYGON_SIZE_X	(SCREEN_WIDTH)//„Éù„É™„Ç¥„É≥„ÅÆSIZE X
+#define POLYGON_SIZE_Y	(SCREEN_HEIGHT)//„Éù„É™„Ç¥„É≥„ÅÆSIZE Y
 #define POLYGON_TEXTURENAME "data/TEXTURE/title_BG.jpg"
 
 
 /*******************************************************************************
-* ç\ë¢ëÃíËã`
+* ÊßãÈÄ†‰ΩìÂÆöÁæ©
 *******************************************************************************/
 
 /*******************************************************************************
-* ÉvÉçÉgÉ^ÉCÉvêÈåæ
+* „Éó„É≠„Éà„Çø„Ç§„ÉóÂÆ£Ë®Ä
 *******************************************************************************/
 HRESULT MakeVertexTitleBG(LPDIRECT3DDEVICE9 pDevice);
 
 /*******************************************************************************
-* ÉOÉçÅ[ÉoÉãïœêî
+* „Ç∞„É≠„Éº„Éê„É´Â§âÊï∞
 *******************************************************************************/
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBufferTitleBG = NULL;
 LPDIRECT3DTEXTURE9 g_pTextureTitleBG = NULL;
@@ -42,19 +42,19 @@ LPDIRECT3DTEXTURE9 g_pTextureTitleBG = NULL;
 
 
 //=============================================================================
-// èâä˙âªèàóù
+// ÂàùÊúüÂåñÂá¶ÁêÜ
 //=============================================================================
 HRESULT InitTitleBG(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//í∏ì_èÓïÒÇÃçÏê¨
+	//È†ÇÁÇπÊÉÖÂ†±„ÅÆ‰ΩúÊàê
 	if(FAILED(MakeVertexTitleBG(pDevice)))
 	{
 		return E_FAIL;
 	}
 
-	//ÉeÉNÉXÉ`ÉÉÇÃì«Ç›çûÇ›
+	//„ÉÜ„ÇØ„Çπ„ÉÅ„É£„ÅÆË™≠„ÅøËæº„Åø
 	D3DXCreateTextureFromFile( pDevice, POLYGON_TEXTURENAME, &g_pTextureTitleBG);
 
 
@@ -62,33 +62,33 @@ HRESULT InitTitleBG(void)
 }
 
 //=============================================================================
-// ï`âÊèàóù
+// ÊèèÁîªÂá¶ÁêÜ
 //=============================================================================
 void DrawTitleBG(void)
 {
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//í∏ì_ÉoÉbÉtÉ@ÇÉfÉoÉCÉXÇÃÉfÅ[É^ÉXÉgÉäÅ[ÉÄÇ…ÉoÉCÉìÉh
+	//È†ÇÁÇπ„Éê„ÉÉ„Éï„Ç°„Çí„Éá„Éê„Ç§„Çπ„ÅÆ„Éá„Éº„Çø„Çπ„Éà„É™„Éº„É†„Å´„Éê„Ç§„É≥„Éâ
 	pDevice->SetStreamSource(0, g_pVtxBufferTitleBG, 0, sizeof(VERTEX_2D));
 
-	//í∏ì_ÉtÉHÅ[É}ÉbÉgÇÃê›íË
+	//È†ÇÁÇπ„Éï„Ç©„Éº„Éû„ÉÉ„Éà„ÅÆË®≠ÂÆö
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	//ÉeÉNÉXÉ`ÉÉÇÃê›íË
+	//„ÉÜ„ÇØ„Çπ„ÉÅ„É£„ÅÆË®≠ÂÆö
 	pDevice->SetTexture(0, g_pTextureTitleBG);
 
-	//É|ÉäÉSÉìÇÃï`âÊ
+	//„Éù„É™„Ç¥„É≥„ÅÆÊèèÁîª
 	pDevice->DrawPrimitive(
-		D3DPT_TRIANGLESTRIP,	//ÉvÉäÉ~ÉeÉBÉuÇÃéÌóﬁ
-		0,						//ÉçÅ[ÉhÇ∑ÇÈç≈èâÇÃí∏ì_ÉCÉìÉfÉbÉNÉX
-		NUM_POLYGON				//É|ÉäÉSÉìÇÃêî
+		D3DPT_TRIANGLESTRIP,	//„Éó„É™„Éü„ÉÜ„Ç£„Éñ„ÅÆÁ®ÆÈ°û
+		0,						//„É≠„Éº„Éâ„Åô„ÇãÊúÄÂàù„ÅÆÈ†ÇÁÇπ„Ç§„É≥„Éá„ÉÉ„ÇØ„Çπ
+		NUM_POLYGON				//„Éù„É™„Ç¥„É≥„ÅÆÊï∞
 	);
 
 }
 
 //=============================================================================
-// èIóπèàóù
+// ÁµÇ‰∫ÜÂá¶ÁêÜ
 //=============================================================================
 void UninitTitleBG(void)
 {
@@ -104,31 +104,31 @@ void UninitTitleBG(void)
 	}
 }
 /*******************************************************************************
-ä÷êîñº:	HRESULT MakeVertexTitleBG(LPDIRECT3DDEVICE9 pDevice)
-à¯êî:	LPDIRECT3DDEVICE9 pDevice : DeviceÉIÉuÉWÉFÉNÉg
-ñﬂÇËíl:	HRESUL : èâä˙âªåãâ  ê≥èÌèIóπ:S_OK
-ê‡ñæ:	îwåiÇÃÉ|ÉäÉSÉìÇÃí∏ì_èÓïÒÇÃçÏê¨ä÷êî
+Èñ¢Êï∞Âêç:	HRESULT MakeVertexTitleBG(LPDIRECT3DDEVICE9 pDevice)
+ÂºïÊï∞:	LPDIRECT3DDEVICE9 pDevice : Device„Ç™„Éñ„Ç∏„Çß„ÇØ„Éà
+Êàª„ÇäÂÄ§:	HRESUL : ÂàùÊúüÂåñÁµêÊûú Ê≠£Â∏∏ÁµÇ‰∫Ü:S_OK
+Ë™¨Êòé:	ËÉåÊôØ„ÅÆ„Éù„É™„Ç¥„É≥„ÅÆÈ†ÇÁÇπÊÉÖÂ†±„ÅÆ‰ΩúÊàêÈñ¢Êï∞
 *******************************************************************************/
 HRESULT MakeVertexTitleBG(LPDIRECT3DDEVICE9 pDevice)
 {
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_2D)*NUM_VERTEX,	//í∏ì_ÉfÅ[É^ÇÃÉoÉbÉtÉ@ÉTÉCÉY 
+		sizeof(VERTEX_2D)*NUM_VERTEX,	//È†ÇÁÇπ„Éá„Éº„Çø„ÅÆ„Éê„ÉÉ„Éï„Ç°„Çµ„Ç§„Ç∫ 
 		D3DUSAGE_WRITEONLY, 
-		FVF_VERTEX_2D,					//í∏ì_ÉtÉHÅ[É}ÉbÉg
+		FVF_VERTEX_2D,					//È†ÇÁÇπ„Éï„Ç©„Éº„Éû„ÉÉ„Éà
 		D3DPOOL_MANAGED, 
-		&g_pVtxBufferTitleBG,			//í∏ì_ÉoÉbÉtÉ@ÉCÉìÉ^Å[ÉtÉFÅ[ÉXÇÃÉ|ÉCÉìÉ^
+		&g_pVtxBufferTitleBG,			//È†ÇÁÇπ„Éê„ÉÉ„Éï„Ç°„Ç§„É≥„Çø„Éº„Éï„Çß„Éº„Çπ„ÅÆ„Éù„Ç§„É≥„Çø
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
-	//í∏ì_ÉoÉbÉtÉ@ÇÃíÜêgÇñÑÇﬂÇÈ
+	//È†ÇÁÇπ„Éê„ÉÉ„Éï„Ç°„ÅÆ‰∏≠Ë∫´„ÇíÂüã„ÇÅ„Çã
 	VERTEX_2D *pVtx;
 
-	//í∏ì_ÉfÅ[É^ÇÃîÕàÕÇÉçÉbÉNÇµÅAí∏ì_ÉoÉbÉtÉ@Ç÷ÇÃÉ|ÉCÉìÉ^ÇéÊìæ
+	//È†ÇÁÇπ„Éá„Éº„Çø„ÅÆÁØÑÂõ≤„Çí„É≠„ÉÉ„ÇØ„Åó„ÄÅÈ†ÇÁÇπ„Éê„ÉÉ„Éï„Ç°„Å∏„ÅÆ„Éù„Ç§„É≥„Çø„ÇíÂèñÂæó
 	g_pVtxBufferTitleBG->Lock( 0, 0, (void**)&pVtx, 0);
 
-	//í∏ì_ç¿ïWÇÃê›íË
+	//È†ÇÁÇπÂ∫ßÊ®ô„ÅÆË®≠ÂÆö
 	pVtx[0].vtx = D3DXVECTOR3(POLYGON_POS_X, POLYGON_POS_Y, 0.0f);
 	pVtx[1].vtx = D3DXVECTOR3(POLYGON_POS_X + POLYGON_SIZE_X, POLYGON_POS_Y, 0.0f);
 	pVtx[2].vtx = D3DXVECTOR3(POLYGON_POS_X, POLYGON_POS_Y + POLYGON_SIZE_Y, 0.0f);
@@ -148,7 +148,7 @@ HRESULT MakeVertexTitleBG(LPDIRECT3DDEVICE9 pDevice)
 	pVtx[2].col = D3DCOLOR_RGBA(255,255,255,255);
 	pVtx[3].col = D3DCOLOR_RGBA(255,255,255,255);
 
-	//ÉeÉNÉXÉ`ÉÉç¿ïWéwíË
+	//„ÉÜ„ÇØ„Çπ„ÉÅ„É£Â∫ßÊ®ôÊåáÂÆö
 	pVtx[0].tex = D3DXVECTOR2(0.0F, 0.0F);
 	pVtx[1].tex = D3DXVECTOR2(1.0F, 0.0F);
 	pVtx[2].tex = D3DXVECTOR2(0.0F, 1.0F);

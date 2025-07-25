@@ -1,8 +1,8 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		“G‚Ìˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	enemy.h
-* ì¬ŽÒ:		HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		æ•µã®å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	enemy.h
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
@@ -13,15 +13,15 @@
 #include "stageManager.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
-#define	MAX_ENEMY	(30)							// Å‘å”
+#define	MAX_ENEMY	(30)							// æœ€å¤§æ•°
 
 //*****************************************************************************
-// ƒJƒƒ‰‚Ì\‘¢‘Ì
+// ã‚«ãƒ¡ãƒ©ã®æ§‹é€ ä½“
 //*****************************************************************************
 
-//“G‚ÌŽí—Þ
+//æ•µã®ç¨®é¡ž
 typedef enum
 {
 	ENEMY_WHITE,
@@ -30,49 +30,49 @@ typedef enum
 	ENEMY_TYPE_MAX
 }ENEMY_TYPE;
 
-//ƒ‚ƒfƒ‹î•ñ
+//ãƒ¢ãƒ‡ãƒ«æƒ…å ±
 typedef struct
 {
-	LPDIRECT3DTEXTURE9	pD3DTexture;	// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPD3DXMESH  pD3DXMesh;				// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPD3DXBUFFER  pD3DXBuffMat;			// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	DWORD	nNumMat;					// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+	LPDIRECT3DTEXTURE9	pD3DTexture;	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPD3DXMESH  pD3DXMesh;				// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPD3DXBUFFER  pD3DXBuffMat;			// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	DWORD	nNumMat;					// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
 	char filePath[MAX_PATH];
 } ENEMY_MODEL;
 
-//“G\‘¢‘Ì
+//æ•µæ§‹é€ ä½“
 typedef struct
 {
-	D3DXVECTOR3 pos;					// ƒ‚ƒfƒ‹‚ÌˆÊ’u
+	D3DXVECTOR3 pos;					// ãƒ¢ãƒ‡ãƒ«ã®ä½ç½®
 	D3DXVECTOR3 posLSide;
 	D3DXVECTOR3 posRSide;
-	D3DXVECTOR3 rot;					// ƒ‚ƒfƒ‹‚ÌŒü‚«(‰ñ“])
-	D3DXVECTOR3 scl;					// ƒ‚ƒfƒ‹‚Ì‘å‚«‚³(ƒXƒP[ƒ‹)
-	D3DXVECTOR3 move;					// ƒ‚ƒfƒ‹‚ÌˆÚ“®—Ê
-	D3DXVECTOR3 rotAngle;				// ƒ‚ƒfƒ‹‚ÌŒü‚«(‰ñ“])
-	D3DXVECTOR3 rotTarget;				// ƒ‚ƒfƒ‹‚ÌŒü‚«(‰ñ“])
+	D3DXVECTOR3 rot;					// ãƒ¢ãƒ‡ãƒ«ã®å‘ã(å›žè»¢)
+	D3DXVECTOR3 scl;					// ãƒ¢ãƒ‡ãƒ«ã®å¤§ãã•(ã‚¹ã‚±ãƒ¼ãƒ«)
+	D3DXVECTOR3 move;					// ãƒ¢ãƒ‡ãƒ«ã®ç§»å‹•é‡
+	D3DXVECTOR3 rotAngle;				// ãƒ¢ãƒ‡ãƒ«ã®å‘ã(å›žè»¢)
+	D3DXVECTOR3 rotTarget;				// ãƒ¢ãƒ‡ãƒ«ã®å‘ã(å›žè»¢)
 
-	D3DXMATRIX mtxWorld;				// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX
+	D3DXMATRIX mtxWorld;				// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹
 
-	int nIdxShadow;						//Žg—p‚µ‚Ä‚¢‚é‰e‚Ì”Ô†
+	int nIdxShadow;						//ä½¿ç”¨ã—ã¦ã„ã‚‹å½±ã®ç•ªå·
 	bool bUse;							
-	bool bShot;							//’e‚ðŒ‚‚Á‚½‚©
-	bool bEscaping;						//“¦‚°‚éó‘Ô
-	float nCoolDown;					//’e‚ÌƒN[ƒ‹ƒ_ƒEƒ“
-	ENEMY_TYPE type;					//“G‚ÌŽí—Þ
+	bool bShot;							//å¼¾ã‚’æ’ƒã£ãŸã‹
+	bool bEscaping;						//é€ƒã’ã‚‹çŠ¶æ…‹
+	float nCoolDown;					//å¼¾ã®ã‚¯ãƒ¼ãƒ«ãƒ€ã‚¦ãƒ³
+	ENEMY_TYPE type;					//æ•µã®ç¨®é¡ž
 
 	//see
-	bool bSeePlayer;					//ƒvƒŒƒCƒ„[‚ð”­Œ©
-	int nSeePFrame;						//ƒvƒŒƒCƒ„[‚ð”­Œ©‚µ‚½ƒtƒŒƒCƒ€”
+	bool bSeePlayer;					//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ç™ºè¦‹
+	int nSeePFrame;						//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ç™ºè¦‹ã—ãŸãƒ•ãƒ¬ã‚¤ãƒ æ•°
 
 	//Patrol
-	bool bPatrol;						//ƒpƒgƒ[ƒ‹‚©
-	D3DXVECTOR3 posPatrol;				//ƒpƒgƒ[ƒ‹’†‚ÌÀ•W
-	D3DXVECTOR3 rotPatrol;				//ƒpƒgƒ[ƒ‹’†‚ÌŒü‚«
+	bool bPatrol;						//ãƒ‘ãƒˆãƒ­ãƒ¼ãƒ«ã‹
+	D3DXVECTOR3 posPatrol;				//ãƒ‘ãƒˆãƒ­ãƒ¼ãƒ«ä¸­ã®åº§æ¨™
+	D3DXVECTOR3 rotPatrol;				//ãƒ‘ãƒˆãƒ­ãƒ¼ãƒ«ä¸­ã®å‘ã
 } ENEMY;
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 HRESULT InitEnemy(void);
 void UninitEnemy(void);
@@ -80,6 +80,6 @@ void UpdateEnemy(float fTimeSpeed);
 void DrawEnemy(void);
 
 ENEMY *GetEnemy(void);
-//“G‚ÌÝ’u
+//æ•µã®è¨­ç½®
 void SetEnemy( D3DXVECTOR3 pos, float rotY, ENEMY_TYPE type);
 #endif

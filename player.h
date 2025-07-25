@@ -1,8 +1,8 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		ƒvƒŒƒCƒ„[ˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	player.h
-* ì¬ŽÒ:		HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	player.h
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
@@ -13,48 +13,48 @@
 #include "main.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define MAX_PLAYER (1)
 #define INI_NUM_LIFE (3)
 #define INI_NUM_BULLET (3)
 
 //*****************************************************************************
-// ƒJƒƒ‰‚Ì\‘¢‘Ì
+// ã‚«ãƒ¡ãƒ©ã®æ§‹é€ ä½“
 //*****************************************************************************
 typedef struct
 {
-	LPDIRECT3DTEXTURE9	pD3DTexture;	// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPD3DXMESH  pD3DXMesh;				// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPD3DXBUFFER  pD3DXBuffMat;			// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	DWORD	nNumMat;					// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+	LPDIRECT3DTEXTURE9	pD3DTexture;	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPD3DXMESH  pD3DXMesh;				// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPD3DXBUFFER  pD3DXBuffMat;			// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	DWORD	nNumMat;					// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
 
-	D3DXVECTOR3 pos;					// ƒ‚ƒfƒ‹‚ÌˆÊ’u
-	D3DXVECTOR3 posLSide;				// ƒ‚ƒfƒ‹‚Ì¶‘¤‚ÌˆÊ’u
-	D3DXVECTOR3 posRSide;				// ƒ‚ƒfƒ‹‚Ì‰E‘¤‚ÌˆÊ’u
-	D3DXVECTOR3 rot;					// ƒ‚ƒfƒ‹‚ÌŒü‚«(‰ñ“])
-	D3DXVECTOR3 scl;					// ƒ‚ƒfƒ‹‚Ì‘å‚«‚³(ƒXƒP[ƒ‹)
-	D3DXVECTOR3 move;					// ƒ‚ƒfƒ‹‚ÌˆÚ“®—Ê
-	D3DXVECTOR3 rotAngle;				// ƒ‚ƒfƒ‹‚ÌŒü‚«(‰ñ“])
-	D3DXVECTOR3 rotTarget;				// ƒ‚ƒfƒ‹‚ÌŒü‚«(‰ñ“])
+	D3DXVECTOR3 pos;					// ãƒ¢ãƒ‡ãƒ«ã®ä½ç½®
+	D3DXVECTOR3 posLSide;				// ãƒ¢ãƒ‡ãƒ«ã®å·¦å´ã®ä½ç½®
+	D3DXVECTOR3 posRSide;				// ãƒ¢ãƒ‡ãƒ«ã®å³å´ã®ä½ç½®
+	D3DXVECTOR3 rot;					// ãƒ¢ãƒ‡ãƒ«ã®å‘ã(å›žè»¢)
+	D3DXVECTOR3 scl;					// ãƒ¢ãƒ‡ãƒ«ã®å¤§ãã•(ã‚¹ã‚±ãƒ¼ãƒ«)
+	D3DXVECTOR3 move;					// ãƒ¢ãƒ‡ãƒ«ã®ç§»å‹•é‡
+	D3DXVECTOR3 rotAngle;				// ãƒ¢ãƒ‡ãƒ«ã®å‘ã(å›žè»¢)
+	D3DXVECTOR3 rotTarget;				// ãƒ¢ãƒ‡ãƒ«ã®å‘ã(å›žè»¢)
 
-	D3DXMATRIX mtxWorld;				// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX
+	D3DXMATRIX mtxWorld;				// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹
 
-	int nIdxShadow;						//Žg—p‚µ‚Ä‚¢‚é‰e‚Ì”Ô†
+	int nIdxShadow;						//ä½¿ç”¨ã—ã¦ã„ã‚‹å½±ã®ç•ªå·
 	
 	//jump
-	bool inAir;							//ƒWƒƒƒ“ƒv’†‚©
-	int jumpTime;						//ƒWƒƒƒ“ƒv’†‚ÌƒtƒŒƒCƒ€”
+	bool inAir;							//ã‚¸ãƒ£ãƒ³ãƒ—ä¸­ã‹
+	int jumpTime;						//ã‚¸ãƒ£ãƒ³ãƒ—ä¸­ã®ãƒ•ãƒ¬ã‚¤ãƒ æ•°
 
 	//status
-	bool bAlive;						//¶‚«‚Ä‚¢‚é‚©
-	int nBullet;						//’e‚Ì”
-	int nLife;							//ƒ‰ƒCƒt‚Ì”
-	bool bRun;							//‘–‚Á‚Ä‚¢‚é‚©
+	bool bAlive;						//ç”Ÿãã¦ã„ã‚‹ã‹
+	int nBullet;						//å¼¾ã®æ•°
+	int nLife;							//ãƒ©ã‚¤ãƒ•ã®æ•°
+	bool bRun;							//èµ°ã£ã¦ã„ã‚‹ã‹
 } PLAYER;
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 HRESULT InitPlayer(void);
 void UninitPlayer(void);
@@ -62,8 +62,8 @@ void UpdatePlayer(void);
 void DrawPlayer(void);
 
 PLAYER *GetPlayer(void);
-//ƒvƒŒƒCƒ„[‚ÌŽ€–Sˆ—
+//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ­»äº¡å‡¦ç†
 void SetPlayerDeath(void);
-//ƒvƒŒƒCƒ„[‚ÌÝ’u
+//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è¨­ç½®
 void SetPlayer( D3DXVECTOR3 pos, float rotY, int numBullet, int numLife);
 #endif

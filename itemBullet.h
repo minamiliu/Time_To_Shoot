@@ -1,8 +1,8 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		ƒAƒCƒeƒ€(’e)‚Ìˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	itemBullet.h
-* ì¬ŽÒ:		HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		ã‚¢ã‚¤ãƒ†ãƒ (å¼¾)ã®å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	itemBullet.h
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
@@ -14,34 +14,34 @@
 #define MAX_ITEM_BULLET (3)
 
 //*****************************************************************************
-// ƒJƒƒ‰‚Ì\‘¢‘Ì
+// ã‚«ãƒ¡ãƒ©ã®æ§‹é€ ä½“
 //*****************************************************************************
 typedef struct
 {
-	LPDIRECT3DTEXTURE9	pD3DTexture;	// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPD3DXMESH  pD3DXMesh;				// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPD3DXBUFFER  pD3DXBuffMat;			// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	DWORD	nNumMat;					// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+	LPDIRECT3DTEXTURE9	pD3DTexture;	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPD3DXMESH  pD3DXMesh;				// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPD3DXBUFFER  pD3DXBuffMat;			// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	DWORD	nNumMat;					// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
 
-	D3DXVECTOR3 pos;					// ƒ‚ƒfƒ‹‚ÌˆÊ’u
-	D3DXVECTOR3 rot;					// ƒ‚ƒfƒ‹‚ÌŒü‚«(‰ñ“])
-	D3DXVECTOR3 scl;					// ƒ‚ƒfƒ‹‚Ì‘å‚«‚³(ƒXƒP[ƒ‹)
+	D3DXVECTOR3 pos;					// ãƒ¢ãƒ‡ãƒ«ã®ä½ç½®
+	D3DXVECTOR3 rot;					// ãƒ¢ãƒ‡ãƒ«ã®å‘ã(å›žè»¢)
+	D3DXVECTOR3 scl;					// ãƒ¢ãƒ‡ãƒ«ã®å¤§ãã•(ã‚¹ã‚±ãƒ¼ãƒ«)
 
 
-	D3DXMATRIX mtxWorld;				// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX
+	D3DXMATRIX mtxWorld;				// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹
 
-	int nIdxShadow;						//Žg—p‚µ‚Ä‚¢‚é‰e‚Ì”Ô†
+	int nIdxShadow;						//ä½¿ç”¨ã—ã¦ã„ã‚‹å½±ã®ç•ªå·
 	bool bUse;
 }ITEM_BULLET;
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 HRESULT InitItemBullet(void);
 void UninitItemBullet(void);
 void UpdateItemBullet(void);
 void DrawItemBullet(void);
 
-//ƒAƒCƒeƒ€’e‚ÌÝ’u
+//ã‚¢ã‚¤ãƒ†ãƒ å¼¾ã®è¨­ç½®
 void SetItemBullet( D3DXVECTOR3 pos);
 #endif

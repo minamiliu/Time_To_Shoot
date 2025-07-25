@@ -1,14 +1,14 @@
-/*******************************************************************************
+﻿/*******************************************************************************
 *
-* �^�C�g��:		�G�̌�(�p�[�e�B�N��)����
-* �v���O������:	particle.h
-* �쐬��:		HAL�����Q�[���w�ȁ@����G
+* タイトル:		敵の血(パーティクル)処理
+* プログラム名:	particle.h
+* 作成者:		HAL東京ゲーム学科　劉南宏
 *
 *******************************************************************************/
 
 
 /*******************************************************************************
-* �C���N���[�h�t�@�C��
+* インクルードファイル
 *******************************************************************************/
 #ifndef _PARTICLE_H_
 #define _PARTICLE_H_
@@ -17,44 +17,44 @@
 
 #define MAX_DOT	(64)
 
-//�ꖇ�̃h�b�g�̍\����
+//一枚のドットの構造体
 typedef struct
 {
-	D3DXMATRIX mtxWorld;								// ���[���h�}�g���b�N�X
+	D3DXMATRIX mtxWorld;								// ワールドマトリックス
 
-	D3DXVECTOR3 posDot;									// �ꖇ�h�b�g�̈ʒu
-	D3DXVECTOR3 rotDot;									// �ꖇ�h�b�g�̌���(��])
-	D3DXVECTOR3 sclDot;									// �ꖇ�h�b�g�̑傫��(�X�P�[��)
-	D3DXVECTOR3 movDot;									// �ꖇ�h�b�g�̈ړ���
+	D3DXVECTOR3 posDot;									// 一枚ドットの位置
+	D3DXVECTOR3 rotDot;									// 一枚ドットの向き(回転)
+	D3DXVECTOR3 sclDot;									// 一枚ドットの大きさ(スケール)
+	D3DXVECTOR3 movDot;									// 一枚ドットの移動量
 
-	float alpha;										//�A���t�@�l
-	int nIdxShadow;										//�g�p���Ă���e�̔ԍ�
-	float timer;										//�t���C���𐔂���
+	float alpha;										//アルファ値
+	int nIdxShadow;										//使用している影の番号
+	float timer;										//フレイムを数える
 	bool bUse;
 }PARTICLE_DOT;
 
-//��̃p�[�e�B�N���̍\����
+//一つのパーティクルの構造体
 typedef struct
 {
-	LPDIRECT3DVERTEXBUFFER9 pD3DVtxBuffParticle;		// ���_�o�b�t�@�C���^�[�t�F�[�X�ւ̃|�C���^
-	PARTICLE_DOT aPtcDot[MAX_DOT];						//�h�b�g��
-	bool bDraw;											//�\�����邩
-	int nNeedCreateNum;									//�������鐔
-	int nNeedDeteNum;									//�����Ă�����
-	int nPtcCreateRate;									//�h�b�g������
-	int nPtcCreateCounter;								//�h�b�g�����̃N�[���_�E��
-	D3DXVECTOR3 pos;									//�p�[�e�B�N���̈ʒu
+	LPDIRECT3DVERTEXBUFFER9 pD3DVtxBuffParticle;		// 頂点バッファインターフェースへのポインタ
+	PARTICLE_DOT aPtcDot[MAX_DOT];						//ドット数
+	bool bDraw;											//表示するか
+	int nNeedCreateNum;									//生成する数
+	int nNeedDeteNum;									//消えていく数
+	int nPtcCreateRate;									//ドット生成率
+	int nPtcCreateCounter;								//ドット生成のクールダウン
+	D3DXVECTOR3 pos;									//パーティクルの位置
 }PARTICLE;
 
 //*****************************************************************************
-// �v���g�^�C�v�錾
+// プロトタイプ宣言
 //*****************************************************************************
 HRESULT InitParticle(void);
 void UninitParticle(void);
 void UpdateParticle( float fTimeSpeed);
 void DrawParticle(void);
 
-//�p�[�e�B�N���̐ݒu
+//パーティクルの設置
 void SetParticle(int needNum, D3DXVECTOR3 pos);
 
 #endif

@@ -1,13 +1,13 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		“G‚Ì’e‚Ìˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	enemyBullet.cpp
-* ì¬Ò:		HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		æ•µã®å¼¾ã®å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	enemyBullet.cpp
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 #include "enemyBullet.h"
 #include "debugproc.h"
@@ -20,15 +20,15 @@
 
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
 
-#define MODEL_BULLET		"data/MODEL/player_bullet.x"					// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
+#define MODEL_BULLET		"data/MODEL/player_bullet.x"					// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
 
-#define VALUE_MOVE		(0.0f)									// ˆÚ“®—Ê
-#define VALUE_ROTATE	(D3DX_PI * 0.1f) 						// ‰ñ“]—Ê
+#define VALUE_MOVE		(0.0f)									// ç§»å‹•é‡
+#define VALUE_ROTATE	(D3DX_PI * 0.1f) 						// å›è»¢é‡
 
 #define MODEL_POS_X	(0)
 #define MODEL_POS_Y	(100)
@@ -39,18 +39,18 @@
 
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 
 
 //*****************************************************************************
-// ƒOƒ[ƒoƒ‹•Ï”
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 //*****************************************************************************
 ENEMY_BULLET g_E_Bullet[MAX_ENEMY_BULLET];
 
 
 //=============================================================================
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT InitEnemyBullet(void)
 {
@@ -58,7 +58,7 @@ HRESULT InitEnemyBullet(void)
 	
 	for(int nCntBullet = 0; nCntBullet < MAX_ENEMY_BULLET; nCntBullet++)
 	{
-		// ˆÊ’uE‰ñ“]EƒXƒP[ƒ‹‚Ì‰Šúİ’è
+		// ä½ç½®ãƒ»å›è»¢ãƒ»ã‚¹ã‚±ãƒ¼ãƒ«ã®åˆæœŸè¨­å®š
 		g_E_Bullet[nCntBullet].pos = D3DXVECTOR3( MODEL_POS_X, MODEL_POS_Y, MODEL_POS_Z);
 		g_E_Bullet[nCntBullet].rot = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 		g_E_Bullet[nCntBullet].scl = D3DXVECTOR3( 0.5f, 0.5f, 0.5f);
@@ -68,22 +68,22 @@ HRESULT InitEnemyBullet(void)
 		g_E_Bullet[nCntBullet].bUse = false;
 		g_E_Bullet[nCntBullet].nJustShoot = 0;
 
-		// ƒ‚ƒfƒ‹‚ÉŠÖ‚·‚é•Ï”‚Ì‰Šú‰»							
-		g_E_Bullet[nCntBullet].pD3DTexture = NULL;		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		g_E_Bullet[nCntBullet].pD3DXMesh = NULL;		// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		g_E_Bullet[nCntBullet].pD3DXBuffMat = NULL;		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		g_E_Bullet[nCntBullet].nNumMat = 0;				// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+		// ãƒ¢ãƒ‡ãƒ«ã«é–¢ã™ã‚‹å¤‰æ•°ã®åˆæœŸåŒ–							
+		g_E_Bullet[nCntBullet].pD3DTexture = NULL;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+		g_E_Bullet[nCntBullet].pD3DXMesh = NULL;		// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+		g_E_Bullet[nCntBullet].pD3DXBuffMat = NULL;		// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+		g_E_Bullet[nCntBullet].nNumMat = 0;				// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
 
-		// Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+		// Xãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 		if(FAILED(D3DXLoadMeshFromX(
-			MODEL_BULLET,				// “Ç‚İ‚Şƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹–¼(Xƒtƒ@ƒCƒ‹)
-			D3DXMESH_SYSTEMMEM,			// ƒƒbƒVƒ…‚Ìì¬ƒIƒvƒVƒ‡ƒ“‚ğw’è
-			pDevice,					// IDirect3DDevice9ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-			NULL,						// —×Ú«ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-			&g_E_Bullet[nCntBullet].pD3DXBuffMat,		// ƒ}ƒeƒŠƒAƒ‹ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-			NULL,						// ƒGƒtƒFƒNƒgƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”z—ñ‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-			&g_E_Bullet[nCntBullet].nNumMat,			// D3DXMATERIAL\‘¢‘Ì‚Ì”
-			&g_E_Bullet[nCntBullet].pD3DXMesh			// ID3DXMeshƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ÌƒAƒhƒŒƒX
+			MODEL_BULLET,				// èª­ã¿è¾¼ã‚€ãƒ¢ãƒ‡ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«å(Xãƒ•ã‚¡ã‚¤ãƒ«)
+			D3DXMESH_SYSTEMMEM,			// ãƒ¡ãƒƒã‚·ãƒ¥ã®ä½œæˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’æŒ‡å®š
+			pDevice,					// IDirect3DDevice9ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+			NULL,						// éš£æ¥æ€§ãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+			&g_E_Bullet[nCntBullet].pD3DXBuffMat,		// ãƒãƒ†ãƒªã‚¢ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+			NULL,						// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®é…åˆ—ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+			&g_E_Bullet[nCntBullet].nNumMat,			// D3DXMATERIALæ§‹é€ ä½“ã®æ•°
+			&g_E_Bullet[nCntBullet].pD3DXMesh			// ID3DXMeshã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 			)))
 		{
 			return E_FAIL;
@@ -95,19 +95,19 @@ HRESULT InitEnemyBullet(void)
 }
 
 //=============================================================================
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //=============================================================================
 void UninitEnemyBullet(void)
 {
 	for(int nCntBullet = 0; nCntBullet < MAX_ENEMY_BULLET; nCntBullet++)
 	{
-		// ƒƒbƒVƒ…‚ÌŠJ•ú
+		// ãƒ¡ãƒƒã‚·ãƒ¥ã®é–‹æ”¾
 		if(g_E_Bullet[nCntBullet].pD3DXMesh != NULL)
 		{
 			g_E_Bullet[nCntBullet].pD3DXMesh->Release();
 			g_E_Bullet[nCntBullet].pD3DXMesh = NULL;
 		}
-		// ƒ}ƒeƒŠƒAƒ‹‚ÌŠJ•ú
+		// ãƒãƒ†ãƒªã‚¢ãƒ«ã®é–‹æ”¾
 		if(g_E_Bullet[nCntBullet].pD3DXBuffMat != NULL)
 		{
 			g_E_Bullet[nCntBullet].pD3DXBuffMat->Release();
@@ -120,7 +120,7 @@ void UninitEnemyBullet(void)
 }
 
 //=============================================================================
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 //=============================================================================
 void UpdateEnemyBullet( float fTimeSpeed)
 {
@@ -131,13 +131,13 @@ void UpdateEnemyBullet( float fTimeSpeed)
 	{
 		if(g_E_Bullet[nCntBullet].bUse)
 		{
-			//ƒXƒe[ƒW‚Ì’†‚É‚¢‚È‚©‚Á‚½‚ç
+			//ã‚¹ãƒ†ãƒ¼ã‚¸ã®ä¸­ã«ã„ãªã‹ã£ãŸã‚‰
 			if(!HitCheckBall( g_E_Bullet[nCntBullet].pos, 2000.0f, D3DXVECTOR3( 0.0f, 0.0f, 0.0f), 0.0f))
 			{
 				g_E_Bullet[nCntBullet].bUse = false;
 			}
 
-			//•Ç‚É“–‚½‚Á‚½‚ç
+			//å£ã«å½“ãŸã£ãŸã‚‰
 			if( HitCheckMeshWall( g_E_Bullet[nCntBullet].pos, g_E_Bullet[nCntBullet].pos + g_E_Bullet[nCntBullet].front, NULL, NULL))
 			{
 				g_E_Bullet[nCntBullet].bUse = false;			
@@ -152,7 +152,7 @@ void UpdateEnemyBullet( float fTimeSpeed)
 				g_E_Bullet[nCntBullet].pos += g_E_Bullet[nCntBullet].front * fTimeSpeed;
 			}
 
-			//ƒvƒŒƒCƒ„[‚É“–‚½‚Á‚½‚ç
+			//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«å½“ãŸã£ãŸã‚‰
 			if( pPlayer->bAlive)
 			{
 				if( HitCheckBall( g_E_Bullet[nCntBullet].pos, 1.0f, pCamera->posV, 10.0f) ||
@@ -176,7 +176,7 @@ void UpdateEnemyBullet( float fTimeSpeed)
 }
 
 //=============================================================================
-// •`‰æˆ—
+// æç”»å‡¦ç†
 //=============================================================================
 void DrawEnemyBullet(void)
 {
@@ -189,40 +189,40 @@ void DrawEnemyBullet(void)
 	{
 		if(g_E_Bullet[nCntBullet].bUse)
 		{
-			// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+			// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 			D3DXMatrixIdentity( &g_E_Bullet[nCntBullet].mtxWorld);
 	
-			// ƒXƒP[ƒ‹‚ğ”½‰f
+			// ã‚¹ã‚±ãƒ¼ãƒ«ã‚’åæ˜ 
 			D3DXMatrixScaling( &mtxScl, g_E_Bullet[nCntBullet].scl.x, g_E_Bullet[nCntBullet].scl.y, g_E_Bullet[nCntBullet].scl.z);
 			D3DXMatrixMultiply( &g_E_Bullet[nCntBullet].mtxWorld, &g_E_Bullet[nCntBullet].mtxWorld, &mtxScl);
 	
-			// ‰ñ“]‚ğ”½‰f
+			// å›è»¢ã‚’åæ˜ 
 			D3DXMatrixRotationYawPitchRoll( &mtxRot, g_E_Bullet[nCntBullet].rot.y, g_E_Bullet[nCntBullet].rot.x, g_E_Bullet[nCntBullet].rot.z);
 			D3DXMatrixMultiply( &g_E_Bullet[nCntBullet].mtxWorld, &g_E_Bullet[nCntBullet].mtxWorld, &mtxRot);
 	
-			// ˆÚ“®‚ğ”½‰f
+			// ç§»å‹•ã‚’åæ˜ 
 			D3DXMatrixTranslation( &mtxTranslate, g_E_Bullet[nCntBullet].pos.x, g_E_Bullet[nCntBullet].pos.y, g_E_Bullet[nCntBullet].pos.z);
 			D3DXMatrixMultiply( &g_E_Bullet[nCntBullet].mtxWorld, &g_E_Bullet[nCntBullet].mtxWorld, &mtxTranslate);
 	
-			// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ìİ’è
+			// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®è¨­å®š
 			pDevice->SetTransform( D3DTS_WORLD, &g_E_Bullet[nCntBullet].mtxWorld);
 
-			// Œ»İ‚Ìƒ}ƒeƒŠƒAƒ‹‚ğæ“¾
+			// ç¾åœ¨ã®ãƒãƒ†ãƒªã‚¢ãƒ«ã‚’å–å¾—
 			pDevice->GetMaterial(&matDef);
 	
-			// ƒ}ƒeƒŠƒAƒ‹î•ñ‚É‘Î‚·‚éƒ|ƒCƒ“ƒ^‚ğæ“¾
+			// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã«å¯¾ã™ã‚‹ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 			pD3DXMat = (D3DXMATERIAL *)g_E_Bullet[nCntBullet].pD3DXBuffMat->GetBufferPointer();
 			for(int nCntMat = 0; nCntMat < (int)g_E_Bullet[nCntBullet].nNumMat; nCntMat++)
 			{
-				// ƒ}ƒeƒŠƒAƒ‹‚Ìİ’è
+				// ãƒãƒ†ãƒªã‚¢ãƒ«ã®è¨­å®š
 				pDevice->SetMaterial( &pD3DXMat[nCntMat].MatD3D);
-				// ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+				// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 				pDevice->SetTexture( 0, g_E_Bullet[nCntBullet].pD3DTexture);
-				// •`‰æ
+				// æç”»
 				g_E_Bullet[nCntBullet].pD3DXMesh->DrawSubset( nCntMat);
 			}
 
-			// ƒ}ƒeƒŠƒAƒ‹‚ğƒfƒtƒHƒ‹ƒg‚É–ß‚·
+			// ãƒãƒ†ãƒªã‚¢ãƒ«ã‚’ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«æˆ»ã™
 			pDevice->SetMaterial( &matDef);		
 		}
 	}
@@ -241,11 +241,11 @@ void SetEnemyBullet( D3DXVECTOR3 pos, D3DXVECTOR3 target)
 	{
 		if(!g_E_Bullet[nCntBullet].bUse) 
 		{
-			//Œü‚«‚ğ•ÏX
+			//å‘ãã‚’å¤‰æ›´
 			g_E_Bullet[nCntBullet].rot = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 			g_E_Bullet[nCntBullet].rot = GetRotationAngle( pos, target, g_E_Bullet[nCntBullet].rot);
 
-			//ˆÊ’u‚ğİ’è
+			//ä½ç½®ã‚’è¨­å®š
 			g_E_Bullet[nCntBullet].pos = pos;
 			g_E_Bullet[nCntBullet].front = front * BULLET_SPEED;
 			g_E_Bullet[nCntBullet].bUse = true;

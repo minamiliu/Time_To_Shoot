@@ -1,28 +1,28 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		•¬…‚Ìƒ‚ƒfƒ‹‚Ì•\¦ˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	fountainCircle.cpp
-* ì¬Ò:		HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		å™´æ°´ã®ãƒ¢ãƒ‡ãƒ«ã®è¡¨ç¤ºå‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	fountainCircle.cpp
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 #include "fountainCircle.h"
 #include "debugproc.h"
 #include "input.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
 
-#define MODEL_PLANE		"data/MODEL/fountain.x"				// “Ç‚İ‚ŞXƒtƒ@ƒCƒ‹–¼
+#define MODEL_PLANE		"data/MODEL/fountain.x"				// èª­ã¿è¾¼ã‚€Xãƒ•ã‚¡ã‚¤ãƒ«å
 
-#define VALUE_MOVE		(5.0f)								// ˆÚ“®—Ê
-#define VALUE_ROTATE	(D3DX_PI * 0.1f) 					// ‰ñ“]—Ê
+#define VALUE_MOVE		(5.0f)								// ç§»å‹•é‡
+#define VALUE_ROTATE	(D3DX_PI * 0.1f) 					// å›è»¢é‡
 
 #define MODEL_POS_X	(-700)
 #define MODEL_POS_Y	(5)
@@ -31,23 +31,23 @@
 #define MODEL_SPHERE (20)
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 
 
 //*****************************************************************************
-// ƒOƒ[ƒoƒ‹•Ï”
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 //*****************************************************************************
 FOUNTAIN_CIRCLE g_FountainCircle;
 
 //=============================================================================
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT InitFountainCircle(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	
-	// ˆÊ’uE‰ñ“]EƒXƒP[ƒ‹‚Ì‰Šúİ’è
+	// ä½ç½®ãƒ»å›è»¢ãƒ»ã‚¹ã‚±ãƒ¼ãƒ«ã®åˆæœŸè¨­å®š
 	g_FountainCircle.pos = D3DXVECTOR3( MODEL_POS_X, MODEL_POS_Y, MODEL_POS_Z);
 	g_FountainCircle.rot = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 	g_FountainCircle.scl = D3DXVECTOR3( 10.0f, 5.0f, 10.0f);
@@ -57,39 +57,39 @@ HRESULT InitFountainCircle(void)
 	g_FountainCircle.fRadius = 150.0f;
 	g_FountainCircle.bUse = true;
 	
-	// ƒ‚ƒfƒ‹‚ÉŠÖ‚·‚é•Ï”‚Ì‰Šú‰»
-	g_FountainCircle.pD3DXMesh = NULL;			// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	g_FountainCircle.pD3DXBuffMat = NULL;		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	g_FountainCircle.nNumMat = 0;				// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+	// ãƒ¢ãƒ‡ãƒ«ã«é–¢ã™ã‚‹å¤‰æ•°ã®åˆæœŸåŒ–
+	g_FountainCircle.pD3DXMesh = NULL;			// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	g_FountainCircle.pD3DXBuffMat = NULL;		// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	g_FountainCircle.nNumMat = 0;				// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
 
-	// Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+	// Xãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 	if(FAILED(D3DXLoadMeshFromX(
-		MODEL_PLANE,				// “Ç‚İ‚Şƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹–¼(Xƒtƒ@ƒCƒ‹)
-		D3DXMESH_SYSTEMMEM,			// ƒƒbƒVƒ…‚Ìì¬ƒIƒvƒVƒ‡ƒ“‚ğw’è
-		pDevice,					// IDirect3DDevice9ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		NULL,						// —×Ú«ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		&g_FountainCircle.pD3DXBuffMat,		// ƒ}ƒeƒŠƒAƒ‹ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		NULL,						// ƒGƒtƒFƒNƒgƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”z—ñ‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		&g_FountainCircle.nNumMat,			// D3DXMATERIAL\‘¢‘Ì‚Ì”
-		&g_FountainCircle.pD3DXMesh			// ID3DXMeshƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ÌƒAƒhƒŒƒX
+		MODEL_PLANE,				// èª­ã¿è¾¼ã‚€ãƒ¢ãƒ‡ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«å(Xãƒ•ã‚¡ã‚¤ãƒ«)
+		D3DXMESH_SYSTEMMEM,			// ãƒ¡ãƒƒã‚·ãƒ¥ã®ä½œæˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’æŒ‡å®š
+		pDevice,					// IDirect3DDevice9ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+		NULL,						// éš£æ¥æ€§ãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+		&g_FountainCircle.pD3DXBuffMat,		// ãƒãƒ†ãƒªã‚¢ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+		NULL,						// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®é…åˆ—ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+		&g_FountainCircle.nNumMat,			// D3DXMATERIALæ§‹é€ ä½“ã®æ•°
+		&g_FountainCircle.pD3DXMesh			// ID3DXMeshã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 		)))
 	{
 		return E_FAIL;
 	}
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^‚Ì‰Šú‰»
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã®åˆæœŸåŒ–
 	for(int nCntMat = 0; nCntMat < MAX_D3D_MAT; nCntMat++)
 	{
-		g_FountainCircle.pD3DTexture[nCntMat] = NULL;		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
+		g_FountainCircle.pD3DTexture[nCntMat] = NULL;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹î•ñ‚É‘Î‚·‚éƒ|ƒCƒ“ƒ^‚ğæ“¾
+	// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã«å¯¾ã™ã‚‹ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	D3DXMATERIAL *pD3DXMat = (D3DXMATERIAL *)g_FountainCircle.pD3DXBuffMat->GetBufferPointer();
 	if((int)g_FountainCircle.nNumMat <= MAX_D3D_MAT)
 	{
 		for(int nCntMat = 0; nCntMat < (int)g_FountainCircle.nNumMat; nCntMat++)
 		{
-			// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+			// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 			D3DXCreateTextureFromFile( pDevice, pD3DXMat[nCntMat].pTextureFilename, &g_FountainCircle.pD3DTexture[nCntMat]);
 		}
 	}
@@ -99,11 +99,11 @@ HRESULT InitFountainCircle(void)
 }
 
 //=============================================================================
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //=============================================================================
 void UninitFountainCircle(void)
 {
-	// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é–‹æ”¾
 	for(int nCntMat = 0; nCntMat < MAX_D3D_MAT; nCntMat++)
 	{
 		if(g_FountainCircle.pD3DTexture[nCntMat] != NULL)
@@ -113,13 +113,13 @@ void UninitFountainCircle(void)
 		}
 	}
 
-	// ƒƒbƒVƒ…‚ÌŠJ•ú
+	// ãƒ¡ãƒƒã‚·ãƒ¥ã®é–‹æ”¾
 	if(g_FountainCircle.pD3DXMesh != NULL)
 	{
 		g_FountainCircle.pD3DXMesh->Release();
 		g_FountainCircle.pD3DXMesh = NULL;
 	}
-	// ƒ}ƒeƒŠƒAƒ‹‚ÌŠJ•ú
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®é–‹æ”¾
 	if(g_FountainCircle.pD3DXBuffMat != NULL)
 	{
 		g_FountainCircle.pD3DXBuffMat->Release();
@@ -130,7 +130,7 @@ void UninitFountainCircle(void)
 }
 
 //=============================================================================
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 //=============================================================================
 void UpdateFountainCircle(void)
 {
@@ -138,7 +138,7 @@ void UpdateFountainCircle(void)
 }
 
 //=============================================================================
-// •`‰æˆ—
+// æç”»å‡¦ç†
 //=============================================================================
 void DrawFountainCircle(void)
 {
@@ -149,50 +149,50 @@ void DrawFountainCircle(void)
 	D3DXMATERIAL *pD3DXMat;
 	D3DMATERIAL9 matDef;
 	
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 	D3DXMatrixIdentity( &g_FountainCircle.mtxWorld);
 	
-	// ƒXƒP[ƒ‹‚ğ”½‰f
+	// ã‚¹ã‚±ãƒ¼ãƒ«ã‚’åæ˜ 
 	D3DXMatrixScaling( &mtxScl, g_FountainCircle.scl.x, g_FountainCircle.scl.y, g_FountainCircle.scl.z);
 	D3DXMatrixMultiply( &g_FountainCircle.mtxWorld, &g_FountainCircle.mtxWorld, &mtxScl);
 	
-	// ‰ñ“]‚ğ”½‰f
+	// å›è»¢ã‚’åæ˜ 
 	D3DXMatrixRotationYawPitchRoll( &mtxRot, g_FountainCircle.rot.y, g_FountainCircle.rot.x, g_FountainCircle.rot.z);
 	D3DXMatrixMultiply( &g_FountainCircle.mtxWorld, &g_FountainCircle.mtxWorld, &mtxRot);
 	
-	// ˆÚ“®‚ğ”½‰f
+	// ç§»å‹•ã‚’åæ˜ 
 	D3DXMatrixTranslation( &mtxTranslate, g_FountainCircle.pos.x, g_FountainCircle.pos.y, g_FountainCircle.pos.z);
 	D3DXMatrixMultiply( &g_FountainCircle.mtxWorld, &g_FountainCircle.mtxWorld, &mtxTranslate);
 	
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ìİ’è
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®è¨­å®š
 	pDevice->SetTransform( D3DTS_WORLD, &g_FountainCircle.mtxWorld);
 
-	// Œ»İ‚Ìƒ}ƒeƒŠƒAƒ‹‚ğæ“¾
+	// ç¾åœ¨ã®ãƒãƒ†ãƒªã‚¢ãƒ«ã‚’å–å¾—
 	pDevice->GetMaterial(&matDef);
 
-	// ƒ}ƒeƒŠƒAƒ‹î•ñ‚É‘Î‚·‚éƒ|ƒCƒ“ƒ^‚ğæ“¾
+	// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã«å¯¾ã™ã‚‹ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	pD3DXMat = (D3DXMATERIAL *)g_FountainCircle.pD3DXBuffMat->GetBufferPointer();
 	
 	for(int nCntMat = 0; nCntMat < (int)g_FountainCircle.nNumMat; nCntMat++)
 	{
-		// ƒ}ƒeƒŠƒAƒ‹‚Ìİ’è
+		// ãƒãƒ†ãƒªã‚¢ãƒ«ã®è¨­å®š
 		pDevice->SetMaterial( &pD3DXMat[nCntMat].MatD3D);
-		// ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 		pDevice->SetTexture( 0, g_FountainCircle.pD3DTexture[nCntMat]);
 
-		// •`‰æ
+		// æç”»
 		g_FountainCircle.pD3DXMesh->DrawSubset( nCntMat);
 
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹‚ğƒfƒtƒHƒ‹ƒg‚É–ß‚·
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã‚’ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«æˆ»ã™
 	pDevice->SetMaterial( &matDef);
 
 
 }
 
 //=============================================================================
-// ƒ‚ƒfƒ‹‚Ìæ“¾
+// ãƒ¢ãƒ‡ãƒ«ã®å–å¾—
 //=============================================================================
 FOUNTAIN_CIRCLE *GetFountainCircle(void)
 {

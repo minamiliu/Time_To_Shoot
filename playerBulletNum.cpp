@@ -1,57 +1,57 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		ƒeƒNƒXƒ`ƒƒ ƒvƒŒƒCƒ„[‚Ì’e‚Ì”•\Ž¦ˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	playerBulletNum.cpp
-* ì¬ŽÒ:		HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		ãƒ†ã‚¯ã‚¹ãƒãƒ£ ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å¼¾ã®æ•°è¡¨ç¤ºå‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	playerBulletNum.cpp
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 
 #include "playerBulletNum.h"
 #include "player.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
 
 
-#define	TEXTURE_POLYGON				"data/TEXTURE/UI/PlayerBullet.png"// “Ç‚Ýž‚ÞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	POLYGON_POS_X				(1100)							// ƒ|ƒŠƒSƒ“‚ÌŠî€ˆÊ’u(‚wÀ•W)
-#define	POLYGON_POS_Y				(25)							// ƒ|ƒŠƒSƒ“‚ÌŠî€ˆÊ’u(‚xÀ•W)
-#define	POLYGON_SIZE_X				(50)							// ƒ|ƒŠƒSƒ“‚Ì•
-#define	POLYGON_SIZE_Y				(100)							// ƒ|ƒŠƒSƒ“‚Ì‚‚³
+#define	TEXTURE_POLYGON				"data/TEXTURE/UI/PlayerBullet.png"// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
+#define	POLYGON_POS_X				(1100)							// ãƒãƒªã‚´ãƒ³ã®åŸºæº–ä½ç½®(ï¼¸åº§æ¨™)
+#define	POLYGON_POS_Y				(25)							// ãƒãƒªã‚´ãƒ³ã®åŸºæº–ä½ç½®(ï¼¹åº§æ¨™)
+#define	POLYGON_SIZE_X				(50)							// ãƒãƒªã‚´ãƒ³ã®å¹…
+#define	POLYGON_SIZE_Y				(100)							// ãƒãƒªã‚´ãƒ³ã®é«˜ã•
 
-#define	TEX_PATTERN_DIVIDE_X		(2)							// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚w•ûŒü)
-#define	TEX_PATTERN_DIVIDE_Y		(1)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚x•ûŒü)
+#define	TEX_PATTERN_DIVIDE_X		(2)							// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¸æ–¹å‘)
+#define	TEX_PATTERN_DIVIDE_Y		(1)								// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¹æ–¹å‘)
 
-#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚w•ûŒü)(1.0f/X•ûŒü•ªŠ„”)
-#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚x•ûŒü)(1.0f/Y•ûŒü•ªŠ„”)
+#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¸æ–¹å‘)(1.0f/Xæ–¹å‘åˆ†å‰²æ•°)
+#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¹æ–¹å‘)(1.0f/Yæ–¹å‘åˆ†å‰²æ•°)
 
-#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X*TEX_PATTERN_DIVIDE_Y)	// ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒpƒ^[ƒ“”(X•ûŒü•ªŠ„”~Y•ûŒü•ªŠ„”)
-#define	TIME_CHANGE_PATTERN			(10)							// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌØ‚è‘Ö‚í‚éƒ^ƒCƒ~ƒ“ƒO(ƒtƒŒ[ƒ€”)
+#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X*TEX_PATTERN_DIVIDE_Y)	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ‘ã‚¿ãƒ¼ãƒ³æ•°(Xæ–¹å‘åˆ†å‰²æ•°Ã—Yæ–¹å‘åˆ†å‰²æ•°)
+#define	TIME_CHANGE_PATTERN			(10)							// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®åˆ‡ã‚Šæ›¿ã‚ã‚‹ã‚¿ã‚¤ãƒŸãƒ³ã‚°(ãƒ•ãƒ¬ãƒ¼ãƒ æ•°)
 
-#define	VALUE_MOVE					(0.0f)							// ƒ|ƒŠƒSƒ“‚ÌˆÚ“®—Ê
+#define	VALUE_MOVE					(0.0f)							// ãƒãƒªã‚´ãƒ³ã®ç§»å‹•é‡
 #define NUM_DIGIT					(3)
 
 
 /*******************************************************************************
-* \‘¢‘Ì’è‹`
+* æ§‹é€ ä½“å®šç¾©
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒvƒƒgƒ^ƒCƒvéŒ¾
+* ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 *******************************************************************************/
 HRESULT MakeVertexNumBullet(LPDIRECT3DDEVICE9 pDevice);
 //void SetVertexScore(void);
 void SetTextureNumBullet( int nPlayerIdx, int nIdx, int number);
 
 /*******************************************************************************
-* ƒOƒ[ƒoƒ‹•Ï”
+* ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 *******************************************************************************/
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBufferNumWin = NULL;
 LPDIRECT3DTEXTURE9 g_pTextureNumWin = NULL;
@@ -61,7 +61,7 @@ NUM_BULLET	g_numBullet[MAX_PLAYER];
 
 
 //=============================================================================
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT InitNumBullet()
 {
@@ -72,7 +72,7 @@ HRESULT InitNumBullet()
 	g_numBullet[0].col = D3DCOLOR_RGBA(255,255,0,255); //yellow 
 
 
-	//l”•ª‚Ì‚ÝA‰Šú‰»
+	//äººæ•°åˆ†ã®ã¿ã€åˆæœŸåŒ–
 	for(int nCntPlayer = 0; nCntPlayer < MAX_PLAYER; nCntPlayer++)
 	{
 		g_numBullet[nCntPlayer].size = D3DXVECTOR3( POLYGON_SIZE_X, POLYGON_SIZE_Y, 0.0f);
@@ -82,48 +82,48 @@ HRESULT InitNumBullet()
 	}
 
 
-	//’¸“_î•ñ‚Ìì¬
+	//é ‚ç‚¹æƒ…å ±ã®ä½œæˆ
 	if(FAILED(MakeVertexNumBullet(pDevice)))
 	{
 		return E_FAIL;
 	}
 
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
-	D3DXCreateTextureFromFile(pDevice,				// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-								TEXTURE_POLYGON,	// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-								&g_pTextureNumWin);	// “Ç‚Ýž‚Þƒƒ‚ƒŠ[
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
+	D3DXCreateTextureFromFile(pDevice,				// ãƒ‡ãƒã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+								TEXTURE_POLYGON,	// ãƒ•ã‚¡ã‚¤ãƒ«ã®åå‰
+								&g_pTextureNumWin);	// èª­ã¿è¾¼ã‚€ãƒ¡ãƒ¢ãƒªãƒ¼
 
 	return S_OK;
 }
 
 
 //=============================================================================
-// •`‰æˆ—
+// æç”»å‡¦ç†
 //=============================================================================
 void DrawNumBullet(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//’¸“_ƒoƒbƒtƒ@‚ðƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒã‚¤ãƒ³ãƒ‰
 	pDevice->SetStreamSource(0, g_pVtxBufferNumWin, 0, sizeof(VERTEX_2D));
 
-	//’¸“_ƒtƒH[ƒ}ƒbƒg‚ÌÝ’è
+	//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®è¨­å®š
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 	pDevice->SetTexture(0, g_pTextureNumWin);
 
-	//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+	//ãƒãƒªã‚´ãƒ³ã®æç”»
 	for(int nCntPlayer = 0; nCntPlayer < MAX_PLAYER; nCntPlayer++)
 	{
 		if(g_numBullet[nCntPlayer].bDraw == false) continue;
 		for(int nCntDigit = 0; nCntDigit < NUM_DIGIT; nCntDigit++)
 		{
 			pDevice->DrawPrimitive(
-				D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚ÌŽí—Þ
-				(nCntPlayer*NUM_DIGIT + nCntDigit) * NUM_VERTEX,	//ƒ[ƒh‚·‚éÅ‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-				NUM_POLYGON				//ƒ|ƒŠƒSƒ“‚Ì”
+				D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡ž
+				(nCntPlayer*NUM_DIGIT + nCntDigit) * NUM_VERTEX,	//ãƒ­ãƒ¼ãƒ‰ã™ã‚‹æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+				NUM_POLYGON				//ãƒãƒªã‚´ãƒ³ã®æ•°
 			);			
 		}
 	}
@@ -131,7 +131,7 @@ void DrawNumBullet(void)
 
 
 //=============================================================================
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //=============================================================================
 void UninitNumBullet(void)
 {
@@ -148,29 +148,29 @@ void UninitNumBullet(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT MakeVertexNumBullet(LPDIRECT3DDEVICE9 pDevice)
-ˆø”:	LPDIRECT3DDEVICE9 pDevice : DeviceƒIƒuƒWƒFƒNƒg
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	ƒ|ƒŠƒSƒ“‚Ì’¸“_î•ñ‚Ìì¬ŠÖ”
+é–¢æ•°å:	HRESULT MakeVertexNumBullet(LPDIRECT3DDEVICE9 pDevice)
+å¼•æ•°:	LPDIRECT3DDEVICE9 pDevice : Deviceã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+æˆ»ã‚Šå€¤:	HRESUL : åˆæœŸåŒ–çµæžœ æ­£å¸¸çµ‚äº†:S_OK
+èª¬æ˜Ž:	ãƒãƒªã‚´ãƒ³ã®é ‚ç‚¹æƒ…å ±ã®ä½œæˆé–¢æ•°
 *******************************************************************************/
 HRESULT MakeVertexNumBullet(LPDIRECT3DDEVICE9 pDevice)
 {
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_2D)*NUM_VERTEX*NUM_DIGIT*MAX_PLAYER,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY 
+		sizeof(VERTEX_2D)*NUM_VERTEX*NUM_DIGIT*MAX_PLAYER,	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º 
 		D3DUSAGE_WRITEONLY, 
-		FVF_VERTEX_2D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_2D,					//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆ
 		D3DPOOL_MANAGED, 
-		&g_pVtxBufferNumWin,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&g_pVtxBufferNumWin,			//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferNumWin->Lock( 0, 0, (void**)&pVtx, 0);
 
 	for(int nCntPlayer = 0; nCntPlayer < MAX_PLAYER; nCntPlayer++)
@@ -191,13 +191,13 @@ HRESULT MakeVertexNumBullet(LPDIRECT3DDEVICE9 pDevice)
 			pVtx[2].col = g_numBullet[nCntPlayer].col;
 			pVtx[3].col = g_numBullet[nCntPlayer].col;
 
-			// ’¸“_À•W‚ÌÝ’è
+			// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 			pVtx[0].vtx = D3DXVECTOR3(g_numBullet[nCntPlayer].pos.x  + nCntDigit*POLYGON_SIZE_X, g_numBullet[nCntPlayer].pos.y , 0.0f);
 			pVtx[1].vtx = D3DXVECTOR3(g_numBullet[nCntPlayer].pos.x  + g_numBullet[nCntPlayer].size.x +  nCntDigit*POLYGON_SIZE_X, g_numBullet[nCntPlayer].pos.y , 0.0f);
 			pVtx[2].vtx = D3DXVECTOR3(g_numBullet[nCntPlayer].pos.x  + nCntDigit*POLYGON_SIZE_X, g_numBullet[nCntPlayer].pos.y + g_numBullet[nCntPlayer].size.y, 0.0f);
 			pVtx[3].vtx = D3DXVECTOR3(g_numBullet[nCntPlayer].pos.x  + g_numBullet[nCntPlayer].size.x + nCntDigit*POLYGON_SIZE_X, g_numBullet[nCntPlayer].pos.y + g_numBullet[nCntPlayer].size.y, 0.0f);
 
-			//ƒeƒNƒXƒ`ƒƒÀ•WŽw’è
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™æŒ‡å®š
 			pVtx[0].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X) , TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X) );
 			pVtx[1].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X + 1) , TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X));
 			pVtx[2].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X), TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X + 1));
@@ -213,7 +213,7 @@ HRESULT MakeVertexNumBullet(LPDIRECT3DDEVICE9 pDevice)
 
 
 //=============================================================================
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 //=============================================================================
 void UpdateNumBullet(void)
 {
@@ -246,26 +246,26 @@ void UpdateNumBullet(void)
 
 
 /*******************************************************************************
-ŠÖ”–¼:	SetTextureNumBullet( int nPlayerIdx, int nIdx, int number) 
-ˆø”:	 int nTdxF‰½Œ…–Ú‚©, int numberF•\Ž¦‚·‚é”
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒeƒNƒXƒ`ƒƒÀ•W‚ÌÝ’è
+é–¢æ•°å:	SetTextureNumBullet( int nPlayerIdx, int nIdx, int number) 
+å¼•æ•°:	 int nTdxï¼šä½•æ¡ç›®ã‹, int numberï¼šè¡¨ç¤ºã™ã‚‹æ•°
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 *******************************************************************************/
 void SetTextureNumBullet( int nPlayerIdx, int nIdx, int number) 
 {
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 		VERTEX_2D *pVtx;
 		float fPosXLeft, fPosXRight;
 		float fPosYUp, fPosYDown;
 		
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		g_pVtxBufferNumWin->Lock(0, 0, (void**)&pVtx, 0);
 
 		//pVtx += (NUM_OBJECT - nIdx) * NUM_VERTEX;
 		pVtx += (NUM_DIGIT - nIdx) * NUM_VERTEX + (nPlayerIdx * NUM_DIGIT * NUM_VERTEX);
 
-		//ƒeƒNƒXƒ`ƒƒÀ•W‚ÌÝ’è
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 		fPosXLeft = TEX_PATTERN_SIZE_X * number;
 		fPosXRight = TEX_PATTERN_SIZE_X * number + TEX_PATTERN_SIZE_X;
 		fPosYUp = 0;
@@ -276,23 +276,23 @@ void SetTextureNumBullet( int nPlayerIdx, int nIdx, int number)
 		pVtx[2].tex = D3DXVECTOR2( fPosXLeft, fPosYDown );
 		pVtx[3].tex = D3DXVECTOR2( fPosXRight, fPosYDown );
 
-		// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_pVtxBufferNumWin->Unlock();
 	}
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	ChangeNumBullet(int nPlayerIdx, int value)
-ˆø”:	int valueF‘‰Á‚·‚é“_”
-–ß‚è’l:	‚È‚µ
-à–¾:	‘“_”‚ð•ÏX‚·‚é
+é–¢æ•°å:	ChangeNumBullet(int nPlayerIdx, int value)
+å¼•æ•°:	int valueï¼šå¢—åŠ ã™ã‚‹ç‚¹æ•°
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	ç·ç‚¹æ•°ã‚’å¤‰æ›´ã™ã‚‹
 *******************************************************************************/
 void ChangeNumBullet(int nPlayerIdx, int value)
 {
 	g_numBullet[nPlayerIdx].num = value;
 
-	if(g_numBullet[nPlayerIdx].num >= NUM_DIGIT ) g_numBullet[nPlayerIdx].num = NUM_DIGIT; //Å‘å’l
-	if(g_numBullet[nPlayerIdx].num < 0 ) g_numBullet[nPlayerIdx].num = 0; //Å¬’l
+	if(g_numBullet[nPlayerIdx].num >= NUM_DIGIT ) g_numBullet[nPlayerIdx].num = NUM_DIGIT; //æœ€å¤§å€¤
+	if(g_numBullet[nPlayerIdx].num < 0 ) g_numBullet[nPlayerIdx].num = 0; //æœ€å°å€¤
 
 	int number = g_numBullet[nPlayerIdx].num;
 	for(int keta = NUM_DIGIT; keta >= 1; keta--)

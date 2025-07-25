@@ -1,36 +1,36 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		ƒƒCƒ“ˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	main.h
-* ì¬ŽÒ:		HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		ãƒ¡ã‚¤ãƒ³å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	main.h
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
-#define USE_SOUND		// ƒTƒEƒ“ƒhŽg—p‚Ì—L–³
+#define USE_SOUND		// ã‚µã‚¦ãƒ³ãƒ‰ä½¿ç”¨ã®æœ‰ç„¡
 //#undef USE_SOUND
 
 
 //*****************************************************************************
-// ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+// ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //*****************************************************************************
 #include <windows.h>
 #include "d3dx9.h"
 #include "dinput.h"
 
 #ifdef USE_SOUND
-#include "xaudio2.h"		// XAudio2ŠÖ˜A‚Ìƒwƒbƒ_[
+#include "xaudio2.h"		// XAudio2é–¢é€£ã®ãƒ˜ãƒƒãƒ€ãƒ¼
 #endif
 
 
 //*****************************************************************************
-// ƒ‰ƒCƒuƒ‰ƒŠ‚ÌƒŠƒ“ƒN
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ãƒªãƒ³ã‚¯
 //*****************************************************************************
 #pragma comment (lib, "d3d9.lib")
 #pragma comment (lib, "d3dx9.lib")
@@ -39,32 +39,32 @@
 #pragma comment (lib, "winmm.lib")
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define	FVF_VERTEX_2D	(D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 #define FVF_VERTEX_3D	(D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 #define DIRECTINPUT_VERTION (0x0800)
-#define SCREEN_WIDTH	(1280)	// ƒEƒCƒ“ƒhƒE‚Ì•
-#define SCREEN_HEIGHT	(720)	// ƒEƒCƒ“ƒhƒE‚Ì‚‚³
+#define SCREEN_WIDTH	(1280)	// ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®å¹…
+#define SCREEN_HEIGHT	(720)	// ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®é«˜ã•
 
 #define SAFE_RELEASE(ptr)			{ if(ptr) { (ptr)->Release(); (ptr) = NULL; } }
 
-// ã‹L‚Q‚cƒ|ƒŠƒSƒ“’¸“_ƒtƒH[ƒ}ƒbƒg‚É‡‚í‚¹‚½\‘¢‘Ì‚ð’è‹`
+// ä¸Šè¨˜ï¼’ï¼¤ãƒãƒªã‚´ãƒ³é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã«åˆã‚ã›ãŸæ§‹é€ ä½“ã‚’å®šç¾©
 typedef struct
 {
-	D3DXVECTOR3 vtx;	// ’¸“_À•W
-	float rhw;			// ƒeƒNƒXƒ`ƒƒ‚Ìƒp[ƒXƒyƒNƒeƒBƒuƒRƒŒƒNƒg—p
-	D3DCOLOR col;		// ”½ŽËŒõ
-	D3DXVECTOR2 tex;	// ƒeƒNƒXƒ`ƒƒÀ•W
+	D3DXVECTOR3 vtx;	// é ‚ç‚¹åº§æ¨™
+	float rhw;			// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ‘ãƒ¼ã‚¹ãƒšã‚¯ãƒ†ã‚£ãƒ–ã‚³ãƒ¬ã‚¯ãƒˆç”¨
+	D3DCOLOR col;		// åå°„å…‰
+	D3DXVECTOR2 tex;	// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™
 } VERTEX_2D;
 
-//‚R‚cƒ|ƒŠƒSƒ“
+//ï¼“ï¼¤ãƒãƒªã‚´ãƒ³
 typedef struct
 {
-	D3DXVECTOR3 vtx; //’¸“_À•W
-	D3DXVECTOR3 nor; //–@üƒxƒNƒgƒ‹
-	D3DCOLOR	col; //’¸“_ƒJƒ‰[
-	D3DXVECTOR2	tex; //ƒeƒNƒXƒ`ƒƒÀ•W
+	D3DXVECTOR3 vtx; //é ‚ç‚¹åº§æ¨™
+	D3DXVECTOR3 nor; //æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+	D3DCOLOR	col; //é ‚ç‚¹ã‚«ãƒ©ãƒ¼
+	D3DXVECTOR2	tex; //ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™
 }VERTEX_3D;
 
 typedef enum
@@ -76,7 +76,7 @@ typedef enum
 }MODE;
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 LPDIRECT3DDEVICE9 GetDevice(void);
 LPD3DXFONT GetFont(void);

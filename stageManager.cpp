@@ -1,13 +1,13 @@
-/*******************************************************************************
+Ôªø/*******************************************************************************
 *
-* É^ÉCÉgÉã:		ÉXÉeÅ[ÉWä«óù
-* ÉvÉçÉOÉâÉÄñº:	stageManager.cpp
-* çÏê¨é“:		HALìåãûÉQÅ[ÉÄäwâ»Å@ó´ìÏçG
+* „Çø„Ç§„Éà„É´:		„Çπ„ÉÜ„Éº„Ç∏ÁÆ°ÁêÜ
+* „Éó„É≠„Ç∞„É©„É†Âêç:	stageManager.cpp
+* ‰ΩúÊàêËÄÖ:		HALÊù±‰∫¨„Ç≤„Éº„É†Â≠¶Áßë„ÄÄÂäâÂçóÂÆè
 *
 *******************************************************************************/
 
 /*******************************************************************************
-* ÉCÉìÉNÉãÅ[ÉhÉtÉ@ÉCÉã
+* „Ç§„É≥„ÇØ„É´„Éº„Éâ„Éï„Ç°„Ç§„É´
 *******************************************************************************/
 
 
@@ -37,18 +37,18 @@
 
 
 //*****************************************************************************
-// É}ÉNÉçíËã`
+// „Éû„ÇØ„É≠ÂÆöÁæ©
 //*****************************************************************************
 #define ENEMY_POS_Y	(70)
 #define ITEM_POS_Y	(100)
 #define PLAYER_POS_Y	(50)
 
 /*******************************************************************************
-* ç\ë¢ëÃíËã`
+* ÊßãÈÄ†‰ΩìÂÆöÁæ©
 *******************************************************************************/
 
 /*******************************************************************************
-* ÉvÉçÉgÉ^ÉCÉvêÈåæ
+* „Éó„É≠„Éà„Çø„Ç§„ÉóÂÆ£Ë®Ä
 *******************************************************************************/
 void InitStage(STAGE_MODE mode);
 
@@ -67,14 +67,14 @@ void InitStageItem1();
 void InitStageItem2();
 void InitStageItem3();
 /*******************************************************************************
-* ÉOÉçÅ[ÉoÉãïœêî
+* „Ç∞„É≠„Éº„Éê„É´Â§âÊï∞
 *******************************************************************************/
 STAGE_MODE g_stageMode;
 
 
 
 //=============================================================================
-// èâä˙âªèàóù
+// ÂàùÊúüÂåñÂá¶ÁêÜ
 //=============================================================================
 void InitStageManager(bool bFirst, int playerLife)
 {
@@ -93,7 +93,7 @@ void InitStageManager(bool bFirst, int playerLife)
 	switch(g_stageMode)
 	{
 	case STAGE0:
-		//ï¨êÖ
+		//Âô¥Ê∞¥
 		InitFountainCircle();
 		InitFountain();
 		SetFountain( -1, D3DXVECTOR3( -700, 0, 200));
@@ -128,14 +128,14 @@ void InitStageManager(bool bFirst, int playerLife)
 
 
 //=============================================================================
-// çXêVèàóù
+// Êõ¥Êñ∞Âá¶ÁêÜ
 //=============================================================================
 void UpdateStageManager(float fTimeSpeed)
 {
 	switch(g_stageMode)
 	{
 	case STAGE0:
-		//ï¨êÖ
+		//Âô¥Ê∞¥
 		UpdateFountain( fTimeSpeed);
 		break;
 	case STAGE1:
@@ -152,7 +152,7 @@ void UpdateStageManager(float fTimeSpeed)
 
 
 //=============================================================================
-// ï`âÊèàóù
+// ÊèèÁîªÂá¶ÁêÜ
 //=============================================================================
 void DrawStageManager(void)
 {
@@ -176,7 +176,7 @@ void DrawStageManager(void)
 }
 
 //=============================================================================
-// èIóπèàóù
+// ÁµÇ‰∫ÜÂá¶ÁêÜ
 //=============================================================================
 void UninitStageManager(void)
 {
@@ -187,21 +187,21 @@ void UninitStageManager(void)
 }
 
 //=============================================================================
-// ÉQÅ[ÉÄÉÇÅ[ÉhÇéÊìæ
+// „Ç≤„Éº„É†„É¢„Éº„Éâ„ÇíÂèñÂæó
 //=============================================================================
 STAGE_MODE GetStageMode(void)
 {
 	return g_stageMode;
 }
 //=============================================================================
-// ÉQÅ[ÉÄÉÇÅ[ÉhÇÃê›íu
+// „Ç≤„Éº„É†„É¢„Éº„Éâ„ÅÆË®≠ÁΩÆ
 //=============================================================================
 void SetStageMode(STAGE_MODE mode)
 {
 	g_stageMode = mode;
 }
 //=============================================================================
-// ÉXÉeÅ[ÉWïœçX
+// „Çπ„ÉÜ„Éº„Ç∏Â§âÊõ¥
 //=============================================================================
 bool NextStage(void)
 {
@@ -219,61 +219,61 @@ bool NextStage(void)
 	}
 }
 //=============================================================================
-// à»â∫ÇÕÉXÉeÅ[ÉWÉfÅ[É^
+// ‰ª•‰∏ã„ÅØ„Çπ„ÉÜ„Éº„Ç∏„Éá„Éº„Çø
 //=============================================================================
 void InitStageWall0()
 {
 	const float fWallSize = 100.0f;
 
-	// ínñ ÇÃèâä˙âªèàóù
+	// Âú∞Èù¢„ÅÆÂàùÊúüÂåñÂá¶ÁêÜ
 	InitMeshField( 20, 20, fWallSize, fWallSize);
 
-	//ï«ÇÃèâä˙âªèàóù
-	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, 10 * fWallSize), D3DXVECTOR3( 0, 0, 0), 20, 2, fWallSize, fWallSize); //è„
-	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, -10 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 20, 2, fWallSize, fWallSize); //â∫
-	InitMeshWall( D3DXVECTOR3( -10 * fWallSize, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 20, 2, fWallSize, fWallSize); //ç∂
-	InitMeshWall( D3DXVECTOR3( 10 * fWallSize, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 20, 2, fWallSize, fWallSize); //âE
+	//Â£Å„ÅÆÂàùÊúüÂåñÂá¶ÁêÜ
+	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, 10 * fWallSize), D3DXVECTOR3( 0, 0, 0), 20, 2, fWallSize, fWallSize); //‰∏ä
+	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, -10 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 20, 2, fWallSize, fWallSize); //‰∏ã
+	InitMeshWall( D3DXVECTOR3( -10 * fWallSize, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 20, 2, fWallSize, fWallSize); //Â∑¶
+	InitMeshWall( D3DXVECTOR3( 10 * fWallSize, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 20, 2, fWallSize, fWallSize); //Âè≥
 
 	//1
-	InitMeshWall( D3DXVECTOR3( -7 * fWallSize, STAGE_WALL_HEIGHT, 4 * fWallSize), D3DXVECTOR3( 0, 0, 0), 6, 2, fWallSize, fWallSize); //è„
-	InitMeshWall( D3DXVECTOR3( -7 * fWallSize, STAGE_WALL_HEIGHT, -6 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 6, 2, fWallSize, fWallSize); //â∫
-	InitMeshWall( D3DXVECTOR3( -4 * fWallSize, STAGE_WALL_HEIGHT, 2 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 4, 2, fWallSize, fWallSize); //âE
-	InitMeshWall( D3DXVECTOR3( -4 * fWallSize, STAGE_WALL_HEIGHT, -4 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 4, 2, fWallSize, fWallSize); //âE
+	InitMeshWall( D3DXVECTOR3( -7 * fWallSize, STAGE_WALL_HEIGHT, 4 * fWallSize), D3DXVECTOR3( 0, 0, 0), 6, 2, fWallSize, fWallSize); //‰∏ä
+	InitMeshWall( D3DXVECTOR3( -7 * fWallSize, STAGE_WALL_HEIGHT, -6 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 6, 2, fWallSize, fWallSize); //‰∏ã
+	InitMeshWall( D3DXVECTOR3( -4 * fWallSize, STAGE_WALL_HEIGHT, 2 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 4, 2, fWallSize, fWallSize); //Âè≥
+	InitMeshWall( D3DXVECTOR3( -4 * fWallSize, STAGE_WALL_HEIGHT, -4 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 4, 2, fWallSize, fWallSize); //Âè≥
 
 	//2
-	InitMeshWall( D3DXVECTOR3( -3 * fWallSize, STAGE_WALL_HEIGHT, 0 * fWallSize), D3DXVECTOR3( 0, 0, 0), 2, 2, fWallSize, fWallSize); //è„
-	InitMeshWall( D3DXVECTOR3( -3 * fWallSize, STAGE_WALL_HEIGHT, -2 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 2, 2, fWallSize, fWallSize); //â∫
+	InitMeshWall( D3DXVECTOR3( -3 * fWallSize, STAGE_WALL_HEIGHT, 0 * fWallSize), D3DXVECTOR3( 0, 0, 0), 2, 2, fWallSize, fWallSize); //‰∏ä
+	InitMeshWall( D3DXVECTOR3( -3 * fWallSize, STAGE_WALL_HEIGHT, -2 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 2, 2, fWallSize, fWallSize); //‰∏ã
 
 	//3
-	InitMeshWall( D3DXVECTOR3( -1 * fWallSize, STAGE_WALL_HEIGHT, -8 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 2, 2, fWallSize, fWallSize); //â∫
-	InitMeshWall( D3DXVECTOR3( -2 * fWallSize, STAGE_WALL_HEIGHT, 3 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 6, 2, fWallSize, fWallSize); //ç∂
-	InitMeshWall( D3DXVECTOR3( -2 * fWallSize, STAGE_WALL_HEIGHT, -5 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 6, 2, fWallSize, fWallSize); //ç∂
-	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, 0 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 16, 2, fWallSize, fWallSize); //âE
+	InitMeshWall( D3DXVECTOR3( -1 * fWallSize, STAGE_WALL_HEIGHT, -8 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 2, 2, fWallSize, fWallSize); //‰∏ã
+	InitMeshWall( D3DXVECTOR3( -2 * fWallSize, STAGE_WALL_HEIGHT, 3 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 6, 2, fWallSize, fWallSize); //Â∑¶
+	InitMeshWall( D3DXVECTOR3( -2 * fWallSize, STAGE_WALL_HEIGHT, -5 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 6, 2, fWallSize, fWallSize); //Â∑¶
+	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, 0 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 16, 2, fWallSize, fWallSize); //Âè≥
 
 	//4
-	InitMeshWall( D3DXVECTOR3( -4 * fWallSize, STAGE_WALL_HEIGHT, 6 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 4, 2, fWallSize, fWallSize); //â∫
-	InitMeshWall( D3DXVECTOR3( -6 * fWallSize, STAGE_WALL_HEIGHT, 8 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 4, 2, fWallSize, fWallSize); //ç∂
+	InitMeshWall( D3DXVECTOR3( -4 * fWallSize, STAGE_WALL_HEIGHT, 6 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 4, 2, fWallSize, fWallSize); //‰∏ã
+	InitMeshWall( D3DXVECTOR3( -6 * fWallSize, STAGE_WALL_HEIGHT, 8 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 4, 2, fWallSize, fWallSize); //Â∑¶
 
 	//5
-	InitMeshWall( D3DXVECTOR3( 2 * fWallSize, STAGE_WALL_HEIGHT, 8 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 4, 2, fWallSize, fWallSize); //â∫
-	InitMeshWall( D3DXVECTOR3( 4 * fWallSize, STAGE_WALL_HEIGHT, 6 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 4, 2, fWallSize, fWallSize); //ç∂
-	InitMeshWall( D3DXVECTOR3( 6 * fWallSize, STAGE_WALL_HEIGHT, 7 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 6, 2, fWallSize, fWallSize); //âE
+	InitMeshWall( D3DXVECTOR3( 2 * fWallSize, STAGE_WALL_HEIGHT, 8 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 4, 2, fWallSize, fWallSize); //‰∏ã
+	InitMeshWall( D3DXVECTOR3( 4 * fWallSize, STAGE_WALL_HEIGHT, 6 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 4, 2, fWallSize, fWallSize); //Â∑¶
+	InitMeshWall( D3DXVECTOR3( 6 * fWallSize, STAGE_WALL_HEIGHT, 7 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 6, 2, fWallSize, fWallSize); //Âè≥
 
 	//6
-	InitMeshWall( D3DXVECTOR3( 3 * fWallSize, STAGE_WALL_HEIGHT, 4 * fWallSize), D3DXVECTOR3( 0, 0, 0), 2, 2, fWallSize, fWallSize); //è„
-	InitMeshWall( D3DXVECTOR3( 7 * fWallSize, STAGE_WALL_HEIGHT, 4 * fWallSize), D3DXVECTOR3( 0, 0, 0), 2, 2, fWallSize, fWallSize); //è„
-	InitMeshWall( D3DXVECTOR3( 3 * fWallSize, STAGE_WALL_HEIGHT, 0 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 2, 2, fWallSize, fWallSize); //â∫
-	InitMeshWall( D3DXVECTOR3( 5 * fWallSize, STAGE_WALL_HEIGHT, 2 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 2, 2, fWallSize, fWallSize); //â∫
-	InitMeshWall( D3DXVECTOR3( 2 * fWallSize, STAGE_WALL_HEIGHT, 2 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 4, 2, fWallSize, fWallSize); //ç∂
-	InitMeshWall( D3DXVECTOR3( 6 * fWallSize, STAGE_WALL_HEIGHT, 0 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 4, 2, fWallSize, fWallSize); //ç∂
-	InitMeshWall( D3DXVECTOR3( 4 * fWallSize, STAGE_WALL_HEIGHT, 1 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 2, 2, fWallSize, fWallSize); //âE
-	InitMeshWall( D3DXVECTOR3( 8 * fWallSize, STAGE_WALL_HEIGHT, 1 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 6, 2, fWallSize, fWallSize); //âE
+	InitMeshWall( D3DXVECTOR3( 3 * fWallSize, STAGE_WALL_HEIGHT, 4 * fWallSize), D3DXVECTOR3( 0, 0, 0), 2, 2, fWallSize, fWallSize); //‰∏ä
+	InitMeshWall( D3DXVECTOR3( 7 * fWallSize, STAGE_WALL_HEIGHT, 4 * fWallSize), D3DXVECTOR3( 0, 0, 0), 2, 2, fWallSize, fWallSize); //‰∏ä
+	InitMeshWall( D3DXVECTOR3( 3 * fWallSize, STAGE_WALL_HEIGHT, 0 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 2, 2, fWallSize, fWallSize); //‰∏ã
+	InitMeshWall( D3DXVECTOR3( 5 * fWallSize, STAGE_WALL_HEIGHT, 2 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 2, 2, fWallSize, fWallSize); //‰∏ã
+	InitMeshWall( D3DXVECTOR3( 2 * fWallSize, STAGE_WALL_HEIGHT, 2 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 4, 2, fWallSize, fWallSize); //Â∑¶
+	InitMeshWall( D3DXVECTOR3( 6 * fWallSize, STAGE_WALL_HEIGHT, 0 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 4, 2, fWallSize, fWallSize); //Â∑¶
+	InitMeshWall( D3DXVECTOR3( 4 * fWallSize, STAGE_WALL_HEIGHT, 1 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 2, 2, fWallSize, fWallSize); //Âè≥
+	InitMeshWall( D3DXVECTOR3( 8 * fWallSize, STAGE_WALL_HEIGHT, 1 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 6, 2, fWallSize, fWallSize); //Âè≥
 
 	//7
-	InitMeshWall( D3DXVECTOR3( 4 * fWallSize, STAGE_WALL_HEIGHT, -2 * fWallSize), D3DXVECTOR3( 0, 0, 0), 4, 2, fWallSize, fWallSize); //è„
-	InitMeshWall( D3DXVECTOR3( 9 * fWallSize, STAGE_WALL_HEIGHT, -2 * fWallSize), D3DXVECTOR3( 0, 0, 0), 2, 2, fWallSize, fWallSize); //è„
-	InitMeshWall( D3DXVECTOR3( 6 * fWallSize, STAGE_WALL_HEIGHT, -10 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 8, 2, fWallSize, fWallSize); //â∫
-	InitMeshWall( D3DXVECTOR3( 2 * fWallSize, STAGE_WALL_HEIGHT, -6 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 8, 2, fWallSize, fWallSize); //ç∂
+	InitMeshWall( D3DXVECTOR3( 4 * fWallSize, STAGE_WALL_HEIGHT, -2 * fWallSize), D3DXVECTOR3( 0, 0, 0), 4, 2, fWallSize, fWallSize); //‰∏ä
+	InitMeshWall( D3DXVECTOR3( 9 * fWallSize, STAGE_WALL_HEIGHT, -2 * fWallSize), D3DXVECTOR3( 0, 0, 0), 2, 2, fWallSize, fWallSize); //‰∏ä
+	InitMeshWall( D3DXVECTOR3( 6 * fWallSize, STAGE_WALL_HEIGHT, -10 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 8, 2, fWallSize, fWallSize); //‰∏ã
+	InitMeshWall( D3DXVECTOR3( 2 * fWallSize, STAGE_WALL_HEIGHT, -6 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 8, 2, fWallSize, fWallSize); //Â∑¶
 
 	//roof
 	//InitMeshWall( D3DXVECTOR3( 0, 200, 0), D3DXVECTOR3( D3DXToRadian(-90.0f), 0, 0), 20, 20, fWallSize, fWallSize);
@@ -283,22 +283,22 @@ void InitStageWall1()
 {
 	const float fWallSize = 100.0f;
 
-	// ínñ ÇÃèâä˙âªèàóù
+	// Âú∞Èù¢„ÅÆÂàùÊúüÂåñÂá¶ÁêÜ
 	InitMeshField( 20, 20, fWallSize, fWallSize);
 
-	//ï«ÇÃèâä˙âªèàóù
-	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, 10 * fWallSize), D3DXVECTOR3( 0, 0, 0), 20, 2, fWallSize, fWallSize); //è„
-	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, -10 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 20, 2, fWallSize, fWallSize); //â∫
-	InitMeshWall( D3DXVECTOR3( -10 * fWallSize, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 20, 2, fWallSize, fWallSize); //ç∂
-	InitMeshWall( D3DXVECTOR3( 10 * fWallSize, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 20, 2, fWallSize, fWallSize); //âE
+	//Â£Å„ÅÆÂàùÊúüÂåñÂá¶ÁêÜ
+	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, 10 * fWallSize), D3DXVECTOR3( 0, 0, 0), 20, 2, fWallSize, fWallSize); //‰∏ä
+	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, -10 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 20, 2, fWallSize, fWallSize); //‰∏ã
+	InitMeshWall( D3DXVECTOR3( -10 * fWallSize, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 20, 2, fWallSize, fWallSize); //Â∑¶
+	InitMeshWall( D3DXVECTOR3( 10 * fWallSize, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 20, 2, fWallSize, fWallSize); //Âè≥
 
-	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, 6 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 12, 2, fWallSize, fWallSize); //è„
-	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, -6 * fWallSize), D3DXVECTOR3( 0, 0, 0), 12, 2, fWallSize, fWallSize); //â∫
-	InitMeshWall( D3DXVECTOR3( -6 * fWallSize, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 12, 2, fWallSize, fWallSize); //ç∂
-	InitMeshWall( D3DXVECTOR3( 6 * fWallSize, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 12, 2, fWallSize, fWallSize); //âE
+	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, 6 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 12, 2, fWallSize, fWallSize); //‰∏ä
+	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, -6 * fWallSize), D3DXVECTOR3( 0, 0, 0), 12, 2, fWallSize, fWallSize); //‰∏ã
+	InitMeshWall( D3DXVECTOR3( -6 * fWallSize, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 12, 2, fWallSize, fWallSize); //Â∑¶
+	InitMeshWall( D3DXVECTOR3( 6 * fWallSize, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 12, 2, fWallSize, fWallSize); //Âè≥
 
-	InitMeshWall( D3DXVECTOR3( -1 * fWallSize, STAGE_WALL_HEIGHT/2, -8 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 4, 1, fWallSize, fWallSize); //ç∂
-	InitMeshWall( D3DXVECTOR3( 1 * fWallSize, STAGE_WALL_HEIGHT/2, -8 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 4, 1, fWallSize, fWallSize); //âE
+	InitMeshWall( D3DXVECTOR3( -1 * fWallSize, STAGE_WALL_HEIGHT/2, -8 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 4, 1, fWallSize, fWallSize); //Â∑¶
+	InitMeshWall( D3DXVECTOR3( 1 * fWallSize, STAGE_WALL_HEIGHT/2, -8 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 4, 1, fWallSize, fWallSize); //Âè≥
 
 	//roof
 	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, -8 * fWallSize), D3DXVECTOR3( D3DXToRadian(90.0f), 0, 0), 2, 4, fWallSize, fWallSize);
@@ -308,14 +308,14 @@ void InitStageWall2()
 {
 	const float fWallSize = 100.0f;
 
-	// ínñ ÇÃèâä˙âªèàóù
+	// Âú∞Èù¢„ÅÆÂàùÊúüÂåñÂá¶ÁêÜ
 	InitMeshField( 20, 20, fWallSize, fWallSize);
 
-	//ï«ÇÃèâä˙âªèàóù
-	InitMeshWall( D3DXVECTOR3( 0, STAGE_WALL_HEIGHT, 1000), D3DXVECTOR3( 0, 0, 0), 20, 2, fWallSize, fWallSize); //è„
-	InitMeshWall( D3DXVECTOR3( 0, STAGE_WALL_HEIGHT, -1000), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 20, 2, fWallSize, fWallSize); //â∫
-	InitMeshWall( D3DXVECTOR3( -1000, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 20, 2, fWallSize, fWallSize); //ç∂
-	InitMeshWall( D3DXVECTOR3( 1000, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 20, 2, fWallSize, fWallSize); //âE
+	//Â£Å„ÅÆÂàùÊúüÂåñÂá¶ÁêÜ
+	InitMeshWall( D3DXVECTOR3( 0, STAGE_WALL_HEIGHT, 1000), D3DXVECTOR3( 0, 0, 0), 20, 2, fWallSize, fWallSize); //‰∏ä
+	InitMeshWall( D3DXVECTOR3( 0, STAGE_WALL_HEIGHT, -1000), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 20, 2, fWallSize, fWallSize); //‰∏ã
+	InitMeshWall( D3DXVECTOR3( -1000, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 20, 2, fWallSize, fWallSize); //Â∑¶
+	InitMeshWall( D3DXVECTOR3( 1000, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 20, 2, fWallSize, fWallSize); //Âè≥
 
 	//1
 	InitMeshWall( D3DXVECTOR3( -600, STAGE_WALL_HEIGHT, 800), D3DXVECTOR3( 0, 0, 0), 8, 2, fWallSize, fWallSize);
@@ -391,14 +391,14 @@ void InitStageWall2()
 void InitStageWall3()
 {
 	float fWallSize = 100.0f;
-	// ínñ ÇÃèâä˙âªèàóù
+	// Âú∞Èù¢„ÅÆÂàùÊúüÂåñÂá¶ÁêÜ
 	InitMeshField( 10, 10, fWallSize, fWallSize);
 
-	//ï«ÇÃèâä˙âªèàóù
-	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, 5 * fWallSize), D3DXVECTOR3( 0, 0, 0), 10, 2, fWallSize, fWallSize); //è„
-	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, -5 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 10, 2, fWallSize, fWallSize); //â∫
-	InitMeshWall( D3DXVECTOR3( -5 * fWallSize, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 10, 2, fWallSize, fWallSize); //ç∂
-	InitMeshWall( D3DXVECTOR3( 5 * fWallSize, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 10, 2, fWallSize, fWallSize); //âE
+	//Â£Å„ÅÆÂàùÊúüÂåñÂá¶ÁêÜ
+	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, 5 * fWallSize), D3DXVECTOR3( 0, 0, 0), 10, 2, fWallSize, fWallSize); //‰∏ä
+	InitMeshWall( D3DXVECTOR3( 0 * fWallSize, STAGE_WALL_HEIGHT, -5 * fWallSize), D3DXVECTOR3( 0, D3DXToRadian(180.0f), 0), 10, 2, fWallSize, fWallSize); //‰∏ã
+	InitMeshWall( D3DXVECTOR3( -5 * fWallSize, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(-90.0f), 0), 10, 2, fWallSize, fWallSize); //Â∑¶
+	InitMeshWall( D3DXVECTOR3( 5 * fWallSize, STAGE_WALL_HEIGHT, 0), D3DXVECTOR3( 0, D3DXToRadian(90.0f), 0), 10, 2, fWallSize, fWallSize); //Âè≥
 }
 
 void InitStageEnemy0()

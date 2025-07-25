@@ -1,14 +1,14 @@
-/*******************************************************************************
-* ƒ^ƒCƒgƒ‹:		ƒtƒB[ƒ‹ƒhˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	field.cpp
-* ì¬Ò:		TH‹³–±•”@ŠñŒõ
-* ì¬“ú:		2015/10/20
+ï»¿/*******************************************************************************
+* ã‚¿ã‚¤ãƒˆãƒ«:		ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	field.cpp
+* ä½œæˆè€…:		THæ•™å‹™éƒ¨ã€€å¯„å…‰
+* ä½œæˆæ—¥:		2015/10/20
 ********************************************************************************
-* XV—š—ğ:		- 2015/10/20	 ŠñŒõ
+* æ›´æ–°å±¥æ­´:		- 2015/10/20	 å¯„å…‰
 *					- V1.00		Initial Version
 *******************************************************************************/
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 #include "enemyBoard.h"
 #include "input.h"
@@ -18,43 +18,43 @@
 #include "enemy.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define NUM_VERTEX	(4)
 #define NUM_POLYGON (2)
 
-#define TEXTURE_FIELD	"data/TEXTURE/xxx.png"				// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
+#define TEXTURE_FIELD	"data/TEXTURE/xxx.png"				// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
 
 
-#define VALUE_MOVE		(5.0f)								// ˆÚ“®—Ê
-#define VALUE_ROTATE	(D3DX_PI * 0.02f) 					// ‰ñ“]—Ê
+#define VALUE_MOVE		(5.0f)								// ç§»å‹•é‡
+#define VALUE_ROTATE	(D3DX_PI * 0.02f) 					// å›è»¢é‡
 
-#define SIZE_X			(30.0f)								// ’n–Ê‚ÌƒTƒCƒY(X•ûŒü)
-#define SIZE_Y			(30.0f)								// ’n–Ê‚ÌƒTƒCƒY(Z•ûŒü)
+#define SIZE_X			(30.0f)								// åœ°é¢ã®ã‚µã‚¤ã‚º(Xæ–¹å‘)
+#define SIZE_Y			(30.0f)								// åœ°é¢ã®ã‚µã‚¤ã‚º(Zæ–¹å‘)
 																		
 																		
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 HRESULT MakeVertexEnemyBoard(LPDIRECT3DDEVICE9 pDevice);
 void ResetVertexEnemyBoard(int nIdxBoard);
 
 //*****************************************************************************
-// ƒOƒ[ƒoƒ‹•Ï”
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 //*****************************************************************************
 ENEMYBOARD g_aEnemyBoard[MAX_ENEMYBOARD];
-LPDIRECT3DTEXTURE9		g_pD3DTextureEnemyBoard;								// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffEnemyBoard;								// ’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
+LPDIRECT3DTEXTURE9		g_pD3DTextureEnemyBoard;								// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffEnemyBoard;								// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 
 //=============================================================================
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT InitEnemyBoard(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	
-	// ˆÊ’uE‰ñ“]EƒXƒP[ƒ‹‚Ì‰Šúİ’è
+	// ä½ç½®ãƒ»å›è»¢ãƒ»ã‚¹ã‚±ãƒ¼ãƒ«ã®åˆæœŸè¨­å®š
 	for(int nCntBoard = 0; nCntBoard < MAX_ENEMYBOARD; nCntBoard++)
 	{
 		g_aEnemyBoard[nCntBoard].pos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
@@ -66,29 +66,29 @@ HRESULT InitEnemyBoard(void)
 	g_pD3DVtxBuffEnemyBoard = NULL;
 
 	
-	// ’¸“_î•ñ‚Ìì¬
+	// é ‚ç‚¹æƒ…å ±ã®ä½œæˆ
 	MakeVertexEnemyBoard(pDevice);
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	D3DXCreateTextureFromFile( pDevice, TEXTURE_FIELD, &g_pD3DTextureEnemyBoard);
 
 	return S_OK;
 }
 
 //=============================================================================
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //=============================================================================
 void UninitEnemyBoard(void)
 {
 	if(g_pD3DTextureEnemyBoard != NULL)
-	{// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
+	{// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é–‹æ”¾
 		g_pD3DTextureEnemyBoard->Release();
 		g_pD3DTextureEnemyBoard = NULL;
 	}
 
 
 	if(g_pD3DVtxBuffEnemyBoard != NULL)
-	{// ’¸“_ƒoƒbƒtƒ@‚ÌŠJ•ú
+	{// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®é–‹æ”¾
 		g_pD3DVtxBuffEnemyBoard->Release();
 		g_pD3DVtxBuffEnemyBoard = NULL;
 	}	
@@ -97,7 +97,7 @@ void UninitEnemyBoard(void)
 }
 
 //=============================================================================
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 //=============================================================================
 void UpdateEnemyBoard(void)
 {
@@ -105,10 +105,10 @@ void UpdateEnemyBoard(void)
 	ENEMY *pEnemy = GetEnemy();
 	D3DXMATRIX mtxScl, mtxRot, mtxTranslate;
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_3D *pVtx;
 
-	// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pD3DVtxBuffEnemyBoard->Lock( 0, 0, (void**)&pVtx, 0);
 
 	for(int nCntBoard = 0; nCntBoard < MAX_ENEMYBOARD; nCntBoard++, pVtx+=4)
@@ -117,48 +117,48 @@ void UpdateEnemyBoard(void)
 
 		ResetVertexEnemyBoard(nCntBoard);
 
-		// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+		// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 		D3DXMatrixIdentity( &g_aEnemyBoard[nCntBoard].mtxWorld);
 
-		//ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚ÉƒJƒƒ‰‚Ìs—ñ‚ğ“]’us—ñ‚Æ‚µ‚Äİ’è‚·‚é
+		//ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã«ã‚«ãƒ¡ãƒ©ã®è¡Œåˆ—ã‚’è»¢ç½®è¡Œåˆ—ã¨ã—ã¦è¨­å®šã™ã‚‹
 		g_aEnemyBoard[nCntBoard].mtxWorld._11 = pCamera->mtxView._11;
-		g_aEnemyBoard[nCntBoard].mtxWorld._22 = pCamera->mtxView._22;//‚’¼•ûŒü
+		g_aEnemyBoard[nCntBoard].mtxWorld._22 = pCamera->mtxView._22;//å‚ç›´æ–¹å‘
 		g_aEnemyBoard[nCntBoard].mtxWorld._33 = pCamera->mtxView._33;
 
 		g_aEnemyBoard[nCntBoard].mtxWorld._12 = pCamera->mtxView._21;
 		g_aEnemyBoard[nCntBoard].mtxWorld._13 = pCamera->mtxView._31;
-		g_aEnemyBoard[nCntBoard].mtxWorld._23 = pCamera->mtxView._32;//‚’¼•ûŒü
+		g_aEnemyBoard[nCntBoard].mtxWorld._23 = pCamera->mtxView._32;//å‚ç›´æ–¹å‘
 
-		g_aEnemyBoard[nCntBoard].mtxWorld._21 = pCamera->mtxView._12;//‚’¼•ûŒü
+		g_aEnemyBoard[nCntBoard].mtxWorld._21 = pCamera->mtxView._12;//å‚ç›´æ–¹å‘
 		g_aEnemyBoard[nCntBoard].mtxWorld._31 = pCamera->mtxView._13;
 		g_aEnemyBoard[nCntBoard].mtxWorld._32 = pCamera->mtxView._23;
 
-		// ƒXƒP[ƒ‹‚ğ”½‰f
+		// ã‚¹ã‚±ãƒ¼ãƒ«ã‚’åæ˜ 
 		D3DXMatrixScaling( &mtxScl, g_aEnemyBoard[nCntBoard].scl.x, g_aEnemyBoard[nCntBoard].scl.y, g_aEnemyBoard[nCntBoard].scl.z);
 		D3DXMatrixMultiply( &g_aEnemyBoard[nCntBoard].mtxWorld, &g_aEnemyBoard[nCntBoard].mtxWorld, &mtxScl);
 	
-		// ‰ñ“]‚ğ”½‰f
+		// å›è»¢ã‚’åæ˜ 
 		D3DXMatrixRotationYawPitchRoll( &mtxRot, g_aEnemyBoard[nCntBoard].rot.y, g_aEnemyBoard[nCntBoard].rot.x, g_aEnemyBoard[nCntBoard].rot.z);
 		D3DXMatrixMultiply( &g_aEnemyBoard[nCntBoard].mtxWorld, &g_aEnemyBoard[nCntBoard].mtxWorld, &mtxRot);
 	
-		// ˆÚ“®‚ğ”½‰f
+		// ç§»å‹•ã‚’åæ˜ 
 		D3DXMatrixTranslation( &mtxTranslate, g_aEnemyBoard[nCntBoard].pos.x, g_aEnemyBoard[nCntBoard].pos.y, g_aEnemyBoard[nCntBoard].pos.z);
 		D3DXMatrixMultiply( &g_aEnemyBoard[nCntBoard].mtxWorld, &g_aEnemyBoard[nCntBoard].mtxWorld, &mtxTranslate);
 
-		//’¸“_ƒoƒbƒtƒ@‚Éƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚ğŠ|‚¯‚éA’¸“_ƒoƒbƒtƒ@‚ªXV‚³‚ê‚é
+		//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã«ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã‚’æ›ã‘ã‚‹ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãŒæ›´æ–°ã•ã‚Œã‚‹
 		D3DXVec3TransformCoord( &pVtx[0].vtx, &pVtx[0].vtx, &g_aEnemyBoard[nCntBoard].mtxWorld);
 		D3DXVec3TransformCoord( &pVtx[1].vtx, &pVtx[1].vtx, &g_aEnemyBoard[nCntBoard].mtxWorld);
 		D3DXVec3TransformCoord( &pVtx[2].vtx, &pVtx[2].vtx, &g_aEnemyBoard[nCntBoard].mtxWorld);
 		D3DXVec3TransformCoord( &pVtx[3].vtx, &pVtx[3].vtx, &g_aEnemyBoard[nCntBoard].mtxWorld);
 	}
 
-	// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 	g_pD3DVtxBuffEnemyBoard->Unlock();
 
 }
 
 //=============================================================================
-// •`‰æˆ—
+// æç”»å‡¦ç†
 //=============================================================================
 void DrawEnemyBoard(void)
 {
@@ -166,7 +166,7 @@ void DrawEnemyBoard(void)
 	D3DXMATRIX mtxScl, mtxRot, mtxTranslate;
 	CAMERA *pCamera = GetCamera();
 
-	// ƒ‰ƒCƒeƒBƒ“ƒOƒ‚[ƒh‚ğOFF
+	// ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã‚’OFF
 	pDevice->SetRenderState( D3DRS_LIGHTING, FALSE);
 		
 	for(int nCntBoard = 0; nCntBoard < MAX_ENEMYBOARD; nCntBoard++)
@@ -174,95 +174,95 @@ void DrawEnemyBoard(void)
 
 		if(!g_aEnemyBoard[nCntBoard].bUse) continue;
 
-		//// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+		//// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 		D3DXMatrixIdentity( &g_aEnemyBoard[nCntBoard].mtxWorld);
 		
-		// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ìİ’è
+		// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®è¨­å®š
 		pDevice->SetTransform( D3DTS_WORLD, &g_aEnemyBoard[nCntBoard].mtxWorld);
 
-		// ’¸“_ƒoƒbƒtƒ@‚ğƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒã‚¤ãƒ³ãƒ‰
 		pDevice->SetStreamSource(0, g_pD3DVtxBuffEnemyBoard, 0, sizeof(VERTEX_3D));
 	
-		// ’¸“_ƒtƒH[ƒ}ƒbƒg‚Ìİ’è
+		// é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®è¨­å®š
 		pDevice->SetFVF(FVF_VERTEX_3D);
 
-		// ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 		pDevice->SetTexture(0, g_pD3DTextureEnemyBoard);
 
-		//ƒ¿ƒeƒXƒg
+		//Î±ãƒ†ã‚¹ãƒˆ
 		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 		pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
 		pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
-		//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+		//ãƒãƒªã‚´ãƒ³ã®æç”»
 		pDevice->DrawPrimitive(
-			D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚Ìí—Ş
-			nCntBoard*NUM_VERTEX,	//ƒ[ƒh‚·‚éÅ‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-			NUM_POLYGON				//ƒ|ƒŠƒSƒ“‚Ì”
+			D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡
+			nCntBoard*NUM_VERTEX,	//ãƒ­ãƒ¼ãƒ‰ã™ã‚‹æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			NUM_POLYGON				//ãƒãƒªã‚´ãƒ³ã®æ•°
 		);	
 	}
 
 
 
-	// ƒ‰ƒCƒeƒBƒ“ƒOƒ‚[ƒh‚ğON
+	// ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã‚’ON
 	pDevice->SetRenderState( D3DRS_LIGHTING, TRUE);
 
-	// ƒ¿ƒeƒXƒg‚ğ–³Œø‚É
+	// Î±ãƒ†ã‚¹ãƒˆã‚’ç„¡åŠ¹ã«
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 }
 
 //=============================================================================
-// ’¸“_‚Ìì¬
+// é ‚ç‚¹ã®ä½œæˆ
 //=============================================================================
 HRESULT MakeVertexEnemyBoard(LPDIRECT3DDEVICE9 pDevice)
 {
-	// ƒIƒuƒWƒFƒNƒg‚Ì’¸“_ƒoƒbƒtƒ@‚ğ¶¬
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆ
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_3D)*NUM_VERTEX*MAX_ENEMYBOARD,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY
+		sizeof(VERTEX_3D)*NUM_VERTEX*MAX_ENEMYBOARD,	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
 		D3DUSAGE_WRITEONLY,
-		FVF_VERTEX_3D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_3D,					//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 		D3DPOOL_MANAGED,
-		&g_pD3DVtxBuffEnemyBoard,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&g_pD3DVtxBuffEnemyBoard,			//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_3D *pVtx;
 
-	// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pD3DVtxBuffEnemyBoard->Lock( 0, 0, (void**)&pVtx, 0);
 
 	for(int nCntBoard = 0; nCntBoard < MAX_ENEMYBOARD; nCntBoard++, pVtx+=4)
 	{
-		// ’¸“_À•W‚Ìİ’è
+		// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		pVtx[0].vtx = D3DXVECTOR3( 0.0f - (SIZE_X/2), 0.0f + (SIZE_Y/2), 0.0f);
 		pVtx[1].vtx = D3DXVECTOR3( 0.0f + (SIZE_X/2), 0.0f + (SIZE_Y/2), 0.0f);
 		pVtx[2].vtx = D3DXVECTOR3( 0.0f - (SIZE_X/2), 0.0f - (SIZE_Y/2), 0.0f);
 		pVtx[3].vtx = D3DXVECTOR3( 0.0f + (SIZE_X/2), 0.0f - (SIZE_Y/2), 0.0f);
 
-		// –@üƒxƒNƒgƒ‹‚Ìİ’è
+		// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã®è¨­å®š
 		pVtx[0].nor = D3DXVECTOR3( 0.0f, 1.0f, 0.0f);
 		pVtx[1].nor = D3DXVECTOR3( 0.0f, 1.0f, 0.0f);
 		pVtx[2].nor = D3DXVECTOR3( 0.0f, 1.0f, 0.0f);
 		pVtx[3].nor = D3DXVECTOR3( 0.0f, 1.0f, 0.0f);
 
-		// ”½ËŒõ‚Ìİ’è
+		// åå°„å…‰ã®è¨­å®š
 		pVtx[0].col = D3DCOLOR_RGBA(255,255,255,255);
 		pVtx[1].col = D3DCOLOR_RGBA(255,255,255,255);
 		pVtx[2].col = D3DCOLOR_RGBA(255,255,255,255);
 		pVtx[3].col = D3DCOLOR_RGBA(255,255,255,255);
 
-		// ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 		pVtx[0].tex = D3DXVECTOR2(0.0F, 0.0F);
 		pVtx[1].tex = D3DXVECTOR2(1.0F, 0.0F);
 		pVtx[2].tex = D3DXVECTOR2(0.0F, 1.0F);
 		pVtx[3].tex = D3DXVECTOR2(1.0F, 1.0F);
 	}
 
-	// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 	g_pD3DVtxBuffEnemyBoard->Unlock();
 
 	return S_OK;
@@ -270,30 +270,30 @@ HRESULT MakeVertexEnemyBoard(LPDIRECT3DDEVICE9 pDevice)
 
 bool HitCheckEnemyBoard( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, int nIdxBoard)
 {
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_3D *pVtx;
 
-	// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pD3DVtxBuffEnemyBoard->Lock( 0, 0, (void**)&pVtx, 0);
 
-	// pVtx‚ğƒCƒ“ƒfƒbƒNƒX•ªƒYƒ‰‚·
+	// pVtxã‚’ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹åˆ†ã‚ºãƒ©ã™
 	pVtx += nIdxBoard * 4;
 
 	if( HitCheck( pVtx[0].vtx, pVtx[1].vtx, pVtx[2].vtx, tNowPos, tNextPos) )
 	{
-		// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_pD3DVtxBuffEnemyBoard->Unlock();
 		return true;
 	}
 	if( HitCheck( pVtx[1].vtx, pVtx[2].vtx, pVtx[3].vtx, tNowPos, tNextPos) )
 	{
-		// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_pD3DVtxBuffEnemyBoard->Unlock();
 		return true;
 	}
 
 
-	// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 	g_pD3DVtxBuffEnemyBoard->Unlock();
 
 
@@ -301,48 +301,48 @@ bool HitCheckEnemyBoard( D3DXVECTOR3 tNowPos, D3DXVECTOR3 tNextPos, int nIdxBoar
 }
 
 //=============================================================================
-// ’¸“_À•W‚Ìİ’è
+// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 //=============================================================================
 void ResetVertexEnemyBoard(int nIdxBoard)
 {
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 		VERTEX_3D *pVtx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		g_pD3DVtxBuffEnemyBoard->Lock( 0, 0, (void**)&pVtx, 0);
 
-		// pVtx‚ğƒCƒ“ƒfƒbƒNƒX•ªƒYƒ‰‚·
+		// pVtxã‚’ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹åˆ†ã‚ºãƒ©ã™
 		pVtx += nIdxBoard * 4;
 
-		// ’¸“_À•W‚Ìİ’èiˆø”‚ğ—p‚¢‚Äİ’èj
+		// é ‚ç‚¹åº§æ¨™ã®è¨­å®šï¼ˆå¼•æ•°ã‚’ç”¨ã„ã¦è¨­å®šï¼‰
 		pVtx[0].vtx = D3DXVECTOR3(0.0f - (SIZE_X/2), 0.0f + (SIZE_Y/2), 0.0f);
 		pVtx[1].vtx = D3DXVECTOR3(0.0f + (SIZE_X/2), 0.0f + (SIZE_Y/2), 0.0f);
 		pVtx[2].vtx = D3DXVECTOR3(0.0f - (SIZE_X/2), 0.0f - (SIZE_Y/2), 0.0f);
 		pVtx[3].vtx = D3DXVECTOR3(0.0f + (SIZE_X/2), 0.0f - (SIZE_Y/2), 0.0f);
 
-		// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_pD3DVtxBuffEnemyBoard->Unlock();
 	}
 }
 
 void SetVertexEnemyBoard(int nIdxBoard, float fSizeX, float fSizeZ)
 {
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 		VERTEX_3D *pVtx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		g_pD3DVtxBuffEnemyBoard->Lock( 0, 0, (void**)&pVtx, 0);
 
-		// pVtx‚ğƒCƒ“ƒfƒbƒNƒX•ªƒYƒ‰‚·
+		// pVtxã‚’ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹åˆ†ã‚ºãƒ©ã™
 		pVtx += nIdxBoard * 4;
 
-		// ’¸“_À•W‚Ìİ’èiˆø”‚ğ—p‚¢‚Äİ’èj
+		// é ‚ç‚¹åº§æ¨™ã®è¨­å®šï¼ˆå¼•æ•°ã‚’ç”¨ã„ã¦è¨­å®šï¼‰
 		pVtx[0].vtx = D3DXVECTOR3(0.0f - (fSizeX/2), 0.0f + (fSizeZ/2), 0.0f);
 		pVtx[1].vtx = D3DXVECTOR3(0.0f + (fSizeX/2), 0.0f + (fSizeZ/2), 0.0f);
 		pVtx[2].vtx = D3DXVECTOR3(0.0f - (fSizeX/2), 0.0f - (fSizeZ/2), 0.0f);
 		pVtx[3].vtx = D3DXVECTOR3(0.0f + (fSizeX/2), 0.0f - (fSizeZ/2), 0.0f);
 
-		// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_pD3DVtxBuffEnemyBoard->Unlock();
 	}
 }
@@ -355,43 +355,43 @@ int CreateEnemyBoard(D3DXVECTOR3 pos, float fSizeX, float fSizeZ)
 	{
 		if(!g_aEnemyBoard[nCntBoard].bUse)
 		{
-			// ‰e‚ÌˆÊ’uA‰ñ“]Šp‚ğİ’è
+			// å½±ã®ä½ç½®ã€å›è»¢è§’ã‚’è¨­å®š
 			D3DXVECTOR3 tPos = pos;
 			tPos.y += 15.0f;
 			g_aEnemyBoard[nCntBoard].pos = tPos;
 
-			// ‰eƒ[ƒN‚ğg—pó‘Ô‚É•ÏX
+			// å½±ãƒ¯ãƒ¼ã‚¯ã‚’ä½¿ç”¨çŠ¶æ…‹ã«å¤‰æ›´
 			g_aEnemyBoard[nCntBoard].bUse = true;
 
-			// ’¸“_À•W‚Ìİ’èŠÖ”‚ğŒÄ‚Ño‚·
+			// é ‚ç‚¹åº§æ¨™ã®è¨­å®šé–¢æ•°ã‚’å‘¼ã³å‡ºã™
 			SetVertexEnemyBoard( nCntBoard, fSizeX, fSizeZ);
 
-			// ‰e‚Ì”Ô†‚ğnIdxShadow‚Éİ’è
+			// å½±ã®ç•ªå·ã‚’nIdxShadowã«è¨­å®š
 			nIdxBoard = nCntBoard;
 			break;
 		}
 	}
 
-	// nIdxShadow‚ğ•Ô‚·
+	// nIdxShadowã‚’è¿”ã™
 	return nIdxBoard;
 }
 
 void ReleaseEnemyBoard(int nIdxBoard)
 {
-	//w’è‚³‚ê‚½‰e‚ª‰eƒ[ƒN‚ÌŒÂ”‚È‚¢‚©‚Ç‚¤‚©
+	//æŒ‡å®šã•ã‚ŒãŸå½±ãŒå½±ãƒ¯ãƒ¼ã‚¯ã®å€‹æ•°ãªã„ã‹ã©ã†ã‹
 	if(nIdxBoard < MAX_ENEMY)
 	{
-		// ‰eƒ[ƒN‚ğ–¢g—pó‘Ô‚Éİ’è
+		// å½±ãƒ¯ãƒ¼ã‚¯ã‚’æœªä½¿ç”¨çŠ¶æ…‹ã«è¨­å®š
 		g_aEnemyBoard[nIdxBoard].bUse = false;
 	}
 }
 
 //=============================================================================
-// ˆÊ’u‚Ìİ’è
+// ä½ç½®ã®è¨­å®š
 //=============================================================================
 void SetPositionEnemyBoard(int nIdxBoard, D3DXVECTOR3 pos)
 {
-	// w’è‚³‚êˆÊ’u‚Éİ’è
+	// æŒ‡å®šã•ã‚Œä½ç½®ã«è¨­å®š
 	D3DXVECTOR3 tPos = pos;
 	g_aEnemyBoard[nIdxBoard].pos.x = pos.x;
 	g_aEnemyBoard[nIdxBoard].pos.z = pos.z;

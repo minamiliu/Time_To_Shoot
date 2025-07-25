@@ -1,13 +1,13 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		•¬…‚Ì…ƒp[ƒeƒBƒNƒ‹ˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	fountain.cpp
-* ì¬Ò:		HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		å™´æ°´ã®æ°´ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	fountain.cpp
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 #include "fountain.h"
 #include "camera.h"
@@ -17,35 +17,35 @@
 #include "player.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define MAX_PARTICLE	(128)
 #define NUM_VERTEX	(4)
 #define NUM_POLYGON (2)
 
-#define TEXTURE_FIELD	"data/TEXTURE/shadow000.jpg"					// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
+#define TEXTURE_FIELD	"data/TEXTURE/shadow000.jpg"					// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
 
 
-#define VALUE_MOVE		(5.0f)											// ˆÚ“®—Ê
-#define VALUE_ROTATE	(D3DX_PI * 0.02f) 								// ‰ñ“]—Ê
+#define VALUE_MOVE		(5.0f)											// ç§»å‹•é‡
+#define VALUE_ROTATE	(D3DX_PI * 0.02f) 								// å›è»¢é‡
 
-#define SIZE_X			(20.0f)											// ’n–Ê‚ÌƒTƒCƒY(X•ûŒü)
-#define SIZE_Y			(20.0f)											// ’n–Ê‚ÌƒTƒCƒY(Z•ûŒü)
+#define SIZE_X			(20.0f)											// åœ°é¢ã®ã‚µã‚¤ã‚º(Xæ–¹å‘)
+#define SIZE_Y			(20.0f)											// åœ°é¢ã®ã‚µã‚¤ã‚º(Zæ–¹å‘)
 																		
 #define CREATE_RATE	(1)
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 HRESULT MakeVertexFountain(LPDIRECT3DDEVICE9 pDevice);
 void SetColorFountain(int nIdxFountain, D3DXCOLOR col);
 
 //*****************************************************************************
-// ƒOƒ[ƒoƒ‹•Ï”
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 //*****************************************************************************
 FOUNTAIN g_aFountain[MAX_PARTICLE];
-LPDIRECT3DTEXTURE9		g_pD3DTextureFountain;								// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffFountain;								// ’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
+LPDIRECT3DTEXTURE9		g_pD3DTextureFountain;								// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffFountain;								// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 bool g_bDraw;
 int g_bDrawTimer;
 D3DXVECTOR3 g_posPtc;
@@ -53,7 +53,7 @@ int g_nPtcCreateRate;
 int g_nPtcCreateCounter;
 float g_fDisToPlayer = 0;
 //=============================================================================
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT InitFountain(void)
 {
@@ -63,7 +63,7 @@ HRESULT InitFountain(void)
 	g_bDrawTimer = 0;
 	g_posPtc = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 	
-	// ˆÊ’uE‰ñ“]EƒXƒP[ƒ‹‚Ì‰Šúİ’è
+	// ä½ç½®ãƒ»å›è»¢ãƒ»ã‚¹ã‚±ãƒ¼ãƒ«ã®åˆæœŸè¨­å®š
 	for(int nCntBoard = 0; nCntBoard < MAX_PARTICLE; nCntBoard++)
 	{
 		g_aFountain[nCntBoard].pos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
@@ -80,29 +80,29 @@ HRESULT InitFountain(void)
 	g_pD3DVtxBuffFountain = NULL;
 
 	
-	// ’¸“_î•ñ‚Ìì¬
+	// é ‚ç‚¹æƒ…å ±ã®ä½œæˆ
 	MakeVertexFountain(pDevice);
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	D3DXCreateTextureFromFile( pDevice, TEXTURE_FIELD, &g_pD3DTextureFountain);
 
 	return S_OK;
 }
 
 //=============================================================================
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //=============================================================================
 void UninitFountain(void)
 {
 	if(g_pD3DTextureFountain != NULL)
-	{// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
+	{// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é–‹æ”¾
 		g_pD3DTextureFountain->Release();
 		g_pD3DTextureFountain = NULL;
 	}
 
 
 	if(g_pD3DVtxBuffFountain != NULL)
-	{// ’¸“_ƒoƒbƒtƒ@‚ÌŠJ•ú
+	{// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®é–‹æ”¾
 		g_pD3DVtxBuffFountain->Release();
 		g_pD3DVtxBuffFountain = NULL;
 	}	
@@ -111,13 +111,13 @@ void UninitFountain(void)
 }
 
 //=============================================================================
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 //=============================================================================
 void UpdateFountain(float fTimeSpeed)
 {
 	if(!g_bDraw) return;
 
-	//ŠÔ‚É‚æ‚èA¶Y—¦‚ª•Ï‚í‚é
+	//æ™‚é–“ã«ã‚ˆã‚Šã€ç”Ÿç”£ç‡ãŒå¤‰ã‚ã‚‹
 	g_nPtcCreateRate = CREATE_RATE / fTimeSpeed;
 	g_nPtcCreateCounter++;
 
@@ -192,7 +192,7 @@ void UpdateFountain(float fTimeSpeed)
 	}
 	else if(g_bDrawTimer == -1)
 	{
-		//–³ŒÀƒ‹[ƒv
+		//ç„¡é™ãƒ«ãƒ¼ãƒ—
 	}
 	else
 	{
@@ -202,7 +202,7 @@ void UpdateFountain(float fTimeSpeed)
 }
 
 //=============================================================================
-// •`‰æˆ—
+// æç”»å‡¦ç†
 //=============================================================================
 void DrawFountain(void)
 {
@@ -212,25 +212,25 @@ void DrawFountain(void)
 	D3DXMATRIX mtxScl, mtxRot, mtxTranslate;
 	CAMERA *pCamera = GetCamera();
 
-	// ‰ÁZ‡¬
-	pDevice->SetRenderState( D3DRS_BLENDOP, D3DBLENDOP_ADD);	// Œ‹‰Ê = “]‘—Œ³(SRC) + “]‘—æ(DEST)
+	// åŠ ç®—åˆæˆ
+	pDevice->SetRenderState( D3DRS_BLENDOP, D3DBLENDOP_ADD);	// çµæœ = è»¢é€å…ƒ(SRC) + è»¢é€å…ˆ(DEST)
 	pDevice->SetRenderState( D3DRS_SRCBLEND, D3DBLEND_INVSRCALPHA);
 	pDevice->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_ONE);
 
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);			// Z”äŠr‚È‚µ
+	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);			// Zæ¯”è¼ƒãªã—
 
-	// ƒ‰ƒCƒeƒBƒ“ƒOƒ‚[ƒh‚ğOFF
+	// ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã‚’OFF
 	pDevice->SetRenderState( D3DRS_LIGHTING, FALSE);
 		
 	for(int nCntBoard = 0; nCntBoard < MAX_PARTICLE; nCntBoard++)
 	{
 		if(g_aFountain[nCntBoard].bUse)
 		{
-			// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+			// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 			D3DXMatrixIdentity( &g_aFountain[nCntBoard].mtxWorld);
 
-			//ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚ÉƒJƒƒ‰‚Ìs—ñ‚ğ“]’us—ñ‚Æ‚µ‚Äİ’è‚·‚é
+			//ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã«ã‚«ãƒ¡ãƒ©ã®è¡Œåˆ—ã‚’è»¢ç½®è¡Œåˆ—ã¨ã—ã¦è¨­å®šã™ã‚‹
 			g_aFountain[nCntBoard].mtxWorld._11 = pCamera->mtxView._11;
 			g_aFountain[nCntBoard].mtxWorld._22 = pCamera->mtxView._22;
 			g_aFountain[nCntBoard].mtxWorld._33 = pCamera->mtxView._33;
@@ -243,144 +243,144 @@ void DrawFountain(void)
 			g_aFountain[nCntBoard].mtxWorld._31 = pCamera->mtxView._13;
 			g_aFountain[nCntBoard].mtxWorld._32 = pCamera->mtxView._23;
 
-			// ƒXƒP[ƒ‹‚ğ”½‰f
+			// ã‚¹ã‚±ãƒ¼ãƒ«ã‚’åæ˜ 
 			D3DXMatrixScaling( &mtxScl, g_aFountain[nCntBoard].scl.x, g_aFountain[nCntBoard].scl.y, g_aFountain[nCntBoard].scl.z);
 			D3DXMatrixMultiply( &g_aFountain[nCntBoard].mtxWorld, &g_aFountain[nCntBoard].mtxWorld, &mtxScl);
 	
-			// ‰ñ“]‚ğ”½‰f
+			// å›è»¢ã‚’åæ˜ 
 			D3DXMatrixRotationYawPitchRoll( &mtxRot, g_aFountain[nCntBoard].rot.y, g_aFountain[nCntBoard].rot.x, g_aFountain[nCntBoard].rot.z);
 			D3DXMatrixMultiply( &g_aFountain[nCntBoard].mtxWorld, &g_aFountain[nCntBoard].mtxWorld, &mtxRot);
 	
-			// ˆÚ“®‚ğ”½‰f
+			// ç§»å‹•ã‚’åæ˜ 
 			D3DXMatrixTranslation( &mtxTranslate, g_aFountain[nCntBoard].pos.x, g_aFountain[nCntBoard].pos.y, g_aFountain[nCntBoard].pos.z);
 			D3DXMatrixMultiply( &g_aFountain[nCntBoard].mtxWorld, &g_aFountain[nCntBoard].mtxWorld, &mtxTranslate);
 	
-			// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ìİ’è
+			// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®è¨­å®š
 			pDevice->SetTransform( D3DTS_WORLD, &g_aFountain[nCntBoard].mtxWorld);
 
-			// ’¸“_ƒoƒbƒtƒ@‚ğƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+			// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒã‚¤ãƒ³ãƒ‰
 			pDevice->SetStreamSource(0, g_pD3DVtxBuffFountain, 0, sizeof(VERTEX_3D));
 
-			// ’¸“_ƒtƒH[ƒ}ƒbƒg‚Ìİ’è
+			// é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®è¨­å®š
 			pDevice->SetFVF(FVF_VERTEX_3D);
 
-			// ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+			// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 			pDevice->SetTexture(0, g_pD3DTextureFountain);
 
-			//ƒ¿ƒeƒXƒg
+			//Î±ãƒ†ã‚¹ãƒˆ
 			pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 			pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
 			pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
-			//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+			//ãƒãƒªã‚´ãƒ³ã®æç”»
 			pDevice->DrawPrimitive(
-				D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚Ìí—Ş
-				nCntBoard*NUM_VERTEX,	//ƒ[ƒh‚·‚éÅ‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-				NUM_POLYGON				//ƒ|ƒŠƒSƒ“‚Ì”
+				D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡
+				nCntBoard*NUM_VERTEX,	//ãƒ­ãƒ¼ãƒ‰ã™ã‚‹æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+				NUM_POLYGON				//ãƒãƒªã‚´ãƒ³ã®æ•°
 			);			
 		}
 	}
 
 
-	// ƒ‰ƒCƒeƒBƒ“ƒOƒ‚[ƒh‚ğON
+	// ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°ãƒ¢ãƒ¼ãƒ‰ã‚’ON
 	pDevice->SetRenderState( D3DRS_LIGHTING, TRUE);
 
-	// ƒ¿ƒeƒXƒg‚ğ–³Œø‚É
+	// Î±ãƒ†ã‚¹ãƒˆã‚’ç„¡åŠ¹ã«
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
-	// ’ÊíƒuƒŒƒ“ƒh 
-	pDevice->SetRenderState( D3DRS_BLENDOP, D3DBLENDOP_ADD);	// Œ‹‰Ê = “]‘—Œ³(SRC) + “]‘—æ(DEST)
+	// é€šå¸¸ãƒ–ãƒ¬ãƒ³ãƒ‰ 
+	pDevice->SetRenderState( D3DRS_BLENDOP, D3DBLENDOP_ADD);	// çµæœ = è»¢é€å…ƒ(SRC) + è»¢é€å…ˆ(DEST)
 	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);	
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);			// Z”äŠr‚ ‚è
+	pDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);			// Zæ¯”è¼ƒã‚ã‚Š
 }
 
 //=============================================================================
-// ’¸“_‚Ìì¬
+// é ‚ç‚¹ã®ä½œæˆ
 //=============================================================================
 HRESULT MakeVertexFountain(LPDIRECT3DDEVICE9 pDevice)
 {
-	// ƒIƒuƒWƒFƒNƒg‚Ì’¸“_ƒoƒbƒtƒ@‚ğ¶¬
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆ
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_3D)*NUM_VERTEX*MAX_PARTICLE,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY
+		sizeof(VERTEX_3D)*NUM_VERTEX*MAX_PARTICLE,	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
 		D3DUSAGE_WRITEONLY,
-		FVF_VERTEX_3D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_3D,					//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 		D3DPOOL_MANAGED,
-		&g_pD3DVtxBuffFountain,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&g_pD3DVtxBuffFountain,			//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_3D *pVtx;
 
-	// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pD3DVtxBuffFountain->Lock( 0, 0, (void**)&pVtx, 0);
 
 	for(int nCntBoard = 0; nCntBoard < MAX_PARTICLE; nCntBoard++, pVtx+=4)
 	{
-		// ’¸“_À•W‚Ìİ’è
+		// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		pVtx[0].vtx = D3DXVECTOR3(g_aFountain[nCntBoard].pos.x - (SIZE_X/2), g_aFountain[nCntBoard].pos.y + (SIZE_Y/2), 0.0f);
 		pVtx[1].vtx = D3DXVECTOR3(g_aFountain[nCntBoard].pos.x + (SIZE_X/2), g_aFountain[nCntBoard].pos.y + (SIZE_Y/2), 0.0f);
 		pVtx[2].vtx = D3DXVECTOR3(g_aFountain[nCntBoard].pos.x - (SIZE_X/2), g_aFountain[nCntBoard].pos.y - (SIZE_Y/2), 0.0f);
 		pVtx[3].vtx = D3DXVECTOR3(g_aFountain[nCntBoard].pos.x + (SIZE_X/2), g_aFountain[nCntBoard].pos.y - (SIZE_Y/2), 0.0f);
 
-		// –@üƒxƒNƒgƒ‹‚Ìİ’è
+		// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã®è¨­å®š
 		pVtx[0].nor = D3DXVECTOR3( 0.0f, 1.0f, 0.0f);
 		pVtx[1].nor = D3DXVECTOR3( 0.0f, 1.0f, 0.0f);
 		pVtx[2].nor = D3DXVECTOR3( 0.0f, 1.0f, 0.0f);
 		pVtx[3].nor = D3DXVECTOR3( 0.0f, 1.0f, 0.0f);
 
-		// ”½ËŒõ‚Ìİ’è
+		// åå°„å…‰ã®è¨­å®š
 		pVtx[0].col = D3DCOLOR_RGBA(255,255,255,255);
 		pVtx[1].col = D3DCOLOR_RGBA(255,255,255,255);
 		pVtx[2].col = D3DCOLOR_RGBA(255,255,255,255);
 		pVtx[3].col = D3DCOLOR_RGBA(255,255,255,255);
 
-		// ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 		pVtx[0].tex = D3DXVECTOR2(0.0F, 0.0F);
 		pVtx[1].tex = D3DXVECTOR2(1.0F, 0.0F);
 		pVtx[2].tex = D3DXVECTOR2(0.0F, 1.0F);
 		pVtx[3].tex = D3DXVECTOR2(1.0F, 1.0F);
 	}
 
-	// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 	g_pD3DVtxBuffFountain->Unlock();
 
 	return S_OK;
 }
 
 //=============================================================================
-// ’¸“_ƒJƒ‰[‚Ìİ’è
+// é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã®è¨­å®š
 //=============================================================================
 void SetColorFountain(int nIdxFountain, D3DXCOLOR col)
 {
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 		VERTEX_3D *pVtx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		g_pD3DVtxBuffFountain->Lock( 0, 0, (void**)&pVtx, 0);
 
-		// pVtx‚ğƒCƒ“ƒfƒbƒNƒX•ªƒYƒ‰‚·
+		// pVtxã‚’ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹åˆ†ã‚ºãƒ©ã™
 		pVtx += nIdxFountain * 4;
 
-		// ’¸“_ƒJƒ‰[‚Ìİ’è
+		// é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã®è¨­å®š
 		pVtx[0].col = col;
 		pVtx[1].col = col;
 		pVtx[2].col = col;
 		pVtx[3].col = col;
 
-		// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_pD3DVtxBuffFountain->Unlock();
 	}
 }
 
 /*******************************************************************************
-* •¬…‚Ìİ’u
+* å™´æ°´ã®è¨­ç½®
 *******************************************************************************/
 void SetFountain(int drawTime, D3DXVECTOR3 pos)
 {

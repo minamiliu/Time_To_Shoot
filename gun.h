@@ -1,8 +1,8 @@
-/*******************************************************************************
+﻿/*******************************************************************************
 *
-* �^�C�g��:		�e�̃��f������
-* �v���O������:	gun.h
-* �쐬��:		HAL�����Q�[���w�ȁ@����G
+* タイトル:		銃のモデル処理
+* プログラム名:	gun.h
+* 作成者:		HAL東京ゲーム学科　劉南宏
 *
 *******************************************************************************/
 
@@ -13,39 +13,39 @@
 #include "main.h"
 
 //*****************************************************************************
-// �J�����̍\����
+// カメラの構造体
 //*****************************************************************************
 typedef struct
 {
-	LPDIRECT3DTEXTURE9	pD3DTexture;	// �e�N�X�`���ւ̃|�C���^
-	LPD3DXMESH  pD3DXMesh;				// ���b�V�����ւ̃|�C���^
-	LPD3DXBUFFER  pD3DXBuffMat;			// �}�e���A�����ւ̃|�C���^
-	DWORD	nNumMat;					// �}�e���A�����̐�
+	LPDIRECT3DTEXTURE9	pD3DTexture;	// テクスチャへのポインタ
+	LPD3DXMESH  pD3DXMesh;				// メッシュ情報へのポインタ
+	LPD3DXBUFFER  pD3DXBuffMat;			// マテリアル情報へのポインタ
+	DWORD	nNumMat;					// マテリアル情報の数
 
-	D3DXVECTOR3 pos;					// ���f���̈ʒu
-	D3DXVECTOR3 rot;					// ���f���̌���(��])
-	D3DXVECTOR3 scl;					// ���f���̑傫��(�X�P�[��)
-	D3DXVECTOR3 move;					// ���f���̈ړ���
+	D3DXVECTOR3 pos;					// モデルの位置
+	D3DXVECTOR3 rot;					// モデルの向き(回転)
+	D3DXVECTOR3 scl;					// モデルの大きさ(スケール)
+	D3DXVECTOR3 move;					// モデルの移動量
 
-	//�L�[�t���C��
-	D3DXVECTOR3 posChild;				//�q���W
-	D3DXVECTOR3 posChildTarget;			//�q���W�̖ڕW
-	D3DXVECTOR3 rotChild;				//�q���W�̌���
-	D3DXVECTOR3 rotChildAngle;			//�q���W�̖���̉�]��
-	D3DXVECTOR3 rotChildTarget;			//�q���W�̌����̖ڕW
+	//キーフレイム
+	D3DXVECTOR3 posChild;				//子座標
+	D3DXVECTOR3 posChildTarget;			//子座標の目標
+	D3DXVECTOR3 rotChild;				//子座標の向き
+	D3DXVECTOR3 rotChildAngle;			//子座標の毎回の回転量
+	D3DXVECTOR3 rotChildTarget;			//子座標の向きの目標
 
-	D3DXMATRIX mtxWorld;				// ���[���h�}�g���b�N�X
+	D3DXMATRIX mtxWorld;				// ワールドマトリックス
 
-	bool bShot;							//�e����������
-	bool bShake;						//�ړ����Ă��邩
-	bool bBulletOut;					//�e�؂�ɂȂ�����
-	int nShootFrame;					//�e�����A�j���K�v�ȃt���C����
-	int nCheckFrame;					//�e�؂�̃`�F�b�N�t���C����
-	int nKeyFrame;						//�e�؂�̃L�[�t���C����
+	bool bShot;							//弾を撃ったか
+	bool bShake;						//移動しているか
+	bool bBulletOut;					//弾切れになったか
+	int nShootFrame;					//弾を撃つアニメ必要なフレイム数
+	int nCheckFrame;					//弾切れのチェックフレイム数
+	int nKeyFrame;						//弾切れのキーフレイム数
 } GUN;
 
 //*****************************************************************************
-// �v���g�^�C�v�錾
+// プロトタイプ宣言
 //*****************************************************************************
 HRESULT InitGun(void);
 void UninitGun(void);
@@ -53,8 +53,8 @@ void UpdateGun(void);
 void DrawGun(void);
 
 GUN *GetGun(void);
-void SetGunShootAni(void);					//�e�����A�j���ݒu
-void SetGunShakeAni(bool bShake);			//�ړ��̃A�j���ݒu
-void SetGunBulletOutAni(bool bBulletOut);	//�e�؂�̃A�j���ݒu
-bool IsGunReady(void);						//�e�̃A�j���I�������
+void SetGunShootAni(void);					//弾を撃つアニメ設置
+void SetGunShakeAni(bool bShake);			//移動のアニメ設置
+void SetGunBulletOutAni(bool bBulletOut);	//弾切れのアニメ設置
+bool IsGunReady(void);						//銃のアニメ終わったか
 #endif

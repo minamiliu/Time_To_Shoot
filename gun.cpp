@@ -1,13 +1,13 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		e‚Ìƒ‚ƒfƒ‹ˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	gun.cpp
-* ì¬Ò:		HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		éŠƒã®ãƒ¢ãƒ‡ãƒ«å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	gun.cpp
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 #include "gun.h"
 #include "debugproc.h"
@@ -17,16 +17,16 @@
 
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
 
-#define MODEL_PLANE		"data/MODEL/gun.x"					// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
+#define MODEL_PLANE		"data/MODEL/gun.x"					// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
 
-#define VALUE_MOVE		(5.0f)									// ˆÚ“®—Ê
-#define VALUE_ROTATE	(D3DX_PI * 0.02f) 						// ‰ñ“]—Ê
-#define DIVIDE_ROTATE	(30) 									// ‰ñ“]—Ê‚ğ‚¢‚­‚Â‚É•ª‚¯‚é
+#define VALUE_MOVE		(5.0f)									// ç§»å‹•é‡
+#define VALUE_ROTATE	(D3DX_PI * 0.02f) 						// å›è»¢é‡
+#define DIVIDE_ROTATE	(30) 									// å›è»¢é‡ã‚’ã„ãã¤ã«åˆ†ã‘ã‚‹
 
 #define MODEL_POS_X	(0)
 #define MODEL_POS_Y	(30)
@@ -34,12 +34,12 @@
 
 #define MAX_KEYFRAME	(4)
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 
 
 //*****************************************************************************
-// ƒOƒ[ƒoƒ‹•Ï”
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 //*****************************************************************************
 GUN g_gun;
 
@@ -52,13 +52,13 @@ D3DXVECTOR3 g_BulletOutAnime[MAX_KEYFRAME]={
 };
 
 //=============================================================================
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT InitGun(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	
-	// ˆÊ’uE‰ñ“]EƒXƒP[ƒ‹‚Ì‰Šúİ’è
+	// ä½ç½®ãƒ»å›è»¢ãƒ»ã‚¹ã‚±ãƒ¼ãƒ«ã®åˆæœŸè¨­å®š
 	g_gun.pos = D3DXVECTOR3( MODEL_POS_X, MODEL_POS_Y, MODEL_POS_Z);
 	g_gun.rot = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 	g_gun.scl = D3DXVECTOR3( 2.0f, 2.0f, 2.0f);
@@ -67,22 +67,22 @@ HRESULT InitGun(void)
 	g_gun.bShake = false;
 	g_gun.bBulletOut = false;
 
-	// ƒ‚ƒfƒ‹‚ÉŠÖ‚·‚é•Ï”‚Ì‰Šú‰»							
-	g_gun.pD3DTexture = NULL;		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	g_gun.pD3DXMesh = NULL;		// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	g_gun.pD3DXBuffMat = NULL;		// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	g_gun.nNumMat = 0;				// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+	// ãƒ¢ãƒ‡ãƒ«ã«é–¢ã™ã‚‹å¤‰æ•°ã®åˆæœŸåŒ–							
+	g_gun.pD3DTexture = NULL;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	g_gun.pD3DXMesh = NULL;		// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	g_gun.pD3DXBuffMat = NULL;		// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	g_gun.nNumMat = 0;				// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
 
-	// Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+	// Xãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 	if(FAILED(D3DXLoadMeshFromX(
-		MODEL_PLANE,				// “Ç‚İ‚Şƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹–¼(Xƒtƒ@ƒCƒ‹)
-		D3DXMESH_SYSTEMMEM,			// ƒƒbƒVƒ…‚Ìì¬ƒIƒvƒVƒ‡ƒ“‚ğw’è
-		pDevice,					// IDirect3DDevice9ƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		NULL,						// —×Ú«ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		&g_gun.pD3DXBuffMat,		// ƒ}ƒeƒŠƒAƒ‹ƒf[ƒ^‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		NULL,						// ƒGƒtƒFƒNƒgƒCƒ“ƒXƒ^ƒ“ƒX‚Ì”z—ñ‚ğŠÜ‚Şƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		&g_gun.nNumMat,			// D3DXMATERIAL\‘¢‘Ì‚Ì”
-		&g_gun.pD3DXMesh			// ID3DXMeshƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ÌƒAƒhƒŒƒX
+		MODEL_PLANE,				// èª­ã¿è¾¼ã‚€ãƒ¢ãƒ‡ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«å(Xãƒ•ã‚¡ã‚¤ãƒ«)
+		D3DXMESH_SYSTEMMEM,			// ãƒ¡ãƒƒã‚·ãƒ¥ã®ä½œæˆã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’æŒ‡å®š
+		pDevice,					// IDirect3DDevice9ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+		NULL,						// éš£æ¥æ€§ãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+		&g_gun.pD3DXBuffMat,		// ãƒãƒ†ãƒªã‚¢ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+		NULL,						// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®é…åˆ—ã‚’å«ã‚€ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+		&g_gun.nNumMat,			// D3DXMATERIALæ§‹é€ ä½“ã®æ•°
+		&g_gun.pD3DXMesh			// ID3DXMeshã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 		)))
 	{
 		return E_FAIL;
@@ -93,19 +93,19 @@ HRESULT InitGun(void)
 }
 
 //=============================================================================
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //=============================================================================
 void UninitGun(void)
 {
-	// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é–‹æ”¾
 
-	// ƒƒbƒVƒ…‚ÌŠJ•ú
+	// ãƒ¡ãƒƒã‚·ãƒ¥ã®é–‹æ”¾
 	if(g_gun.pD3DXMesh != NULL)
 	{
 		g_gun.pD3DXMesh->Release();
 		g_gun.pD3DXMesh = NULL;
 	}
-	// ƒ}ƒeƒŠƒAƒ‹‚ÌŠJ•ú
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®é–‹æ”¾
 	if(g_gun.pD3DXBuffMat != NULL)
 	{
 		g_gun.pD3DXBuffMat->Release();
@@ -114,22 +114,22 @@ void UninitGun(void)
 }
 
 //=============================================================================
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 //=============================================================================
 void UpdateGun(void)
 {
 	CAMERA *pCamera = GetCamera();
 
-	//e‚ÍƒJƒƒ‰‚Ì‰E‰œ‚Ì‰½“x‚Ì‚Æ‚±‚ë‚É’u‚­
+	//éŠƒã¯ã‚«ãƒ¡ãƒ©ã®å³å¥¥ã®ä½•åº¦ã®ã¨ã“ã‚ã«ç½®ã
 	float angle = pCamera->rot.y + D3DXToRadian(15.0f);
 	if( angle > D3DX_PI) angle -= D3DX_PI * 2.0f;
 
-	//e‚ÌˆÊ’u‚ğİ’è
+	//éŠƒã®ä½ç½®ã‚’è¨­å®š
 	g_gun.pos.x = pCamera->posV.x + 2 * sinf(angle);
 	g_gun.pos.z = pCamera->posV.z + 2 * cosf(angle);
 	g_gun.pos.y = pCamera->posV.y - 1.68f;
 
-	//Œ©‰º‚ë‚·Ae‚ÌˆÊ’u
+	//è¦‹ä¸‹ã‚ã™æ™‚ã€éŠƒã®ä½ç½®
 	g_gun.pos.y += sinf( D3DXToRadian(22.0f) - pCamera->rot.x ) * 2.0f ;
 	if( D3DXToRadian(22.0f) - pCamera->rot.x < 0)
 	{
@@ -137,36 +137,36 @@ void UpdateGun(void)
 		g_gun.pos.z = pCamera->posV.z + ( 2 +  (D3DXToRadian(22.0f) - pCamera->rot.x)*0.5f ) * cosf(angle);				
 	}
 
-	//e‚ÌŒü‚«
+	//éŠƒã®å‘ã
 	g_gun.rot = GetRotationAngle( g_gun.pos, pCamera->posR, g_gun.rot);	
 
-	//”½“®
+	//åå‹•
 	if( g_gun.bShot)
 	{
 		g_gun.nShootFrame--;
-		if( g_gun.nShootFrame == 0) //ˆê”­‚Ì”­ËŠ®—¹ 
+		if( g_gun.nShootFrame == 0) //ä¸€ç™ºã®ç™ºå°„å®Œäº† 
 		{
 			g_gun.bShot = false;
 		}
-		else if( g_gun.nShootFrame > 50) //”­Ë‚µ‚½uŠÔAe‚Ì”½“®
+		else if( g_gun.nShootFrame > 50) //ç™ºå°„ã—ãŸç¬é–“ã€éŠƒã®åå‹•
 		{
 			float angle = pCamera->rot.y + D3DXToRadian(170.0f); 
 			if( angle > D3DX_PI) angle -= D3DX_PI * 2.0f;
 			g_gun.posChild.x = 0.5f * sinf(angle);
 			g_gun.posChild.z = 0.5f * cosf(angle);
 		}
-		else //e‚ğŒ³‚ÉˆÊ’u‚É–ß‚·
+		else //éŠƒã‚’å…ƒã«ä½ç½®ã«æˆ»ã™
 		{
 			g_gun.posChild.x -= g_gun.posChild.x * 0.05f;
 			g_gun.posChild.z -= g_gun.posChild.z * 0.05f;
 		}
 		
-		//eq‚ÌÀ•W‚ğ‘«‚µ‚ÄAe‚ÌˆÊ’u‚ğİ’è
+		//è¦ªå­ã®åº§æ¨™ã‚’è¶³ã—ã¦ã€éŠƒã®ä½ç½®ã‚’è¨­å®š
 		g_gun.pos.x += g_gun.posChild.x;
 		g_gun.pos.z += g_gun.posChild.z;	
 	}
 
-	//—h‚ê‚é
+	//æºã‚Œã‚‹
 	const float shakeMove = 0.01f;
 	if( g_gun.bShake)
 	{
@@ -174,7 +174,7 @@ void UpdateGun(void)
 		float diff = g_gun.posChildTarget.y - g_gun.posChild.y;
 		if( fabs(diff) <= shakeMove)
 		{
-			//ã‰º”½“]
+			//ä¸Šä¸‹åè»¢
 			g_gun.posChildTarget.y *= -1;
 		}
 		else if( diff > 0.0f)
@@ -187,11 +187,11 @@ void UpdateGun(void)
 		}
 		
 		
-		//eq‚ÌÀ•W‚ğ‘«‚µ‚ÄAe‚ÌˆÊ’u‚ğİ’è
+		//è¦ªå­ã®åº§æ¨™ã‚’è¶³ã—ã¦ã€éŠƒã®ä½ç½®ã‚’è¨­å®š
 		g_gun.pos += g_gun.posChild;		
 	}
 
-	//’eØ‚ê
+	//å¼¾åˆ‡ã‚Œ
 	if( g_gun.bBulletOut)
 	{
 		if(g_gun.nCheckFrame > 0){
@@ -201,7 +201,7 @@ void UpdateGun(void)
 		{
 			g_gun.nCheckFrame = -1;
 
-			//Ÿ‚Ì‰ñ“]ˆÊ’u‚É“’…‚µ‚½‚ç
+			//æ¬¡ã®å›è»¢ä½ç½®ã«åˆ°ç€ã—ãŸã‚‰
 			if( fabs(g_gun.rotChild.x - g_gun.rotChildTarget.x) < VALUE_ROTATE &&
 				fabs(g_gun.rotChild.y - g_gun.rotChildTarget.y) < VALUE_ROTATE &&
 				fabs(g_gun.rotChild.z - g_gun.rotChildTarget.z) < VALUE_ROTATE
@@ -223,7 +223,7 @@ void UpdateGun(void)
 			
 		
 		}
-		//eq‚ÌÀ•W‚ğ‘«‚µ‚ÄAe‚ÌˆÊ’u‚ğİ’è
+		//è¦ªå­ã®åº§æ¨™ã‚’è¶³ã—ã¦ã€éŠƒã®ä½ç½®ã‚’è¨­å®š
 		g_gun.rot += g_gun.rotChild;
 
 		if( g_gun.nKeyFrame == MAX_KEYFRAME)
@@ -232,14 +232,14 @@ void UpdateGun(void)
 		}
 	}
 
-	//PrintDebugProc("\nCamera‚ÌˆÊ’uF(X:%f, Y:%f, Z:%f)\n", pCamera->posV.x, pCamera->posV.y, pCamera->posV.z);
-	//PrintDebugProc("\ne‚ÌˆÊ’uF(X:%f, Y:%f, Z:%f)\n", g_gun.pos.x, g_gun.pos.y, g_gun.pos.z);
-	//PrintDebugProc("e‚ÌŒü‚«@F(X:%f, Y:%f, Z:%f)\n", g_gun.rot.x, g_gun.rot.y, g_gun.rot.z);
+	//PrintDebugProc("\nCameraã®ä½ç½®ï¼š(X:%f, Y:%f, Z:%f)\n", pCamera->posV.x, pCamera->posV.y, pCamera->posV.z);
+	//PrintDebugProc("\néŠƒã®ä½ç½®ï¼š(X:%f, Y:%f, Z:%f)\n", g_gun.pos.x, g_gun.pos.y, g_gun.pos.z);
+	//PrintDebugProc("éŠƒã®å‘ãã€€ï¼š(X:%f, Y:%f, Z:%f)\n", g_gun.rot.x, g_gun.rot.y, g_gun.rot.z);
 	
 }
 
 //=============================================================================
-// •`‰æˆ—
+// æç”»å‡¦ç†
 //=============================================================================
 void DrawGun(void)
 {
@@ -248,45 +248,45 @@ void DrawGun(void)
 	D3DXMATERIAL *pD3DXMat;
 	D3DMATERIAL9 matDef;
 	
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 	D3DXMatrixIdentity( &g_gun.mtxWorld);
 	
-	// ƒXƒP[ƒ‹‚ğ”½‰f
+	// ã‚¹ã‚±ãƒ¼ãƒ«ã‚’åæ˜ 
 	D3DXMatrixScaling( &mtxScl, g_gun.scl.x, g_gun.scl.y, g_gun.scl.z);
 	D3DXMatrixMultiply( &g_gun.mtxWorld, &g_gun.mtxWorld, &mtxScl);
 	
-	// ‰ñ“]‚ğ”½‰f
+	// å›è»¢ã‚’åæ˜ 
 	D3DXMatrixRotationYawPitchRoll( &mtxRot, g_gun.rot.y, g_gun.rot.x, g_gun.rot.z);
 	D3DXMatrixMultiply( &g_gun.mtxWorld, &g_gun.mtxWorld, &mtxRot);
 	
-	// ˆÚ“®‚ğ”½‰f
+	// ç§»å‹•ã‚’åæ˜ 
 	D3DXMatrixTranslation( &mtxTranslate, g_gun.pos.x, g_gun.pos.y, g_gun.pos.z);
 	D3DXMatrixMultiply( &g_gun.mtxWorld, &g_gun.mtxWorld, &mtxTranslate);
 	
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ìİ’è
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®è¨­å®š
 	pDevice->SetTransform( D3DTS_WORLD, &g_gun.mtxWorld);
 
-	// Œ»İ‚Ìƒ}ƒeƒŠƒAƒ‹‚ğæ“¾
+	// ç¾åœ¨ã®ãƒãƒ†ãƒªã‚¢ãƒ«ã‚’å–å¾—
 	pDevice->GetMaterial(&matDef);
 	
-	// ƒ}ƒeƒŠƒAƒ‹î•ñ‚É‘Î‚·‚éƒ|ƒCƒ“ƒ^‚ğæ“¾
+	// ãƒãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã«å¯¾ã™ã‚‹ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	pD3DXMat = (D3DXMATERIAL *)g_gun.pD3DXBuffMat->GetBufferPointer();
 	for(int nCntMat = 0; nCntMat < (int)g_gun.nNumMat; nCntMat++)
 	{
-		// ƒ}ƒeƒŠƒAƒ‹‚Ìİ’è
+		// ãƒãƒ†ãƒªã‚¢ãƒ«ã®è¨­å®š
 		pDevice->SetMaterial( &pD3DXMat[nCntMat].MatD3D);
-		// ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 		pDevice->SetTexture( 0, g_gun.pD3DTexture);
-		// •`‰æ
+		// æç”»
 		g_gun.pD3DXMesh->DrawSubset( nCntMat);
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹‚ğƒfƒtƒHƒ‹ƒg‚É–ß‚·
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã‚’ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«æˆ»ã™
 	pDevice->SetMaterial( &matDef);
 }
 
 //=============================================================================
-// ƒ‚ƒfƒ‹‚Ìæ“¾
+// ãƒ¢ãƒ‡ãƒ«ã®å–å¾—
 //=============================================================================
 GUN *GetGun(void)
 {
@@ -294,7 +294,7 @@ GUN *GetGun(void)
 }
 
 /*******************************************************************************
-* e‚Ì”½“®ƒAƒjƒ
+* éŠƒã®åå‹•ã‚¢ãƒ‹ãƒ¡
 *******************************************************************************/
 void SetGunShootAni(void)
 {
@@ -303,18 +303,18 @@ void SetGunShootAni(void)
 	g_gun.posChild = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 }
 /*******************************************************************************
-* e‚ÌˆÚ“®ƒAƒjƒ
+* éŠƒã®ç§»å‹•ã‚¢ãƒ‹ãƒ¡
 *******************************************************************************/
 void SetGunShakeAni(bool bShake)
 {
 	const float shakeMax = 0.05f;
 	g_gun.bShake = bShake;
 	g_gun.posChild = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
-	//—h‚ê‚éY”ÍˆÍ‚ğİ’è
+	//æºã‚Œã‚‹Yç¯„å›²ã‚’è¨­å®š
 	g_gun.posChildTarget = D3DXVECTOR3( 0.0f, shakeMax, 0.0f);
 }
 /*******************************************************************************
-* ’eØ‚ê‚ÌƒAƒjƒ
+* å¼¾åˆ‡ã‚Œã®ã‚¢ãƒ‹ãƒ¡
 *******************************************************************************/
 void SetGunBulletOutAni(bool bBulletOut)
 {
@@ -322,18 +322,18 @@ void SetGunBulletOutAni(bool bBulletOut)
 	g_gun.rotChild = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 	g_gun.nCheckFrame = 30;
 
-	//’eØ‚ê‚ÌAe‚ÌŠp“x
+	//å¼¾åˆ‡ã‚Œã®æ™‚ã€éŠƒã®è§’åº¦
 	g_gun.nKeyFrame = 0;
 	g_gun.rotChildTarget = g_BulletOutAnime[0];
 
 
-	//Œv‰ñ‚èA‚Ü‚½‚Í‹tŒv‰ñ‚è‚ğŒˆ‚ß‚é
+	//æ™‚è¨ˆå›ã‚Šã€ã¾ãŸã¯é€†æ™‚è¨ˆå›ã‚Šã‚’æ±ºã‚ã‚‹
 	g_gun.rotChildAngle =  Get2VecRotAngle( g_gun.rot, g_gun.rotChildTarget + g_gun.rot, DIVIDE_ROTATE, -1);
 	g_gun.rotChild += g_gun.rotChildAngle;
 }
 
 /*******************************************************************************
-* e‚Ì”­Ë€”õ‚Í‚Ç‚¤‚©
+* éŠƒã®ç™ºå°„æº–å‚™ã¯ã©ã†ã‹
 *******************************************************************************/
 bool IsGunReady(void)
 {

@@ -1,8 +1,8 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		ƒTƒEƒ“ƒhˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	sound.h
-* ì¬ŽÒ:		HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		ã‚µã‚¦ãƒ³ãƒ‰å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	sound.h
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
@@ -13,19 +13,19 @@
 #include "main.h"
 
 //*****************************************************************************
-// ƒTƒEƒ“ƒhƒtƒ@ƒCƒ‹
+// ã‚µã‚¦ãƒ³ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //*****************************************************************************
 typedef enum
 {
 	SOUND_LABEL_BGM_OP = 0,		// BGM0
 	SOUND_LABEL_BGM_RANK,		// BGM1
-	SOUND_LABEL_SE_ESHOT,		// “G’e”­ŽË‰¹
-	SOUND_LABEL_SE_PSHOT,		// ƒvƒŒƒCƒ„[’e”­ŽË‰¹
+	SOUND_LABEL_SE_ESHOT,		// æ•µå¼¾ç™ºå°„éŸ³
+	SOUND_LABEL_SE_PSHOT,		// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼å¼¾ç™ºå°„éŸ³
 	SOUND_LABEL_SE_RELOAD,		// RELOAD
-	SOUND_LABEL_SE_BULLET_OUT,	// ’eØ‚ê
+	SOUND_LABEL_SE_BULLET_OUT,	// å¼¾åˆ‡ã‚Œ
 	SOUND_LABEL_SE_CLEAR,		// STAGE CLEAR
-	SOUND_LABEL_SE_WATER,		// •¬…
-	SOUND_LABEL_SE_EXPLOSION,	// ”š”­‰¹
+	SOUND_LABEL_SE_WATER,		// å™´æ°´
+	SOUND_LABEL_SE_EXPLOSION,	// çˆ†ç™ºéŸ³
 	SOUND_LABEL_SE_HURT,		// HURT
 	SOUND_LABEL_SE_RUN,			// RUN
 	SOUND_LABEL_SE_SWITCH,		// SWITCH
@@ -33,7 +33,7 @@ typedef enum
 } SOUND_LABEL;
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 HRESULT InitSound(HWND hWnd);
 void UninitSound(void);
@@ -41,6 +41,6 @@ HRESULT PlaySound(SOUND_LABEL label);
 void StopSound(SOUND_LABEL label);
 void StopSound(void);
 
-//‰¹‚Ì‰¹—ÊXV
+//éŸ³ã®éŸ³é‡æ›´æ–°
 void UpdateSoundVolume(SOUND_LABEL label, float percent);
 #endif

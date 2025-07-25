@@ -1,64 +1,64 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		ƒeƒNƒXƒ`ƒƒ‚ÌŽžŒv•\Ž¦ˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	clock.cpp
-* ì¬ŽÒ:		HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æ™‚è¨ˆè¡¨ç¤ºå‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	clock.cpp
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 ********************************************************************************
 
 *******************************************************************************/
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 
 #include "clock.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
 
-#define	TEXTURE_CLOCK				"data/TEXTURE/UI/Clock.png"		// “Ç‚Ýž‚ÞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	TEXTURE_HAND				"data/TEXTURE/UI/ClockHand.png"		// “Ç‚Ýž‚ÞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	POLYGON_POS_X				(SCREEN_WIDTH/2 + 100)				// ƒ|ƒŠƒSƒ“‚ÌŠî€ˆÊ’u(‚wÀ•W)
-#define	POLYGON_POS_Y				(70)				// ƒ|ƒŠƒSƒ“‚ÌŠî€ˆÊ’u(‚xÀ•W)
-#define	POLYGON_SIZE_X				(100)							// ƒ|ƒŠƒSƒ“‚Ì•
-#define	POLYGON_SIZE_Y				(100)							// ƒ|ƒŠƒSƒ“‚Ì‚‚³
+#define	TEXTURE_CLOCK				"data/TEXTURE/UI/Clock.png"		// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
+#define	TEXTURE_HAND				"data/TEXTURE/UI/ClockHand.png"		// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
+#define	POLYGON_POS_X				(SCREEN_WIDTH/2 + 100)				// ãƒãƒªã‚´ãƒ³ã®åŸºæº–ä½ç½®(ï¼¸åº§æ¨™)
+#define	POLYGON_POS_Y				(70)				// ãƒãƒªã‚´ãƒ³ã®åŸºæº–ä½ç½®(ï¼¹åº§æ¨™)
+#define	POLYGON_SIZE_X				(100)							// ãƒãƒªã‚´ãƒ³ã®å¹…
+#define	POLYGON_SIZE_Y				(100)							// ãƒãƒªã‚´ãƒ³ã®é«˜ã•
 
-#define	TEX_PATTERN_DIVIDE_X		(1)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚w•ûŒü)
-#define	TEX_PATTERN_DIVIDE_Y		(1)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚x•ûŒü)
+#define	TEX_PATTERN_DIVIDE_X		(1)								// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¸æ–¹å‘)
+#define	TEX_PATTERN_DIVIDE_Y		(1)								// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¹æ–¹å‘)
 
-#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚w•ûŒü)(1.0f/X•ûŒü•ªŠ„”)
-#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚x•ûŒü)(1.0f/Y•ûŒü•ªŠ„”)
+#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¸æ–¹å‘)(1.0f/Xæ–¹å‘åˆ†å‰²æ•°)
+#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¹æ–¹å‘)(1.0f/Yæ–¹å‘åˆ†å‰²æ•°)
 
-#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X*TEX_PATTERN_DIVIDE_Y)	// ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒpƒ^[ƒ“”(X•ûŒü•ªŠ„”~Y•ûŒü•ªŠ„”)
-//#define	TIME_CHANGE_PATTERN			(5)								// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌØ‚è‘Ö‚í‚éƒ^ƒCƒ~ƒ“ƒO(ƒtƒŒ[ƒ€”)
-#define MAX_OBJECT					(2)							// ƒIƒuƒWƒFƒNƒg‚Ì”
+#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X*TEX_PATTERN_DIVIDE_Y)	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ‘ã‚¿ãƒ¼ãƒ³æ•°(Xæ–¹å‘åˆ†å‰²æ•°Ã—Yæ–¹å‘åˆ†å‰²æ•°)
+//#define	TIME_CHANGE_PATTERN			(5)								// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®åˆ‡ã‚Šæ›¿ã‚ã‚‹ã‚¿ã‚¤ãƒŸãƒ³ã‚°(ãƒ•ãƒ¬ãƒ¼ãƒ æ•°)
+#define MAX_OBJECT					(2)							// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ•°
 
-#define	VALUE_ROTATE			(D3DX_PI / 30.0f)								// ƒJƒƒ‰‚Ì‰ñ“]—Ê
+#define	VALUE_ROTATE			(D3DX_PI / 30.0f)								// ã‚«ãƒ¡ãƒ©ã®å›žè»¢é‡
 
 /*******************************************************************************
-* \‘¢‘Ì’è‹`
+* æ§‹é€ ä½“å®šç¾©
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒvƒƒgƒ^ƒCƒvéŒ¾
+* ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 *******************************************************************************/
 HRESULT MakeVertexClock(LPDIRECT3DDEVICE9 pDevice);
 void SetVertexClockRot(int nCntClock, float angle);
 
 /*******************************************************************************
-* ƒOƒ[ƒoƒ‹•Ï”
+* ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 *******************************************************************************/
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBufferClock = NULL;
 LPDIRECT3DTEXTURE9 g_pTextureClock = NULL;
 LPDIRECT3DTEXTURE9 g_pTextureHand = NULL;
 
-CLOCK g_clock[MAX_OBJECT]; //ƒvƒŒƒCƒ„[‚Ìƒ[ƒN
+CLOCK g_clock[MAX_OBJECT]; //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒ¯ãƒ¼ã‚¯
 
 //=============================================================================
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT InitClock(D3DXVECTOR3 initPos)
 {
@@ -66,7 +66,7 @@ HRESULT InitClock(D3DXVECTOR3 initPos)
 
 	for(int nCntClock = 0; nCntClock < MAX_OBJECT; nCntClock++)
 	{
-		//bullet‚Ì‰Šú‰»
+		//bulletã®åˆæœŸåŒ–
 		g_clock[nCntClock].pos = initPos;
 		g_clock[nCntClock].size = D3DXVECTOR3( POLYGON_SIZE_X, POLYGON_SIZE_Y, 0.0f);
 		g_clock[nCntClock].bUse = true;
@@ -74,36 +74,36 @@ HRESULT InitClock(D3DXVECTOR3 initPos)
 
 
 
-	//’¸“_î•ñ‚Ìì¬
+	//é ‚ç‚¹æƒ…å ±ã®ä½œæˆ
 	if(FAILED(MakeVertexClock(pDevice)))
 	{
 		return E_FAIL;
 	}
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
-	D3DXCreateTextureFromFile(pDevice,					// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-								TEXTURE_CLOCK,		// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-								&g_pTextureClock);	// “Ç‚Ýž‚Þƒƒ‚ƒŠ[
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
-	D3DXCreateTextureFromFile(pDevice,					// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-								TEXTURE_HAND,		// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-								&g_pTextureHand);	// “Ç‚Ýž‚Þƒƒ‚ƒŠ[
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
+	D3DXCreateTextureFromFile(pDevice,					// ãƒ‡ãƒã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+								TEXTURE_CLOCK,		// ãƒ•ã‚¡ã‚¤ãƒ«ã®åå‰
+								&g_pTextureClock);	// èª­ã¿è¾¼ã‚€ãƒ¡ãƒ¢ãƒªãƒ¼
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
+	D3DXCreateTextureFromFile(pDevice,					// ãƒ‡ãƒã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+								TEXTURE_HAND,		// ãƒ•ã‚¡ã‚¤ãƒ«ã®åå‰
+								&g_pTextureHand);	// èª­ã¿è¾¼ã‚€ãƒ¡ãƒ¢ãƒªãƒ¼
 
 	return S_OK;
 }
 
 
 //=============================================================================
-// •`‰æˆ—
+// æç”»å‡¦ç†
 //=============================================================================
 void DrawClock(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//’¸“_ƒoƒbƒtƒ@‚ðƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒã‚¤ãƒ³ãƒ‰
 	pDevice->SetStreamSource(0, g_pVtxBufferClock, 0, sizeof(VERTEX_2D));
 
-	//’¸“_ƒtƒH[ƒ}ƒbƒg‚ÌÝ’è
+	//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®è¨­å®š
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	for(int nCntClock = 0; nCntClock < MAX_OBJECT; nCntClock++)
@@ -113,21 +113,21 @@ void DrawClock(void)
 			switch( nCntClock)
 			{
 			case 0:
-				//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+				//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 				pDevice->SetTexture(0, g_pTextureClock);
 				break;
 			case 1:
-				//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+				//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 				pDevice->SetTexture(0, g_pTextureHand);
 				break;
 
 			}
 
-			//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+			//ãƒãƒªã‚´ãƒ³ã®æç”»
 			pDevice->DrawPrimitive(
-				D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚ÌŽí—Þ
-				nCntClock*NUM_VERTEX,	//ƒ[ƒh‚·‚éÅ‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-				NUM_POLYGON				//ƒ|ƒŠƒSƒ“‚Ì”
+				D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡ž
+				nCntClock*NUM_VERTEX,	//ãƒ­ãƒ¼ãƒ‰ã™ã‚‹æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+				NUM_POLYGON				//ãƒãƒªã‚´ãƒ³ã®æ•°
 			);
 		}	
 	}
@@ -137,7 +137,7 @@ void DrawClock(void)
 
 
 //=============================================================================
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //=============================================================================
 void UninitClock(void)
 {
@@ -159,19 +159,19 @@ void UninitClock(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT MakeVertexClock(LPDIRECT3DDEVICE9 pDevice)
-ˆø”:	LPDIRECT3DDEVICE9 pDevice : DeviceƒIƒuƒWƒFƒNƒg
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	ƒ|ƒŠƒSƒ“‚Ì’¸“_î•ñ‚Ìì¬ŠÖ”
+é–¢æ•°å:	HRESULT MakeVertexClock(LPDIRECT3DDEVICE9 pDevice)
+å¼•æ•°:	LPDIRECT3DDEVICE9 pDevice : Deviceã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+æˆ»ã‚Šå€¤:	HRESUL : åˆæœŸåŒ–çµæžœ æ­£å¸¸çµ‚äº†:S_OK
+èª¬æ˜Ž:	ãƒãƒªã‚´ãƒ³ã®é ‚ç‚¹æƒ…å ±ã®ä½œæˆé–¢æ•°
 *******************************************************************************/
 HRESULT MakeVertexClock(LPDIRECT3DDEVICE9 pDevice)
 {
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_OBJECT,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY 
+		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_OBJECT,	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º 
 		D3DUSAGE_WRITEONLY, 
-		FVF_VERTEX_2D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_2D,					//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆ
 		D3DPOOL_MANAGED, 
-		&g_pVtxBufferClock,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&g_pVtxBufferClock,			//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 		NULL)))
 	{
 		return E_FAIL;
@@ -179,10 +179,10 @@ HRESULT MakeVertexClock(LPDIRECT3DDEVICE9 pDevice)
 
 
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferClock->Lock( 0, 0, (void**)&pVtx, 0);
 
 	for(int nCntClock = 0; nCntClock < MAX_OBJECT; nCntClock++, pVtx += NUM_VERTEX)
@@ -200,13 +200,13 @@ HRESULT MakeVertexClock(LPDIRECT3DDEVICE9 pDevice)
 		pVtx[2].col = D3DCOLOR_RGBA(255,255,255,255);
 		pVtx[3].col = D3DCOLOR_RGBA(255,255,255,255);
 
-		// ’¸“_À•W‚ÌÝ’è
+		// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		pVtx[0].vtx = D3DXVECTOR3(g_clock[nCntClock].pos.x - (POLYGON_SIZE_X/2), g_clock[nCntClock].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[1].vtx = D3DXVECTOR3(g_clock[nCntClock].pos.x + (POLYGON_SIZE_X/2), g_clock[nCntClock].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[2].vtx = D3DXVECTOR3(g_clock[nCntClock].pos.x - (POLYGON_SIZE_X/2), g_clock[nCntClock].pos.y + (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[3].vtx = D3DXVECTOR3(g_clock[nCntClock].pos.x + (POLYGON_SIZE_X/2), g_clock[nCntClock].pos.y + (POLYGON_SIZE_Y/2), 0.0f);
 
-		//ƒeƒNƒXƒ`ƒƒÀ•WŽw’è
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™æŒ‡å®š
 		pVtx[0].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X) , TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X) );
 		pVtx[1].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X + 1) , TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X));
 		pVtx[2].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X), TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X + 1));
@@ -223,7 +223,7 @@ HRESULT MakeVertexClock(LPDIRECT3DDEVICE9 pDevice)
 
 
 //=============================================================================
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 //=============================================================================
 void UpdateClock(float fTimeSpeed)
 {
@@ -231,22 +231,22 @@ void UpdateClock(float fTimeSpeed)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void SetVertexClockRot(int nCntClock, float angle)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	’¸“_À•W‚ÌÝ’è
+é–¢æ•°å:	void SetVertexClockRot(int nCntClock, float angle)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 *******************************************************************************/
 void SetVertexClockRot(int nCntClock, float angle)
 {
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 		VERTEX_2D *pVtx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		g_pVtxBufferClock->Lock(0, 0, (void**)&pVtx, 0);
 
 		pVtx += nCntClock * NUM_VERTEX; 
 		
-		// ’¸“_À•W‚ÌÝ’è
+		// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		float xc = g_clock[nCntClock].pos.x;
 		float yc = g_clock[nCntClock].pos.y;
 		float nx,ny;
@@ -271,7 +271,7 @@ void SetVertexClockRot(int nCntClock, float angle)
 		pVtx[3].vtx.x = nx;
 		pVtx[3].vtx.y = ny;
 
-		// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_pVtxBufferClock->Unlock();
 	}
 }

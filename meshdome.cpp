@@ -1,13 +1,13 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		ƒƒbƒVƒ…ƒh[ƒ€ˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	meshdome.cpp
-* ì¬Ò:		HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		ãƒ¡ãƒƒã‚·ãƒ¥ãƒ‰ãƒ¼ãƒ å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	meshdome.cpp
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 #include "meshdome.h"
 #include "input.h"
@@ -15,113 +15,113 @@
 #include "debugproc.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
-#define	TEXTURE_MESHDOME	"data/TEXTURE/dome.jpg"	// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	VALUE_MOVE_DOME		(4.0f)						// ˆÚ“®‘¬“x
-#define	VALUE_ROTATE_DOME	(D3DX_PI * 0.01f)			// ‰ñ“]‘¬“x
+#define	TEXTURE_MESHDOME	"data/TEXTURE/dome.jpg"	// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
+#define	VALUE_MOVE_DOME		(4.0f)						// ç§»å‹•é€Ÿåº¦
+#define	VALUE_ROTATE_DOME	(D3DX_PI * 0.01f)			// å›è»¢é€Ÿåº¦
 
-#define	DOME_HEIGHT_RATE	(1.0f)		// ‹óƒh[ƒ€‚Ì‚‚³ŒW”
-#define	TEX_COUNT_LOOP		(8)			// ƒeƒNƒXƒ`ƒƒ‚ÌŒJ‚è•Ô‚µ‰ñ”
+#define	DOME_HEIGHT_RATE	(1.0f)		// ç©ºãƒ‰ãƒ¼ãƒ ã®é«˜ã•ä¿‚æ•°
+#define	TEX_COUNT_LOOP		(8)			// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ç¹°ã‚Šè¿”ã—å›æ•°
 
 //*****************************************************************************
-// ƒOƒ[ƒoƒ‹•Ï”
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 //*****************************************************************************
 typedef struct
 {
-	LPDIRECT3DTEXTURE9 pTextureDome;			// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPDIRECT3DVERTEXBUFFER9 pVtxBuffDome;		// ’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPDIRECT3DINDEXBUFFER9 pIdxBuffDome;		// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPDIRECT3DVERTEXBUFFER9 pVtxBuffDomeTop;	// ’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPDIRECT3DINDEXBUFFER9 pIdxBuffDomeTop;		// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^
+	LPDIRECT3DTEXTURE9 pTextureDome;			// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPDIRECT3DVERTEXBUFFER9 pVtxBuffDome;		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPDIRECT3DINDEXBUFFER9 pIdxBuffDome;		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPDIRECT3DVERTEXBUFFER9 pVtxBuffDomeTop;	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPDIRECT3DINDEXBUFFER9 pIdxBuffDomeTop;		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 
-	D3DXMATRIX mtxWorldDome;					// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX
-	D3DXVECTOR3 posDome;						// ƒ|ƒŠƒSƒ“•\¦ˆÊ’u‚Ì’†SÀ•W
-	D3DXVECTOR3 rotDome;						// ƒ|ƒŠƒSƒ“‚Ì‰ñ“]Šp
+	D3DXMATRIX mtxWorldDome;					// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹
+	D3DXVECTOR3 posDome;						// ãƒãƒªã‚´ãƒ³è¡¨ç¤ºä½ç½®ã®ä¸­å¿ƒåº§æ¨™
+	D3DXVECTOR3 rotDome;						// ãƒãƒªã‚´ãƒ³ã®å›è»¢è§’
 
-	int nNumBlockHDome;						// ƒuƒƒbƒN”
-	int nNumBlockVDome;						// ƒuƒƒbƒN”
-	int nNumVertexDome;						// ‘’¸“_”	
-	int nNumVertexIndexDome;				// ‘ƒCƒ“ƒfƒbƒNƒX”
-	int nNumPolygonDome;					// ‘ƒ|ƒŠƒSƒ“”
-	float fRadius;							// ”¼Œa
+	int nNumBlockHDome;						// ãƒ–ãƒ­ãƒƒã‚¯æ•°
+	int nNumBlockVDome;						// ãƒ–ãƒ­ãƒƒã‚¯æ•°
+	int nNumVertexDome;						// ç·é ‚ç‚¹æ•°	
+	int nNumVertexIndexDome;				// ç·ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°
+	int nNumPolygonDome;					// ç·ãƒãƒªã‚´ãƒ³æ•°
+	float fRadius;							// åŠå¾„
 } MESH_DOME;
 
 MESH_DOME g_aMeshDome;
 
 //=============================================================================
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //=============================================================================
 HRESULT InitMeshDome(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fRadius, int nNumBlockH, int nNumBlockV)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	// ˆÊ’uEŒü‚«E”¼ŒaiƒOƒ[ƒoƒ‹•Ï”j‚Ì‰Šúİ’è
+	// ä½ç½®ãƒ»å‘ããƒ»åŠå¾„ï¼ˆã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ï¼‰ã®åˆæœŸè¨­å®š
 	g_aMeshDome.posDome = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 	g_aMeshDome.rotDome = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
 	g_aMeshDome.fRadius = fRadius;
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	D3DXCreateTextureFromFile( pDevice, TEXTURE_MESHDOME, &g_aMeshDome.pTextureDome);
 
-	// ƒuƒƒbƒN”H/ViƒOƒ[ƒoƒ‹•Ï”j‚Ìİ’è
+	// ãƒ–ãƒ­ãƒƒã‚¯æ•°H/Vï¼ˆã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ï¼‰ã®è¨­å®š
 	g_aMeshDome.nNumBlockHDome = nNumBlockH;
 	g_aMeshDome.nNumBlockVDome = nNumBlockV;
 
-	// ’¸“_”iƒOƒ[ƒoƒ‹•Ï”j‚Ìİ’è
+	// é ‚ç‚¹æ•°ï¼ˆã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ï¼‰ã®è¨­å®š
 	g_aMeshDome.nNumVertexDome = (g_aMeshDome.nNumBlockHDome + 1) * (g_aMeshDome.nNumBlockVDome + 1);
 
-	// ƒ|ƒŠƒSƒ“”iƒOƒ[ƒoƒ‹•Ï”j‚Ìİ’è
+	// ãƒãƒªã‚´ãƒ³æ•°ï¼ˆã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ï¼‰ã®è¨­å®š
 	g_aMeshDome.nNumPolygonDome = ( g_aMeshDome.nNumBlockHDome * (g_aMeshDome.nNumBlockVDome * 2) + (g_aMeshDome.nNumBlockVDome - 1) * 4);
 
-	// ƒCƒ“ƒfƒbƒNƒX”iƒOƒ[ƒoƒ‹•Ï”j‚Ìİ’è
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•°ï¼ˆã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ï¼‰ã®è¨­å®š
 	g_aMeshDome.nNumVertexIndexDome = (g_aMeshDome.nNumBlockHDome * (g_aMeshDome.nNumBlockVDome * 2) + g_aMeshDome.nNumBlockVDome * 2 + (g_aMeshDome.nNumBlockVDome - 1) * 2);
 
-	// ƒIƒuƒWƒFƒNƒg‚Ì’¸“_ƒoƒbƒtƒ@‚ğ¶¬
-    if(FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * g_aMeshDome.nNumVertexDome,	// ’¸“_ƒf[ƒ^—p‚ÉŠm•Û‚·‚éƒoƒbƒtƒ@ƒTƒCƒY(ƒoƒCƒg’PˆÊ)
-												D3DUSAGE_WRITEONLY,							// ’¸“_ƒoƒbƒtƒ@‚Ìg—p–@@
-												FVF_VERTEX_3D,								// g—p‚·‚é’¸“_ƒtƒH[ƒ}ƒbƒg
-												D3DPOOL_MANAGED,							// ƒŠƒ\[ƒX‚Ìƒoƒbƒtƒ@‚ğ•Û‚·‚éƒƒ‚ƒŠƒNƒ‰ƒX‚ğw’è
-												&g_aMeshDome.pVtxBuffDome,					// ’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-												NULL)))										// NULL‚Éİ’è
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆ
+    if(FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * g_aMeshDome.nNumVertexDome,	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ç”¨ã«ç¢ºä¿ã™ã‚‹ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º(ãƒã‚¤ãƒˆå˜ä½)
+												D3DUSAGE_WRITEONLY,							// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä½¿ç”¨æ³•ã€€
+												FVF_VERTEX_3D,								// ä½¿ç”¨ã™ã‚‹é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+												D3DPOOL_MANAGED,							// ãƒªã‚½ãƒ¼ã‚¹ã®ãƒãƒƒãƒ•ã‚¡ã‚’ä¿æŒã™ã‚‹ãƒ¡ãƒ¢ãƒªã‚¯ãƒ©ã‚¹ã‚’æŒ‡å®š
+												&g_aMeshDome.pVtxBuffDome,					// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+												NULL)))										// NULLã«è¨­å®š
 	{
         return E_FAIL;
 	}
 
-	// ƒIƒuƒWƒFƒNƒg‚Ì’¸“_ƒoƒbƒtƒ@‚ğ¶¬
-	if(FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * (g_aMeshDome.nNumBlockHDome + 1),		// ’¸“_ƒf[ƒ^—p‚ÉŠm•Û‚·‚éƒoƒbƒtƒ@ƒTƒCƒY(ƒoƒCƒg’PˆÊ)
-												D3DUSAGE_WRITEONLY,						// ’¸“_ƒoƒbƒtƒ@‚Ìg—p–@@
-												FVF_VERTEX_3D,							// g—p‚·‚é’¸“_ƒtƒH[ƒ}ƒbƒg
-												D3DPOOL_MANAGED,						// ƒŠƒ\[ƒX‚Ìƒoƒbƒtƒ@‚ğ•Û‚·‚éƒƒ‚ƒŠƒNƒ‰ƒX‚ğw’è
-												&g_aMeshDome.pVtxBuffDomeTop,						// ’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-												NULL)))									// NULL‚Éİ’è
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆ
+	if(FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * (g_aMeshDome.nNumBlockHDome + 1),		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ç”¨ã«ç¢ºä¿ã™ã‚‹ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º(ãƒã‚¤ãƒˆå˜ä½)
+												D3DUSAGE_WRITEONLY,						// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä½¿ç”¨æ³•ã€€
+												FVF_VERTEX_3D,							// ä½¿ç”¨ã™ã‚‹é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+												D3DPOOL_MANAGED,						// ãƒªã‚½ãƒ¼ã‚¹ã®ãƒãƒƒãƒ•ã‚¡ã‚’ä¿æŒã™ã‚‹ãƒ¡ãƒ¢ãƒªã‚¯ãƒ©ã‚¹ã‚’æŒ‡å®š
+												&g_aMeshDome.pVtxBuffDomeTop,						// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+												NULL)))									// NULLã«è¨­å®š
 	{
         return E_FAIL;
 	}
 
-	// ƒIƒuƒWƒFƒNƒg‚ÌƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğ¶¬
-	if(FAILED(pDevice->CreateIndexBuffer(sizeof(WORD) * g_aMeshDome.nNumVertexIndexDome,	// ’¸“_ƒf[ƒ^—p‚ÉŠm•Û‚·‚éƒoƒbƒtƒ@ƒTƒCƒY(ƒoƒCƒg’PˆÊ)
-												D3DUSAGE_WRITEONLY,					// ’¸“_ƒoƒbƒtƒ@‚Ìg—p–@@
-												D3DFMT_INDEX16,						// g—p‚·‚éƒCƒ“ƒfƒbƒNƒXƒtƒH[ƒ}ƒbƒg
-												D3DPOOL_MANAGED,					// ƒŠƒ\[ƒX‚Ìƒoƒbƒtƒ@‚ğ•Û‚·‚éƒƒ‚ƒŠƒNƒ‰ƒX‚ğw’è
-												&g_aMeshDome.pIdxBuffDome,					// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-												NULL)))								// NULL‚Éİ’è
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆ
+	if(FAILED(pDevice->CreateIndexBuffer(sizeof(WORD) * g_aMeshDome.nNumVertexIndexDome,	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ç”¨ã«ç¢ºä¿ã™ã‚‹ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º(ãƒã‚¤ãƒˆå˜ä½)
+												D3DUSAGE_WRITEONLY,					// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä½¿ç”¨æ³•ã€€
+												D3DFMT_INDEX16,						// ä½¿ç”¨ã™ã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+												D3DPOOL_MANAGED,					// ãƒªã‚½ãƒ¼ã‚¹ã®ãƒãƒƒãƒ•ã‚¡ã‚’ä¿æŒã™ã‚‹ãƒ¡ãƒ¢ãƒªã‚¯ãƒ©ã‚¹ã‚’æŒ‡å®š
+												&g_aMeshDome.pIdxBuffDome,					// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+												NULL)))								// NULLã«è¨­å®š
 	{
         return E_FAIL;
 	}
 
-	// ƒIƒuƒWƒFƒNƒg‚ÌƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğ¶¬
-	if(FAILED(pDevice->CreateIndexBuffer(sizeof(WORD) * (g_aMeshDome.nNumBlockHDome + 2),			// ’¸“_ƒf[ƒ^—p‚ÉŠm•Û‚·‚éƒoƒbƒtƒ@ƒTƒCƒY(ƒoƒCƒg’PˆÊ)
-												D3DUSAGE_WRITEONLY,					// ’¸“_ƒoƒbƒtƒ@‚Ìg—p–@@
-												D3DFMT_INDEX16,						// g—p‚·‚éƒCƒ“ƒfƒbƒNƒXƒtƒH[ƒ}ƒbƒg
-												D3DPOOL_MANAGED,					// ƒŠƒ\[ƒX‚Ìƒoƒbƒtƒ@‚ğ•Û‚·‚éƒƒ‚ƒŠƒNƒ‰ƒX‚ğw’è
-												&g_aMeshDome.pIdxBuffDomeTop,					// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-												NULL)))								// NULL‚Éİ’è
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ç”Ÿæˆ
+	if(FAILED(pDevice->CreateIndexBuffer(sizeof(WORD) * (g_aMeshDome.nNumBlockHDome + 2),			// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ç”¨ã«ç¢ºä¿ã™ã‚‹ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º(ãƒã‚¤ãƒˆå˜ä½)
+												D3DUSAGE_WRITEONLY,					// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä½¿ç”¨æ³•ã€€
+												D3DFMT_INDEX16,						// ä½¿ç”¨ã™ã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+												D3DPOOL_MANAGED,					// ãƒªã‚½ãƒ¼ã‚¹ã®ãƒãƒƒãƒ•ã‚¡ã‚’ä¿æŒã™ã‚‹ãƒ¡ãƒ¢ãƒªã‚¯ãƒ©ã‚¹ã‚’æŒ‡å®š
+												&g_aMeshDome.pIdxBuffDomeTop,					// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+												NULL)))								// NULLã«è¨­å®š
 	{
         return E_FAIL;
 	}
 
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 		VERTEX_3D *pVtx;
 		const float angleH = (D3DX_PI * 2.0f) / g_aMeshDome.nNumBlockHDome;
 		const float angleV = (D3DX_PI / 2.0f) / (g_aMeshDome.nNumBlockVDome + 1);
@@ -130,7 +130,7 @@ HRESULT InitMeshDome(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fRadius, int nNumBl
 		float lengthXZ;
 		D3DXVECTOR3 nor;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		g_aMeshDome.pVtxBuffDome->Lock( 0, 0, (void**)&pVtx, 0);
 		for(int nCntV = 0; nCntV < (g_aMeshDome.nNumBlockVDome + 1); nCntV++)
 		{
@@ -138,20 +138,20 @@ HRESULT InitMeshDome(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fRadius, int nNumBl
 
 			for(int nCntH = 0; nCntH < (g_aMeshDome.nNumBlockHDome + 1); nCntH++, pVtx++)
 			{
-				// ’¸“_À•W‚Ìİ’è
+				// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 				pVtx->vtx.x = sinf(angleH * nCntH) * lengthXZ;
 				pVtx->vtx.y = sinf(angleV * nCntV) * g_aMeshDome.fRadius * DOME_HEIGHT_RATE;
 				pVtx->vtx.z = -cosf(angleH * nCntH) * lengthXZ;
 
-				// –@ü‚Ìİ’è
+				// æ³•ç·šã®è¨­å®š
 				nor = pVtx->vtx;
 				D3DXVec3Normalize(&nor, &nor);
 				pVtx->nor = nor;
 
-				// ’¸“_ƒJƒ‰[‚Ìİ’è
+				// é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã®è¨­å®š
 				pVtx->col = D3DCOLOR_RGBA(255,255,255,255);
 
-				// ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+				// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 				pVtx->tex.x = nCntH * width * TEX_COUNT_LOOP;
 
 				if(nCntV == g_aMeshDome.nNumBlockVDome)
@@ -164,60 +164,60 @@ HRESULT InitMeshDome(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fRadius, int nNumBl
 				}
 			}
 		}
-		// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_aMeshDome.pVtxBuffDome->Unlock();
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		g_aMeshDome.pVtxBuffDomeTop->Lock( 0, 0, (void**)&pVtx, 0);
-		// ’¸“_À•W‚Ìİ’è
+		// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		pVtx->vtx.x = 0.0f;
 		pVtx->vtx.y = sinf(angleV * (g_aMeshDome.nNumBlockVDome + 1)) * g_aMeshDome.fRadius * DOME_HEIGHT_RATE;
 		pVtx->vtx.z = 0.0f;
 
-		// –@ü‚Ìİ’è
+		// æ³•ç·šã®è¨­å®š
 		nor = pVtx->vtx;
 		D3DXVec3Normalize(&nor, &nor);
 		pVtx->nor = nor;
 
-		// ’¸“_ƒJƒ‰[‚Ìİ’è
+		// é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã®è¨­å®š
 		pVtx->col = D3DCOLOR_RGBA(255,255,255,255);
 
-		// ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 		pVtx->tex.x = 0.5f;
 		pVtx->tex.y = 0.0f;
 
-		// ’¸“_ƒoƒbƒtƒ@‚Ìƒ|ƒCƒ“ƒ^‚ğƒCƒ“ƒNƒŠƒƒ“ƒg
+		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ãƒã‚¤ãƒ³ã‚¿ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 		pVtx++;
 
 		lengthXZ = cosf(angleV * g_aMeshDome.nNumBlockVDome) * g_aMeshDome.fRadius;
 		for(int nCntH = 0; nCntH < g_aMeshDome.nNumBlockHDome; nCntH++, pVtx++)
 		{
-			// ’¸“_À•W‚Ìİ’è
+			// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 			pVtx->vtx.x = -sinf(angleH * nCntH) * lengthXZ;
 			pVtx->vtx.y = sinf(angleV * g_aMeshDome.nNumBlockVDome) * g_aMeshDome.fRadius * DOME_HEIGHT_RATE;
 			pVtx->vtx.z = -cosf(angleH * nCntH) * lengthXZ;
 
-			// –@ü‚Ìİ’è
+			// æ³•ç·šã®è¨­å®š
 			nor = pVtx->vtx;
 			D3DXVec3Normalize(&nor, &nor);
 			pVtx->nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
-			// ’¸“_ƒJƒ‰[‚Ìİ’è
+			// é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã®è¨­å®š
 			pVtx->col = D3DCOLOR_RGBA(255,255,255,255);
 
-			// ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+			// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 			pVtx->tex.x = 0.5f;
 			pVtx->tex.y = 1.0f;
 		}
 
-		// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_aMeshDome.pVtxBuffDomeTop->Unlock();
 	}
 
-	{//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	{//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 		WORD *pIdx;
 
-		// ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		g_aMeshDome.pIdxBuffDome->Lock( 0, 0, (void**)&pIdx, 0);
 		for(int nCntV = 0; nCntV < g_aMeshDome.nNumBlockVDome; nCntV++)
 		{
@@ -243,10 +243,10 @@ HRESULT InitMeshDome(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fRadius, int nNumBl
 			}
 		}
 
-		// ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_aMeshDome.pIdxBuffDome->Unlock();
 
-		// ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		g_aMeshDome.pIdxBuffDomeTop->Lock( 0, 0, (void**)&pIdx, 0);
 		for(int nCntH = 0; nCntH < g_aMeshDome.nNumBlockHDome + 1; nCntH++, pIdx++)
 		{
@@ -254,7 +254,7 @@ HRESULT InitMeshDome(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fRadius, int nNumBl
 		}
 		*pIdx = 1;
 
-		// ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_aMeshDome.pIdxBuffDomeTop->Unlock();
 	}
 
@@ -262,120 +262,120 @@ HRESULT InitMeshDome(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fRadius, int nNumBl
 }
 
 //=============================================================================
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //=============================================================================
 void UninitMeshDome(void)
 {
 	if(g_aMeshDome.pVtxBuffDome != NULL)
-	{// ’¸“_ƒoƒbƒtƒ@‚ÌŠJ•ú
+	{// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®é–‹æ”¾
 		g_aMeshDome.pVtxBuffDome->Release();
 		g_aMeshDome.pVtxBuffDome = NULL;
 	}
 
 	if(g_aMeshDome.pIdxBuffDome != NULL)
-	{// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ÌŠJ•ú
+	{// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®é–‹æ”¾
 		g_aMeshDome.pIdxBuffDome->Release();
 		g_aMeshDome.pIdxBuffDome = NULL;
 	}
 
 	if(g_aMeshDome.pVtxBuffDomeTop != NULL)
-	{// ’¸“_ƒoƒbƒtƒ@‚ÌŠJ•ú
+	{// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®é–‹æ”¾
 		g_aMeshDome.pVtxBuffDomeTop->Release();
 		g_aMeshDome.pVtxBuffDomeTop = NULL;
 	}
 
 	if(g_aMeshDome.pIdxBuffDomeTop != NULL)
-	{// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ÌŠJ•ú
+	{// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã®é–‹æ”¾
 		g_aMeshDome.pIdxBuffDomeTop->Release();
 		g_aMeshDome.pIdxBuffDomeTop = NULL;
 	}
 
 	if(g_aMeshDome.pTextureDome != NULL)
-	{// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
+	{// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®é–‹æ”¾
 		g_aMeshDome.pTextureDome->Release();
 		g_aMeshDome.pTextureDome = NULL;
 	}
 }
 
 //=============================================================================
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 //=============================================================================
 void UpdateMeshDome(void)
 {
 
-	//PrintDebugProc("*** ”¼‹…î•ñ ***\n");
-	//PrintDebugProc("ˆÊ’u           : (%f : %f : %f)\n", g_posDome.x, g_posDome.y, g_posDome.z);
-	//PrintDebugProc("Œü‚«           : (%f : %f : %f)\n", g_rotDome.x, g_rotDome.y, g_rotDome.z);
-	//PrintDebugProc("ƒuƒƒbƒN”     : (%d x %d)ƒuƒƒbƒN\n", g_nNumBlockHDome, g_nNumBlockVDome);
-	//PrintDebugProc("’¸“_”         : %d’¸“_ + %d’¸“_\n", ’¸“_”, g_nNumBlockHDome + 1);
-	//PrintDebugProc("ƒCƒ“ƒfƒbƒNƒX” : %dŒÂ + %dŒÂ\n", g_nNumVertexIndexDome, g_nNumBlockHDome + 2);
-	//PrintDebugProc("ƒ|ƒŠƒSƒ“”     : %dƒ|ƒŠƒSƒ“ + %dƒ|ƒŠƒSƒ“\n", g_nNumPolygonDome, g_nNumBlockHDome);
+	//PrintDebugProc("*** åŠçƒæƒ…å ± ***\n");
+	//PrintDebugProc("ä½ç½®           : (%f : %f : %f)\n", g_posDome.x, g_posDome.y, g_posDome.z);
+	//PrintDebugProc("å‘ã           : (%f : %f : %f)\n", g_rotDome.x, g_rotDome.y, g_rotDome.z);
+	//PrintDebugProc("ãƒ–ãƒ­ãƒƒã‚¯æ•°     : (%d x %d)ãƒ–ãƒ­ãƒƒã‚¯\n", g_nNumBlockHDome, g_nNumBlockVDome);
+	//PrintDebugProc("é ‚ç‚¹æ•°         : %dé ‚ç‚¹ + %dé ‚ç‚¹\n", é ‚ç‚¹æ•°, g_nNumBlockHDome + 1);
+	//PrintDebugProc("ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ•° : %då€‹ + %då€‹\n", g_nNumVertexIndexDome, g_nNumBlockHDome + 2);
+	//PrintDebugProc("ãƒãƒªã‚´ãƒ³æ•°     : %dãƒãƒªã‚´ãƒ³ + %dãƒãƒªã‚´ãƒ³\n", g_nNumPolygonDome, g_nNumBlockHDome);
 	//PrintDebugProc("\n");
 
 }
 
 //=============================================================================
-// •`‰æˆ—
+// æç”»å‡¦ç†
 //=============================================================================
 void DrawMeshDome(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	D3DXMATRIX mtxRot, mtxTranslate;
 
-	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);	// — –Ê‚ğƒJƒŠƒ“ƒO
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);	// è£é¢ã‚’ã‚«ãƒªãƒ³ã‚°
 
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®åˆæœŸåŒ–
 	D3DXMatrixIdentity( &g_aMeshDome.mtxWorldDome);
 
-	// ‰ñ“]‚ğ”½‰f
+	// å›è»¢ã‚’åæ˜ 
 	D3DXMatrixRotationYawPitchRoll( &mtxRot, g_aMeshDome.rotDome.y, g_aMeshDome.rotDome.x, g_aMeshDome.rotDome.z);
 	D3DXMatrixMultiply( &g_aMeshDome.mtxWorldDome, &g_aMeshDome.mtxWorldDome, &mtxRot);
 
-	// ˆÚ“®‚ğ”½‰f
+	// ç§»å‹•ã‚’åæ˜ 
 	D3DXMatrixTranslation( &mtxTranslate, g_aMeshDome.rotDome.x, g_aMeshDome.rotDome.y, g_aMeshDome.rotDome.z);
 	D3DXMatrixMultiply( &g_aMeshDome.mtxWorldDome, &g_aMeshDome.mtxWorldDome, &mtxTranslate);
 
-	// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ìİ’è
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒãƒˆãƒªãƒƒã‚¯ã‚¹ã®è¨­å®š
 	pDevice->SetTransform( D3DTS_WORLD, &g_aMeshDome.mtxWorldDome);
 
-	// ’¸“_ƒoƒbƒtƒ@‚ğƒŒƒ“ƒ_ƒŠƒ“ƒOƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 	pDevice->SetStreamSource(0, g_aMeshDome.pVtxBuffDome, 0, sizeof(VERTEX_3D));
 
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğƒŒƒ“ƒ_ƒŠƒ“ƒOƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 	pDevice->SetIndices(g_aMeshDome.pIdxBuffDome);
 
-	// ’¸“_ƒtƒH[ƒ}ƒbƒg‚Ìİ’è
+	// é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®è¨­å®š
 	pDevice->SetFVF(FVF_VERTEX_3D);
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 	pDevice->SetTexture(0, g_aMeshDome.pTextureDome);
 
-	// ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+	// ãƒãƒªã‚´ãƒ³ã®æç”»
 	pDevice->DrawIndexedPrimitive(
-		D3DPT_TRIANGLESTRIP,			//ƒvƒŠƒ~ƒeƒBƒu‚Ìí—Ş
-		0,								//Å‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX‚Ü‚Å‚ÌƒIƒtƒZƒbƒg
-		0,								//Å¬‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-		g_aMeshDome.nNumVertexDome,		//’¸“_‚Ì”
-		0,								//“Ç‚İæ‚è‚ğŠJn‚·‚éˆÊ’u
-		g_aMeshDome.nNumPolygonDome		//ƒ|ƒŠƒSƒ“‚Ì”
+		D3DPT_TRIANGLESTRIP,			//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡
+		0,								//æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¾ã§ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+		0,								//æœ€å°ã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		g_aMeshDome.nNumVertexDome,		//é ‚ç‚¹ã®æ•°
+		0,								//èª­ã¿å–ã‚Šã‚’é–‹å§‹ã™ã‚‹ä½ç½®
+		g_aMeshDome.nNumPolygonDome		//ãƒãƒªã‚´ãƒ³ã®æ•°
 	);
 
-	// ’¸“_ƒoƒbƒtƒ@‚ğƒŒƒ“ƒ_ƒŠƒ“ƒOƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 	pDevice->SetStreamSource(0, g_aMeshDome.pVtxBuffDomeTop, 0, sizeof(VERTEX_3D));
 
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğƒŒƒ“ƒ_ƒŠƒ“ƒOƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ¬ãƒ³ãƒ€ãƒªãƒ³ã‚°ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 	pDevice->SetIndices(g_aMeshDome.pIdxBuffDomeTop);
 
-	// ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+	// ãƒãƒªã‚´ãƒ³ã®æç”»
 	pDevice->DrawIndexedPrimitive(
-		D3DPT_TRIANGLEFAN,				//ƒvƒŠƒ~ƒeƒBƒu‚Ìí—Ş
-		0,								//Å‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX‚Ü‚Å‚ÌƒIƒtƒZƒbƒg
-		0,								//Å¬‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-		(g_aMeshDome.nNumBlockHDome + 1),		//’¸“_‚Ì”
-		0,								//“Ç‚İæ‚è‚ğŠJn‚·‚éˆÊ’u
-		g_aMeshDome.nNumBlockHDome		//ƒ|ƒŠƒSƒ“‚Ì”
+		D3DPT_TRIANGLEFAN,				//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡
+		0,								//æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã¾ã§ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+		0,								//æœ€å°ã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		(g_aMeshDome.nNumBlockHDome + 1),		//é ‚ç‚¹ã®æ•°
+		0,								//èª­ã¿å–ã‚Šã‚’é–‹å§‹ã™ã‚‹ä½ç½®
+		g_aMeshDome.nNumBlockHDome		//ãƒãƒªã‚´ãƒ³ã®æ•°
 	);
 
-	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	// — –Ê‚ğƒJƒŠƒ“ƒO
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);	// è£é¢ã‚’ã‚«ãƒªãƒ³ã‚°
 }
 

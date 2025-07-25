@@ -1,8 +1,8 @@
-/*******************************************************************************
+ï»¿/*******************************************************************************
 *
-* ƒ^ƒCƒgƒ‹:		“G‚Ì’e‚Ìˆ—
-* ƒvƒƒOƒ‰ƒ€–¼:	enemyBullet.h
-* ì¬ŽÒ:		HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+* ã‚¿ã‚¤ãƒˆãƒ«:		æ•µã®å¼¾ã®å‡¦ç†
+* ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	enemyBullet.h
+* ä½œæˆè€…:		HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 *
 *******************************************************************************/
 
@@ -14,38 +14,38 @@
 #define MAX_ENEMY_BULLET	(16)
 
 //*****************************************************************************
-// ƒJƒƒ‰‚Ì\‘¢‘Ì
+// ã‚«ãƒ¡ãƒ©ã®æ§‹é€ ä½“
 //*****************************************************************************
 typedef struct
 {
-	LPDIRECT3DTEXTURE9	pD3DTexture;	// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPD3DXMESH  pD3DXMesh;				// ƒƒbƒVƒ…î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	LPD3DXBUFFER  pD3DXBuffMat;			// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	DWORD	nNumMat;					// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
+	LPDIRECT3DTEXTURE9	pD3DTexture;	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPD3DXMESH  pD3DXMesh;				// ãƒ¡ãƒƒã‚·ãƒ¥æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	LPD3DXBUFFER  pD3DXBuffMat;			// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+	DWORD	nNumMat;					// ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±ã®æ•°
 
-	D3DXVECTOR3 pos;					// ƒ‚ƒfƒ‹‚ÌˆÊ’u
-	D3DXVECTOR3 rot;					// ƒ‚ƒfƒ‹‚ÌŒü‚«(‰ñ“])
-	D3DXVECTOR3 scl;					// ƒ‚ƒfƒ‹‚Ì‘å‚«‚³(ƒXƒP[ƒ‹)
-	D3DXVECTOR3 move;					// ƒ‚ƒfƒ‹‚ÌˆÚ“®—Ê
-	D3DXVECTOR3 rotAngle;				// ƒ‚ƒfƒ‹‚ÌŒü‚«(‰ñ“])
-	D3DXVECTOR3 rotTarget;				// ƒ‚ƒfƒ‹‚ÌŒü‚«(‰ñ“])
+	D3DXVECTOR3 pos;					// ãƒ¢ãƒ‡ãƒ«ã®ä½ç½®
+	D3DXVECTOR3 rot;					// ãƒ¢ãƒ‡ãƒ«ã®å‘ã(å›žè»¢)
+	D3DXVECTOR3 scl;					// ãƒ¢ãƒ‡ãƒ«ã®å¤§ãã•(ã‚¹ã‚±ãƒ¼ãƒ«)
+	D3DXVECTOR3 move;					// ãƒ¢ãƒ‡ãƒ«ã®ç§»å‹•é‡
+	D3DXVECTOR3 rotAngle;				// ãƒ¢ãƒ‡ãƒ«ã®å‘ã(å›žè»¢)
+	D3DXVECTOR3 rotTarget;				// ãƒ¢ãƒ‡ãƒ«ã®å‘ã(å›žè»¢)
 
-	D3DXMATRIX mtxWorld;				// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX
+	D3DXMATRIX mtxWorld;				// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒžãƒˆãƒªãƒƒã‚¯ã‚¹
 
-	int nIdxShadow;						//Žg—p‚µ‚Ä‚¢‚é‰e‚Ì”Ô†
+	int nIdxShadow;						//ä½¿ç”¨ã—ã¦ã„ã‚‹å½±ã®ç•ªå·
 	bool bUse;
-	D3DXVECTOR3 front;					//’e‚ÌŒü‚«
-	int nJustShoot;						//Œ‚‚Á‚½‚Î‚©‚è‚Ì’e‚ÌˆÚ“®ƒtƒŒƒCƒ€
+	D3DXVECTOR3 front;					//å¼¾ã®å‘ã
+	int nJustShoot;						//æ’ƒã£ãŸã°ã‹ã‚Šã®å¼¾ã®ç§»å‹•ãƒ•ãƒ¬ã‚¤ãƒ 
 } ENEMY_BULLET;
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 HRESULT InitEnemyBullet(void);
 void UninitEnemyBullet(void);
 void UpdateEnemyBullet( float fTimeSpeed);
 void DrawEnemyBullet(void);
 
-//’e‚ÌÝ’u
+//å¼¾ã®è¨­ç½®
 void SetEnemyBullet( D3DXVECTOR3 pos, D3DXVECTOR3 target);
 #endif
